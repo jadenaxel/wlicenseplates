@@ -2,8 +2,8 @@
     "expo": {
         "android": {
             "adaptiveIcon": {
-                "backgroundColor": "#ffffff",
-                "foregroundImage": "./assets/adaptive-icon.png"
+                "backgroundColor": "#000",
+                "foregroundImage": "./assets/icon.png"
             }
         },
         "assetBundlePatterns": [
@@ -21,14 +21,11 @@
         "scheme": "your-app-scheme",
         "slug": "wlicenseplates",
         "splash": {
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "#000",
             "image": "./assets/splash.png",
-            "resizeMode": "contain"
+            "resizeMode": "cover"
         },
-        "userInterfaceStyle": "light",
-        "version": "1.0.0",
-        "web": {
-            "favicon": "./assets/favicon.png"
-        }
+        "userInterfaceStyle": "dark",
+        "version": "1.0.0"
     }
 }
