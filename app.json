@@ -1,4 +1,7 @@
 {
+    "assetBundlePatterns": [
+        "**/*"
+    ],
     "expo": {
         "android": {
             "adaptiveIcon": {
@@ -6,9 +9,6 @@
                 "foregroundImage": "./assets/icon.png"
             }
         },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
         "icon": "./assets/icon.png",
         "ios": {
             "supportsTablet": true
