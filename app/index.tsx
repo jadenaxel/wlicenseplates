@@ -1,35 +1,32 @@
-import { StyleSheet, Text, View } from "react-native";
+// Imports for react types
+import type { FC } from "react";
 
-export default function Page() {
+// Imports for Expo and Reac Native libraries
+import { StyleSheet, View, ScrollView, Text } from "react-native";
+
+// Others imports
+import { Color } from "../config";
+
+const Home: FC = (): JSX.Element => {
 	return (
 		<View style={styles.container}>
-			<View style={styles.main}>
-				<Text style={styles.title}>Hello World</Text>
-				<Text style={styles.subtitle}>This is the first page of your app.</Text>
-			</View>
+			<ScrollView showsVerticalScrollIndicator={false}>
+				<Text style={styles.title}>Explore</Text>
+			</ScrollView>
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "center",
-		padding: 24,
-		backgroundColor: "#000",
-	},
-	main: {
-		flex: 1,
-		justifyContent: "center",
-		maxWidth: 960,
-		marginHorizontal: "auto",
+		paddingHorizontal: 16,
+		backgroundColor: Color.black,
 	},
 	title: {
-		fontSize: 64,
-		fontWeight: "bold",
-	},
-	subtitle: {
-		fontSize: 36,
-		color: "#38434D",
+		color: Color.white,
+		fontSize: 28,
 	},
 });
+
+export default Home;

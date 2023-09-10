@@ -1,13 +1,25 @@
+// This code defines a component named AppLayout that uses the Tabs component from the Expo Router library. It also defines four screens that are used by the tabs. Each screen has a different icon and label.
+
+// Imports for react types
 import type { FC } from "react";
 
+// Imports for Expo and Reac Native libraries
+import { useState } from "react";
 import { Text } from "react-native";
-
 import { Tabs } from "expo-router/tabs";
+import { useFonts } from "expo-font";
 
+// Others imports
 import { Icons } from "../components";
 import { Color } from "../config";
 
 const AppLayout: FC = (): JSX.Element => {
+	const [fontsLoaded] = useFonts({
+		"SF-Pro-Bold": require("../assets/fonts/SFPRODISPLAYBOLD.OTF"),
+	});
+
+	if (!fontsLoaded) return <></>;
+
 	return (
 		<Tabs
 			screenOptions={{
