@@ -7,4 +7,5 @@ export interface ICard {
 	title: string;
 	plates: number;
 	countries: number;
+	description: string;
 }

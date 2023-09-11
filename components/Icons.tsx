@@ -1,4 +1,4 @@
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path, G } from "react-native-svg";
 
 const FireIcon = ({ color, size }: { color: string; size: number }): JSX.Element => {
 	return (
@@ -49,4 +49,16 @@ const SearchIcon = ({ color, size }: { color: string; size: number }): JSX.Eleme
 	);
 };
 
-export default { FireIcon, HeartIcon, Explore, SearchIcon };
+const ArrowRIght = ({ size }: { size: number }): JSX.Element => {
+	return (
+		<Svg viewBox="0 0 24 24" fill="none" width={size} height={size}>
+			<G id="SVGRepo_bgCarrier" stroke-width="0"></G>
+			<G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></G>
+			<G id="SVGRepo_iconCarrier">
+				<Path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></Path>
+			</G>
+		</Svg>
+	);
+};
+
+export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRIght };

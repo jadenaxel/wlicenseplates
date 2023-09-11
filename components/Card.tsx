@@ -4,6 +4,8 @@ import type { ICard } from "../types";
 import { View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 
+import Icons from "./Icons";
+
 const Card: FC<ICard> = ({ title, image, icons, plates, countries }: ICard): JSX.Element => {
 	return (
 		<View style={styles.card}>
@@ -22,7 +24,9 @@ const Card: FC<ICard> = ({ title, image, icons, plates, countries }: ICard): JSX
 							<Text style={styles.dataDetailsItem}>{countries} Countries</Text>
 						</View>
 					</View>
-					<View></View>
+					<View style={styles.arrowAccess}>
+						<Icons.ArrowRIght size={13.08} />
+					</View>
 				</BlurView>
 			</ImageBackground>
 		</View>
@@ -84,6 +88,11 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		fontFamily: "SF_PRO_REGULAR",
 		fontWeight: "300",
+	},
+	arrowAccess: {
+		alignSelf: "flex-end",
+		marginBottom: 13,
+        marginLeft: 43
 	},
 });
 
