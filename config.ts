@@ -1,7 +1,4 @@
-// This code creates a color interface .
-interface IColor {
-	[key: string]: string;
-}
+import type { IColor } from "./types";
 
 //This code is used to define a set of colors that can be used in other parts of the code.
 export const Color: IColor = {
