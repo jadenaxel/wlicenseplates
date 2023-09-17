@@ -5,8 +5,9 @@ import { View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 
 import Icons from "./Icons";
+import { WindowWidth } from "../config";
 
-const Card: FC<ICard> = ({ title, image, icons, plates, countries }: ICard): JSX.Element => {
+const Card: FC<ICard> = ({ title, image, icons, platesNumber, countriesQuantity }: ICard): JSX.Element => {
 	return (
 		<View style={styles.card}>
 			<ImageBackground source={{ uri: image }} style={styles.image}>
@@ -20,12 +21,12 @@ const Card: FC<ICard> = ({ title, image, icons, plates, countries }: ICard): JSX
 						<Text style={styles.dataTitle}>{title}</Text>
 						<View style={styles.dataLine} />
 						<View style={styles.dataDetails}>
-							<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{plates} - License Plates</Text>
-							<Text style={styles.dataDetailsItem}>{countries} Countries</Text>
+							<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{platesNumber} - License Plates</Text>
+							<Text style={styles.dataDetailsItem}>{countriesQuantity} Countries</Text>
 						</View>
 					</View>
 					<View style={styles.arrowAccess}>
-						<Icons.ArrowRIght size={13.08} />
+						<Icons.ArrowRight size={13.08} />
 					</View>
 				</BlurView>
 			</ImageBackground>
@@ -91,8 +92,9 @@ const styles = StyleSheet.create({
 	},
 	arrowAccess: {
 		alignSelf: "flex-end",
+		justifyContent: "flex-end",
 		marginBottom: 13,
-        marginLeft: 43
+		marginLeft: WindowWidth - 350,
 	},
 });
 

@@ -49,16 +49,42 @@ const SearchIcon = ({ color, size }: { color: string; size: number }): JSX.Eleme
 	);
 };
 
-const ArrowRIght = ({ size }: { size: number }): JSX.Element => {
+const ArrowRight = ({ size }: { size: number }): JSX.Element => {
 	return (
-		<Svg viewBox="0 0 24 24" fill="none" width={size} height={size}>
-			<G id="SVGRepo_bgCarrier" stroke-width="0"></G>
-			<G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></G>
-			<G id="SVGRepo_iconCarrier">
-				<Path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></Path>
-			</G>
+		<Svg width={size} height={size} viewBox="0 0 14 14">
+			<Path
+				fill-rule="evenodd"
+				clip-rule="evenodd"
+				d="M7.46333 0.292893C7.07281 -0.0976311 6.43964 -0.0976311 6.04912 0.292893C5.65859 0.683418 5.65859 1.31658 6.04912 1.70711L9.88368 5.54167H1.21454C0.662254 5.54167 0.214539 5.98938 0.214539 6.54167C0.214539 7.09395 0.662254 7.54167 1.21454 7.54167H9.88368L6.04912 11.3762C5.65859 11.7668 5.65859 12.3999 6.04912 12.7904C6.43964 13.181 7.07281 13.181 7.46333 12.7904L13.005 7.24877C13.107 7.14679 13.1823 7.02826 13.2311 6.90182C13.2671 6.80843 13.2896 6.70826 13.296 6.60375C13.2985 6.56241 13.2985 6.52093 13.296 6.47958C13.2896 6.37507 13.2671 6.2749 13.2311 6.18151C13.1823 6.05507 13.107 5.93654 13.005 5.83456L7.46333 0.292893Z"
+				fill="white"
+			/>
 		</Svg>
 	);
 };
 
-export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRIght };
+const ArrowLongLeft = ({ size, color }: { size: number; color: string }): JSX.Element => {
+	return (
+		<Svg width={size} height={size} viewBox="0 0 20 10" fill={color}>
+			<Path
+				d="M5.59227 9L1.90219 5M1.90219 5L5.59227 1M1.90219 5L18.5075 5"
+				stroke="white"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</Svg>
+	);
+};
+
+const FilterIcon = ({ size }: { size: number }): JSX.Element => {
+	return (
+		<Svg width={size} height={size} viewBox="0 0 18 12" fill="none">
+			<Path
+				d="M10.6841 10C11.0983 10 11.4341 10.3358 11.4341 10.75C11.4341 11.1642 11.0983 11.5 10.6841 11.5H7.68408C7.26987 11.5 6.93408 11.1642 6.93408 10.75C6.93408 10.3358 7.26987 10 7.68408 10H10.6841ZM13.6841 5C14.0983 5 14.4341 5.33579 14.4341 5.75C14.4341 6.16421 14.0983 6.5 13.6841 6.5H4.68408C4.26987 6.5 3.93408 6.16421 3.93408 5.75C3.93408 5.33579 4.26987 5 4.68408 5H13.6841ZM16.6841 0C17.0983 0 17.4341 0.335786 17.4341 0.75C17.4341 1.16421 17.0983 1.5 16.6841 1.5H1.68408C1.26987 1.5 0.934082 1.16421 0.934082 0.75C0.934082 0.335786 1.26987 0 1.68408 0H16.6841Z"
+				fill="#D6D6D6"
+			/>
+		</Svg>
+	);
+};
+
+export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRight, ArrowLongLeft, FilterIcon };

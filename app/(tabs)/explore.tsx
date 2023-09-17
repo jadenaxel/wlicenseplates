@@ -14,7 +14,6 @@ import { ICard } from "../../types";
 const Home: FC = (): JSX.Element => {
 	return (
 		<View style={styles.container}>
-			<StatusBar backgroundColor={Color.black} />
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Text style={styles.title}>Explore</Text>
 				{data.home.continent.map((item: ICard | any, i: number) => {

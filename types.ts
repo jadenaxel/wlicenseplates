@@ -5,7 +5,14 @@ export interface ICard {
 	image: string;
 	icons: string;
 	title: string;
-	plates: number;
-	countries: number;
+	platesNumber: number;
+	countriesQuantity: number;
 	description: string;
+	countries: [ICountries];
+}
+
+export interface ICountries {
+	image: string;
+	title: string;
+	platesNumber: number;
 }
