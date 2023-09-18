@@ -2,5 +2,8 @@
 import Icons from "./Icons";
 import Card from "./Card";
 import ContinentList from "./ContinentList";
+import Loading from "./Loading";
+import Filter from "./Filter";
+import Plates from "./Plates";
 
-export { Icons, Card, ContinentList };
+export { Icons, Card, ContinentList, Loading, Filter, Plates };

@@ -14,5 +14,20 @@ export interface ICard {
 export interface ICountries {
 	image: string;
 	title: string;
+	flag: string;
+	description: string;
 	platesNumber: number;
+	plates: [IPlates];
+}
+
+export interface IPlates {
+	title: string;
+	bg: string;
+	year: number;
+	image: [string];
+	description: string;
+	note: string;
+	eligibility: string;
+    plateType: string;
+	categories: any;
 }

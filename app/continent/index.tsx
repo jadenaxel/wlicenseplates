@@ -4,17 +4,18 @@ import type { EdgeInsets } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Pressable } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { router, useGlobalSearchParams, Link } from "expo-router";
+import { router, useLocalSearchParams, Link } from "expo-router";
 
 import { ICard, ICountries } from "../../types";
 import { Color, WindowWidth } from "../../config";
 import { Icons, ContinentList } from "../../components";
 
 const Continent: FC = () => {
-	const { data }: any = useGlobalSearchParams();
+	const { data }: any = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
+	const newData: ICard = JSON.parse(data);
 
-	const { countries, countriesQuantity, description, icons, image, platesNumber, title }: ICard = JSON.parse(data);
+	const { title, description, countriesQuantity, countries, icons, image, platesNumber } = newData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -26,40 +27,38 @@ const Continent: FC = () => {
 	};
 
 	return (
-		<View style={containerStyle}>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
-					<Pressable onPress={() => router.back()}>
-						<Icons.ArrowLongLeft size={24} color={Color.white} />
-					</Pressable>
-					<View style={styles.continent}>
-						<Image style={styles.contientIcon} source={{ uri: icons }} />
-						<Text style={styles.continentText}>{title}</Text>
-					</View>
-				</ImageBackground>
-				<View style={styles.subheader}>
-					<View style={styles.subheaderSideOne}>
-						<View style={styles.subheaderInfo}>
-							<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{platesNumber} - License Plates</Text>
-							<Text style={styles.subheaderInfoText}>{countriesQuantity} Countries</Text>
-						</View>
-						<Text style={styles.subheaderInfoDescription}>{description}</Text>
-					</View>
-					<View style={styles.subheaderIcon}>
-						<Icons.FilterIcon size={16} />
-					</View>
+		<ScrollView showsVerticalScrollIndicator={false} style={containerStyle}>
+			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
+				<Pressable onPress={() => router.back()}>
+					<Icons.ArrowLongLeft size={24} color={Color.white} />
+				</Pressable>
+				<View style={styles.continent}>
+					<Image style={styles.contientIcon} source={{ uri: icons }} />
+					<Text style={styles.continentText}>{title}</Text>
 				</View>
-				{countries.map((item: ICountries, i: number) => {
-					return (
-						<Link href={{ pathname: "/country" }} key={i} asChild>
-							<Pressable>
-								<ContinentList {...item} />
-							</Pressable>
-						</Link>
-					);
-				})}
-			</ScrollView>
-		</View>
+			</ImageBackground>
+			<View style={styles.subheader}>
+				<View style={styles.subheaderSideOne}>
+					<View style={styles.subheaderInfo}>
+						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{platesNumber} - License Plates</Text>
+						<Text style={styles.subheaderInfoText}>{countriesQuantity} Countries</Text>
+					</View>
+					<Text style={styles.subheaderInfoDescription}>{description}</Text>
+				</View>
+				<View style={styles.subheaderIcon}>
+					<Icons.FilterIcon size={16} />
+				</View>
+			</View>
+			{countries && countries.map((item: ICountries, i: number) => {
+				return (
+					<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
+						<Pressable>
+							<ContinentList {...item} />
+						</Pressable>
+					</Link>
+				);
+			})}
+		</ScrollView>
 	);
 };
 

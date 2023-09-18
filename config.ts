@@ -3,8 +3,10 @@ import type { IColor } from "./types";
 import { Dimensions } from "react-native";
 
 // Getting dimensions
-const WindowWidth: number = Dimensions.get("window").width;
-const WindowHeight: number = Dimensions.get("window").height;
+export const WindowWidth: number = Dimensions.get("window").width;
+export const WindowHeight: number = Dimensions.get("window").height;
+
+export const apiUrl: string = "https://fxqapxmx.api.sanity.io/v2021-10-21/data/query/production?query=";
 
 //This code is used to define a set of colors that can be used in other parts of the code.
 export const Color: IColor = {
@@ -13,6 +15,3 @@ export const Color: IColor = {
 	gray: "#D6D6D6",
 	white: "#FFFFFF",
 };
-
-// Exporting dimensions
-export { WindowHeight, WindowWidth };

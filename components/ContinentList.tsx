@@ -6,13 +6,13 @@ import { ICountries } from "../types";
 import { Color } from "../config";
 
 const ContinentList: FC<ICountries> = (props: ICountries): JSX.Element => {
-	const { image, platesNumber, title }: ICountries = props;
+	const { platesNumber, title, flag }: ICountries = props;
 
 	return (
 		<View>
 			<View style={styles.container}>
 				<View style={styles.flagsContinaer}>
-					<Image style={styles.flagsContinaerImage} source={{ uri: image }} />
+					<Image style={styles.flagsContinaerImage} source={{ uri: flag }} />
 					<Text style={styles.flagsContinaerText}>{title}</Text>
 				</View>
 				<Text style={styles.platesNumber}>{platesNumber}</Text>

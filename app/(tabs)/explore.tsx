@@ -2,21 +2,36 @@
 import type { FC } from "react";
 
 // Imports for Expo and Reac Native libraries
-import { StyleSheet, View, ScrollView, Text, StatusBar, Pressable } from "react-native";
-import { Link } from "expo-router";
+import { useEffect, useState } from "react";
+import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
+import { Link, router } from "expo-router";
 
 // Others imports
-import { Color } from "../../config";
-import { Card } from "../../components";
-import data from "../../db_temp.json";
+import { Color, apiUrl } from "../../config";
+import { Card, Loading } from "../../components";
 import { ICard } from "../../types";
+import Query from "../../query";
 
 const Home: FC = (): JSX.Element => {
+	const [data, setData] = useState<ICard | any>();
+
+	const getData = async (): Promise<void> => {
+		const response: Response = await fetch(`${apiUrl}${Query.continent.getContinent}`);
+		const json: any = await response.json();
+		setData(json.result);
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
+	if (data === undefined) return <Loading />;
+
 	return (
 		<View style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Text style={styles.title}>Explore</Text>
-				{data.home.continent.map((item: ICard | any, i: number) => {
+				{data.map((item: ICard | any, i: number) => {
 					return (
 						<Link key={i} href={{ pathname: "/continent", params: { data: JSON.stringify(item) } }} asChild>
 							<Pressable>

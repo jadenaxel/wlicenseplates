@@ -87,4 +87,26 @@ const FilterIcon = ({ size }: { size: number }): JSX.Element => {
 	);
 };
 
-export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRight, ArrowLongLeft, FilterIcon };
+const Favorite = ({ size }: { size: number }): JSX.Element => {
+	return (
+		<Svg width={size} height={size} viewBox="0 0 20 18" fill={"transparent"}>
+			<Path
+				d="M3.16756 2.31802C1.54636 4.07538 1.54636 6.92462 3.16756 8.68198L10.2544 16.364L17.3411 8.68198C18.9623 6.92462 18.9623 4.07538 17.3411 2.31802C15.7199 0.56066 13.0914 0.56066 11.4702 2.31802L10.2544 3.63609L9.03843 2.31802C7.41724 0.56066 4.78876 0.56066 3.16756 2.31802Z"
+				stroke="white"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</Svg>
+	);
+};
+
+const X = ({ size }: { size: number }): JSX.Element => {
+	return (
+		<Svg width={size} height={size} viewBox="0 0 23 24">
+			<Path d="M6.39459 18L17.4648 6M6.39459 6L17.4648 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+		</Svg>
+	);
+};
+
+export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRight, ArrowLongLeft, FilterIcon, Favorite, X };

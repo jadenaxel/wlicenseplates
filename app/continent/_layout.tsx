@@ -5,6 +5,7 @@ const StackLayout = () => {
 		<Stack screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="index" />
 			<Stack.Screen name="country" />
+			<Stack.Screen name="plate" />
 		</Stack>
 	);
 };
