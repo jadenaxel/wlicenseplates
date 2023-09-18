@@ -21,7 +21,6 @@ const AppLayout: FC = (): JSX.Element => {
 	});
 
 	if (!loaded) return <></>;
-
 	return (
 		<Tabs
 			screenOptions={{
@@ -40,15 +39,7 @@ const AppLayout: FC = (): JSX.Element => {
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Explore</Text>,
 				}}
 			/>
-			<Tabs.Screen
-				name="search"
-				options={{
-					headerShown: false,
-					title: "Search",
-					tabBarIcon: ({ color, size }) => <Icons.SearchIcon color={color} size={size} />,
-					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Search</Text>,
-				}}
-			/>
+
 			<Tabs.Screen
 				name="favorite"
 				options={{
@@ -56,6 +47,15 @@ const AppLayout: FC = (): JSX.Element => {
 					title: "Favorite",
 					tabBarIcon: ({ color, size }) => <Icons.HeartIcon color={color} size={size} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Favorite</Text>,
+				}}
+			/>
+			<Tabs.Screen
+				name="search"
+				options={{
+					headerShown: false,
+					title: "Search",
+					tabBarIcon: ({ color, size }) => <Icons.SearchIcon color={color} size={size} />,
+					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Search</Text>,
 				}}
 			/>
 			<Tabs.Screen
