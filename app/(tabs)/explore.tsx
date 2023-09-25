@@ -4,10 +4,10 @@ import type { FC } from "react";
 // Imports for Expo and Reac Native libraries
 import { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 
 // Others imports
-import { Color, apiUrl } from "../../config";
+import { Color } from "../../config";
 import { Card, Loading } from "../../components";
 import { ICard } from "../../types";
 import Query from "../../query";
@@ -16,7 +16,7 @@ const Home: FC = (): JSX.Element => {
 	const [data, setData] = useState<ICard | any>();
 
 	const getData = async (): Promise<void> => {
-		const response: Response = await fetch(`${apiUrl}${Query.continent.getContinent}`);
+		const response: Response = await fetch(Query.query.Continent.query);
 		const json: any = await response.json();
 		setData(json.result);
 	};

@@ -87,12 +87,12 @@ const FilterIcon = ({ size }: { size: number }): JSX.Element => {
 	);
 };
 
-const Favorite = ({ size }: { size: number }): JSX.Element => {
+const Favorite = ({ size, color, stroke }: { size: number; color: string; stroke: string }): JSX.Element => {
 	return (
-		<Svg width={size} height={size} viewBox="0 0 20 18" fill={"transparent"}>
+		<Svg width={size} height={size} viewBox="0 0 20 18" fill={color}>
 			<Path
 				d="M3.16756 2.31802C1.54636 4.07538 1.54636 6.92462 3.16756 8.68198L10.2544 16.364L17.3411 8.68198C18.9623 6.92462 18.9623 4.07538 17.3411 2.31802C15.7199 0.56066 13.0914 0.56066 11.4702 2.31802L10.2544 3.63609L9.03843 2.31802C7.41724 0.56066 4.78876 0.56066 3.16756 2.31802Z"
-				stroke="white"
+				stroke={stroke}
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
@@ -109,4 +109,17 @@ const X = ({ size }: { size: number }): JSX.Element => {
 	);
 };
 
-export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRight, ArrowLongLeft, FilterIcon, Favorite, X };
+const Circle = ({ size }: { size: number }): JSX.Element => {
+	return (
+		<Svg width={size} height={size} viewBox="0 0 13 13" fill="none">
+			<Path
+				fill-rule="evenodd"
+				clip-rule="evenodd"
+				d="M6.00574 10.3874C8.21488 10.3874 10.0057 8.59651 10.0057 6.38737C10.0057 4.17824 8.21488 2.38737 6.00574 2.38737C3.7966 2.38737 2.00574 4.17824 2.00574 6.38737C2.00574 8.59651 3.7966 10.3874 6.00574 10.3874ZM6.00574 9.38737C4.34888 9.38737 3.00574 8.04423 3.00574 6.38737C3.00574 4.73052 4.34888 3.38737 6.00574 3.38737C7.66259 3.38737 9.00574 4.73052 9.00574 6.38737C9.00574 8.04423 7.66259 9.38737 6.00574 9.38737Z"
+				fill="#FF1464"
+			/>
+		</Svg>
+	);
+};
+
+export default { FireIcon, HeartIcon, Explore, SearchIcon, ArrowRight, ArrowLongLeft, FilterIcon, Favorite, X, Circle };

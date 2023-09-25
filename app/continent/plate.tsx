@@ -1,19 +1,25 @@
 import type { FC } from "react";
 import type { EdgeInsets } from "react-native-safe-area-context";
 
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Color, WindowWidth } from "../../config";
 import { Icons } from "../../components";
 import { IPlates } from "../../types";
 
 const Plate: FC = (): JSX.Element => {
-	const { data }: any = useLocalSearchParams();
+	const [heart, setHeart] = useState<boolean>(false);
+
+	const { data, country }: any = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
-	const newData: IPlates = JSON.parse(data);
-	const { bg, year, image, description, eligibility, plateType, note } = newData;
+	let newData: IPlates | any = JSON.parse(data);
+	const countryP = JSON.parse(country);
+	const { bg, year, image, description, eligibility, plateType, note, title } = newData;
+	newData = { ...newData, countryP };
 
 	const containerStyle: any = {
 		flex: 1,
@@ -23,6 +29,51 @@ const Plate: FC = (): JSX.Element => {
 		paddingLeft: safeAreaInsets.left,
 		paddingRight: safeAreaInsets.right,
 	};
+
+	const SaveCountry = async () => {
+		try {
+			const data: any = await AsyncStorage.getItem("country");
+			const parsing = JSON.parse(data);
+			if (parsing === null) await AsyncStorage.setItem("country", JSON.stringify([newData]));
+			else await AsyncStorage.setItem("country", JSON.stringify([...parsing, newData]));
+		} catch (e: any) {
+			console.log(e.message);
+		}
+	};
+
+	const GetCountry = async () => {
+		try {
+			const data: any = await AsyncStorage.getItem("country");
+			const parsing = JSON.parse(data);
+			if (parsing === null) return;
+			const getTitle = parsing.filter((item: any) => item.title === title);
+			setHeart(getTitle.length > 0 ? true : false);
+		} catch (e: any) {
+			console.log(e.message);
+		}
+	};
+
+	const RemoveHeart = async () => {
+		try {
+			const data: any = await AsyncStorage.getItem("country");
+			const parsing = JSON.parse(data);
+			if (parsing === null) return;
+			const deleteItem = parsing.filter((item: any) => item.title !== title);
+			await AsyncStorage.setItem("country", JSON.stringify(deleteItem));
+		} catch (e: any) {
+			console.log(e.message);
+		}
+	};
+
+	const handleHeart = () => {
+		if (heart === true) RemoveHeart();
+		if (heart === false) SaveCountry();
+		setHeart((prev): boolean => !prev);
+	};
+
+	useEffect(() => {
+		GetCountry();
+	}, []);
 
 	return (
 		<ScrollView style={containerStyle}>
@@ -34,6 +85,9 @@ const Plate: FC = (): JSX.Element => {
 					<Text style={styles.continentTextYear}>{year}</Text>
 					<Text style={styles.continentTextTitle}>Year</Text>
 				</View>
+				<Pressable style={styles.subheaderIcon} onPress={handleHeart}>
+					<Icons.Favorite size={20} color={heart ? Color.red : "transparent"} stroke={heart ? Color.red : "white"} />
+				</Pressable>
 			</ImageBackground>
 			<View style={styles.content}>
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -99,6 +153,10 @@ const styles = StyleSheet.create({
 		fontSize: 41,
 		fontWeight: "bold",
 		color: Color.white,
+	},
+	subheaderIcon: {
+		alignSelf: "flex-end",
+		marginBottom: 16,
 	},
 	platesContainer: {
 		borderRadius: 4,

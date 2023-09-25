@@ -17,6 +17,7 @@ export interface ICountries {
 	flag: string;
 	description: string;
 	platesNumber: number;
+	continent: [ICard];
 	plates: [IPlates];
 }
 
@@ -28,6 +29,6 @@ export interface IPlates {
 	description: string;
 	note: string;
 	eligibility: string;
-    plateType: string;
+	plateType: string;
 	categories: any;
 }

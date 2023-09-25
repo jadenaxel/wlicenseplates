@@ -49,15 +49,16 @@ const Continent: FC = () => {
 					<Icons.FilterIcon size={16} />
 				</View>
 			</View>
-			{countries && countries.map((item: ICountries, i: number) => {
-				return (
-					<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
-						<Pressable>
-							<ContinentList {...item} />
-						</Pressable>
-					</Link>
-				);
-			})}
+			{countries &&
+				countries.map((item: ICountries, i: number) => {
+					return (
+						<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
+							<Pressable>
+								<ContinentList {...item} />
+							</Pressable>
+						</Link>
+					);
+				})}
 		</ScrollView>
 	);
 };

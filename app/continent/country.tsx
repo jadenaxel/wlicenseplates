@@ -45,9 +45,6 @@ const Country: FC = (): JSX.Element => {
 					<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{platesNumber} - License Plates</Text>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
-				<Pressable style={styles.subheaderIcon}>
-					<Icons.Favorite size={16} />
-				</Pressable>
 			</View>
 			<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 				{filters &&
@@ -63,7 +60,11 @@ const Country: FC = (): JSX.Element => {
 				{plates &&
 					plates.map((item: IPlates, i: number) => {
 						return (
-							<Link key={i} href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item) } }} asChild>
+							<Link
+								key={i}
+								href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item), country: JSON.stringify(title) } }}
+								asChild
+							>
 								<Pressable>
 									<Plates {...item} />
 								</Pressable>
@@ -124,10 +125,6 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 15,
-	},
-	subheaderIcon: {
-		alignSelf: "flex-end",
-		marginBottom: 16,
 	},
 	plates: {
 		flexDirection: "row",

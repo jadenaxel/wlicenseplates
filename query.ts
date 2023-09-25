@@ -1,22 +1,26 @@
 export default {
-	continent: {
-		getContinent:
-			"*%5B_type+%3D%3D+%22continent%22%5D+%7C+order%28title%29+%7B%0A++title%2C%0A++platesNumber%2C%0A++image%2C%0A++countriesQuantity%2C%0A++description%2C%0A++icons%2C%0A++countries%5B0..-1%5D-%3E%7B%0A++++description%2C%0A++++title%2C%0A++++platesNumber%2C%0A++++image%2C%0A++++flag%2C%0A++++plates%5B0..-1%5D-%3E%0A++%7D%0A%7D%0A%0A%0A%0A&perspective=published",
-		data: `*[_type == "continent"] | order(title) {
+	query: {
+		Continent: {
+			query: "https://fxqapxmx.api.sanity.io/v2021-10-21/data/query/production?query=*%5B_type+%3D%3D+%22continent%22%5D+%7C+order%28title%29+%7B%0Atitle%2C%0AplatesNumber%2C%0Aimage%2C%0AcountriesQuantity%2C%0Adescription%2C%0Aicons%2C%0Acountries%5B0..-1%5D-%3E+%7B%0Adescription%2C%0Atitle%2C%0AplatesNumber%2C%0Aimage%2C%0Aflag%2C%0Aplates%5B0..-1%5D-%3E%2C%0Acontinent-%3E+%7B%0Atitle%0A%7D%0A%7D%0A%7D&perspective=published",
+			qroq: `*[_type == "continent"] | order(title) {
                     title,
                     platesNumber,
                     image,
                     countriesQuantity,
                     description,
                     icons,
-                    countries[0..-1]->{
+                    countries[0..-1]-> {
                         description,
                         title,
                         platesNumber,
                         image,
                         flag,
-                        plates[0..-1]->
-                    }
-                }`,
+                        plates[0..-1]->,
+                            continent-> {
+                                title
+                            }
+                        }
+                    }`,
+		},
 	},
 };
