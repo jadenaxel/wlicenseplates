@@ -57,6 +57,7 @@ const AppLayout: FC = (): JSX.Element => {
 					title: "Search",
 					tabBarIcon: ({ color, size }) => <Icons.SearchIcon color={color} size={size} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Search</Text>,
+					unmountOnBlur: true,
 				}}
 			/>
 			<Tabs.Screen
