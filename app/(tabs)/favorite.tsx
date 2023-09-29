@@ -1,8 +1,9 @@
 import type { FC } from "react";
 
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Link } from "expo-router";
 
 import { Color } from "../../config";
 import { FavoriteCard } from "../../components";
@@ -42,8 +43,6 @@ const Favorite: FC = (): JSX.Element => {
 		GetCountry();
 	}, [loading]);
 
-    console.log("as")
-
 	useEffect(() => {
 		if (data.length > 0) setLoading(false);
 	}, [data]);
@@ -54,7 +53,13 @@ const Favorite: FC = (): JSX.Element => {
 				<Text style={styles.title}>Favorite</Text>
 				{!loading &&
 					data.map((item: ICountries, i: number) => {
-						return <FavoriteCard key={i} {...item} RemoveHeart={RemoveHeart} item={item} />;
+						return (
+							<Link key={i} href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item), } }} asChild>
+								<Pressable>
+									<FavoriteCard {...item} RemoveHeart={RemoveHeart} item={item} />
+								</Pressable>
+							</Link>
+						);
 					})}
 			</ScrollView>
 		</View>

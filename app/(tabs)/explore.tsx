@@ -16,7 +16,7 @@ const Home: FC = (): JSX.Element => {
 	const [data, setData] = useState<ICard | any>();
 
 	const getData = async (): Promise<void> => {
-		const response: Response = await fetch(Query.query.Continent.query);
+		const response: Response = await fetch(Query.query.Home.Continent.query);
 		const json: any = await response.json();
 		setData(json.result);
 	};

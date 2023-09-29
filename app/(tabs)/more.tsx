@@ -1,13 +1,34 @@
 import type { FC } from "react";
 
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
+
 import { Color } from "../../config";
+import { Icons } from "../../components";
 
 const More: FC = (): JSX.Element => {
 	return (
 		<View style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Text style={styles.title}>More</Text>
+				<View style={styles.buyacoffee}>
+					<View style={styles.coffee}>
+						<Icons.Coffee size={40} />
+						<Text style={styles.coffeeText}>Buy me a coffee</Text>
+					</View>
+					<Pressable style={styles.goButton}>
+						<Text style={styles.goButtonText}>Go now</Text>
+					</Pressable>
+				</View>
+				<View style={styles.appC}>
+					{[1, 2, 3, 4, 5, 6, 7, 8].map((item: any, i: number) => {
+						return (
+							<View style={styles.app} key={i}>
+								<View style={styles.appView}></View>
+								<Text style={styles.appName}>App Name</Text>
+							</View>
+						);
+					})}
+				</View>
 			</ScrollView>
 		</View>
 	);
@@ -25,6 +46,57 @@ const styles = StyleSheet.create({
 		marginTop: 70,
 		marginBottom: 29,
 		fontFamily: "SF_PRO_BOLD",
+	},
+	buyacoffee: {
+		backgroundColor: "#FFFF64",
+		borderRadius: 14,
+		paddingHorizontal: 14,
+		paddingVertical: 28,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		marginBottom: 17,
+	},
+	coffee: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	coffeeText: {
+		fontSize: 17,
+		fontWeight: "bold",
+		width: 77,
+		marginLeft: 13,
+	},
+	goButton: {
+		paddingHorizontal: 35,
+		paddingVertical: 11,
+		borderRadius: 14,
+		borderColor: "#000",
+		borderWidth: 2,
+	},
+	goButtonText: {
+		fontSize: 15,
+		fontWeight: "700",
+	},
+	appC: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		gap: 10,
+	},
+	app: {
+		flexDirection: "column",
+		alignItems: "center",
+	},
+	appView: {
+		width: 80.696,
+		height: 80.696,
+		borderRadius: 15,
+		backgroundColor: "#D9D9D9",
+        marginBottom: 10
+	},
+	appName: {
+		fontSize: 12,
+		color: "#FFF",
 	},
 });
 

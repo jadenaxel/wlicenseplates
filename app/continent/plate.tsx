@@ -17,9 +17,9 @@ const Plate: FC = (): JSX.Element => {
 	const { data, country }: any = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
 	let newData: IPlates | any = JSON.parse(data);
-	const countryP = JSON.parse(country);
+	const countryP = country ? JSON.parse(country) : null;
 	const { bg, year, image, description, eligibility, plateType, note, title } = newData;
-	newData = { ...newData, countryP };
+	newData = country ? { ...newData, countryP } : newData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -81,13 +81,15 @@ const Plate: FC = (): JSX.Element => {
 				<Pressable style={styles.close} onPress={() => router.back()}>
 					<Icons.X size={24} />
 				</Pressable>
-				<View>
-					<Text style={styles.continentTextYear}>{year}</Text>
-					<Text style={styles.continentTextTitle}>Year</Text>
+				<View style={styles.continent}>
+					<View>
+						<Text style={styles.continentTextYear}>{year}</Text>
+						<Text style={styles.continentTextTitle}>Year</Text>
+					</View>
+					<Pressable style={styles.subheaderIcon} onPress={handleHeart}>
+						<Icons.Favorite size={20} color={heart ? Color.red : "transparent"} stroke={heart ? Color.red : "white"} />
+					</Pressable>
 				</View>
-				<Pressable style={styles.subheaderIcon} onPress={handleHeart}>
-					<Icons.Favorite size={20} color={heart ? Color.red : "transparent"} stroke={heart ? Color.red : "white"} />
-				</Pressable>
 			</ImageBackground>
 			<View style={styles.content}>
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -137,6 +139,11 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		paddingHorizontal: 16,
+	},
+	continent: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
 	},
 	continentTextYear: { color: Color.white, fontFamily: "SF_PRO_MEDIUM", fontSize: 24 },
 	continentTextTitle: {
