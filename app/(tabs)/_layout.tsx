@@ -7,20 +7,12 @@ import type { FC } from "react";
 
 import { Text } from "react-native";
 import { Tabs } from "expo-router/tabs";
-import { useFonts } from "expo-font";
 
 // Others imports
 import { Icons } from "../../components";
 import { Color } from "../../config";
 
 const AppLayout: FC = (): JSX.Element => {
-	const [loaded] = useFonts({
-		SF_PRO_BOLD: require("../../assets/fonts/SF_PRO_D_BOLD/SF_PRO_D_BOLD.otf"),
-		SF_PRO_MEDIUM: require("../../assets/fonts/SF_PRO_D_BOLD/SF_PRO_D_MEDIUM.otf"),
-		SF_PRO_REGULAR: require("../../assets/fonts/SF_PRO_D_BOLD/SF_PRO_D_REGULAR.otf"),
-	});
-
-	if (!loaded) return <></>;
 	return (
 		<Tabs
 			screenOptions={{

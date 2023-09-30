@@ -3,12 +3,12 @@ import type { FC } from "react";
 
 // Imports for Expo and Reac Native libraries
 import { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
+import { StyleSheet, View, ScrollView, Text, Pressable, SafeAreaView } from "react-native";
 import { Link } from "expo-router";
 
 // Others imports
 import { Color } from "../../config";
-import { Card, Loading } from "../../components";
+import { Card, Loading, Title } from "../../components";
 import { ICard } from "../../types";
 import Query from "../../query";
 
@@ -28,35 +28,37 @@ const Home: FC = (): JSX.Element => {
 	if (data === undefined) return <Loading />;
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.body}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.title}>Explore</Text>
-				{data.map((item: ICard | any, i: number) => {
-					return (
-						<Link key={i} href={{ pathname: "/continent", params: { data: JSON.stringify(item) } }} asChild>
-							<Pressable>
-								<Card {...item} />
-							</Pressable>
-						</Link>
-					);
-				})}
+				<View style={styles.container}>
+					<Title text="Explore" />
+					<View style={ styles.group}>
+						{data.map((item: ICard | any, i: number) => {
+							return (
+								<Link key={i} href={{ pathname: "/continent", params: { data: JSON.stringify(item) } }} asChild>
+									<Pressable>
+										<Card {...item} />
+									</Pressable>
+								</Link>
+							);
+						})}
+					</View>
+				</View>
 			</ScrollView>
-		</View>
+		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
+	body: {
 		flex: 1,
-		paddingHorizontal: 16,
 		backgroundColor: Color.black,
 	},
-	title: {
-		color: Color.white,
-		fontSize: 28,
-		marginTop: 70,
-		marginBottom: 29,
-		fontFamily: "SF_PRO_BOLD",
+	container: {
+		paddingHorizontal: 16,
+	},
+	group: {
+		marginVertical: 15,
 	},
 });
 
