@@ -7,19 +7,20 @@ import Icons from "./Icons";
 import { WindowWidth, Color } from "../config";
 
 const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICard): JSX.Element => {
-
 	return (
 		<ImageBackground source={{ uri: image }} style={styles.card} blurRadius={17}>
 			<View style={styles.overlay}>
-				<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
-					<Icons.AfricaIcon type={title} />
-				</ImageBackground>
+				<View style={{ flexDirection: "row" }}>
+					<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
+						<Icons.AfricaIcon type={title} />
+					</ImageBackground>
 
-				<View style={styles.data}>
-					<Text style={styles.dataTitle}>{title}</Text>
-					<View style={styles.dataDetails}>
-						<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{platesNumber} - License Plates</Text>
-						<Text style={styles.dataDetailsItem}>{countriesQuantity} Countries</Text>
+					<View style={styles.data}>
+						<Text style={styles.dataTitle}>{title}</Text>
+						<View style={styles.dataDetails}>
+							<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{platesNumber} - License Plates</Text>
+							<Text style={styles.dataDetailsItem}>{countriesQuantity} Countries</Text>
+						</View>
 					</View>
 				</View>
 				<View style={styles.arrowAccess}>
@@ -37,10 +38,10 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 	},
 	overlay: {
-		backgroundColor: 'rgba(70,63,65,0.35)',
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
+		backgroundColor: "rgba(70,63,65,0.35)",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
 		padding: 10,
 	},
 	portrait: {
@@ -56,13 +57,13 @@ const styles = StyleSheet.create({
 	dataTitle: {
 		color: Color.white,
 		fontSize: 21,
-		fontWeight: '800'
+		fontWeight: "800",
 	},
 	dataDetails: {
-		borderTopColor: 'rgba(255,255,255,.10)',
+		borderTopColor: "rgba(255,255,255,.10)",
 		marginTop: 10,
 		paddingTop: 10,
-		borderStyle: 'solid',
+		borderStyle: "solid",
 		borderTopWidth: 1,
 		flexDirection: "row",
 	},
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontWeight: "300",
 		fontSize: 12,
-		marginBottom: 5
+		marginBottom: 5,
 	},
 	arrowAccess: {
 		marginLeft: 20,

@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 import { Text, StyleSheet } from "react-native";
 
-import { Color } from "../config";
+import { Color, WindowWidth } from "../config";
 
 const Title: FC<any> = (props: any): JSX.Element => {
 	const { text }: { text: string } = props;
@@ -13,7 +13,7 @@ const Title: FC<any> = (props: any): JSX.Element => {
 const styles = StyleSheet.create({
 	text: {
 		color: Color.white,
-		fontSize: 28,
+		fontSize: WindowWidth / 12,
 		marginVertical: 7,
 		fontWeight: "700",
 	},
