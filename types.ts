@@ -3,7 +3,6 @@ export interface IColor {
 }
 export interface ICard {
 	image: string;
-	icons: string;
 	title: string;
 	platesNumber: number;
 	countriesQuantity: number;

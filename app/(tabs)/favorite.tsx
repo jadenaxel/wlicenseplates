@@ -76,8 +76,7 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: 28,
 		marginTop: 70,
-		marginBottom: 29,
-		fontFamily: "SF_PRO_BOLD",
+		marginBottom: 29
 	},
 });
 

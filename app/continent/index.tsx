@@ -15,7 +15,7 @@ const Continent: FC = () => {
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
 	const newData: ICard = JSON.parse(data);
 
-	const { title, description, countriesQuantity, countries, icons, image, platesNumber } = newData;
+	const { title, description, countriesQuantity, countries, image, platesNumber } = newData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -33,7 +33,7 @@ const Continent: FC = () => {
 					<Icons.ArrowLongLeft size={24} color={Color.white} />
 				</Pressable>
 				<View style={styles.continent}>
-					<Image style={styles.contientIcon} source={{ uri: icons }} />
+					{/* <Image style={styles.contientIcon} source={{ uri: icons }} /> */}
 					<Text style={styles.continentText}>{title}</Text>
 				</View>
 			</ImageBackground>
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoDescription: {
 		color: Color.white,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 15,
 	},
 	subheaderInfoPlates: {
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoText: {
 		color: Color.white,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 15,
 	},
 	continent: {

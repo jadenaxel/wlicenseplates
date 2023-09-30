@@ -43,10 +43,8 @@ const styles = StyleSheet.create({
 	flagsContinaerText: {
 		color: Color.white,
 		fontSize: 14,
-		fontFamily: "SF_PRO_REGULAR",
 	},
 	platesNumber: {
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 14,
 		color: Color.white,
 	},

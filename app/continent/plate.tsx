@@ -145,10 +145,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
-	continentTextYear: { color: Color.white, fontFamily: "SF_PRO_MEDIUM", fontSize: 24 },
+	continentTextYear: { color: Color.white, fontSize: 24 },
 	continentTextTitle: {
 		color: Color.white,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 18,
 	},
 	contientIcon: {
@@ -190,7 +189,6 @@ const styles = StyleSheet.create({
 	descriptionText: {
 		color: Color.white,
 		lineHeight: 20,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 16,
 	},
 	detail: {
@@ -209,13 +207,11 @@ const styles = StyleSheet.create({
 	detailETitle: {
 		color: Color.white,
 		fontSize: 16,
-		fontFamily: "SF_PRO_BOLD",
 		marginBottom: 10,
 	},
 	detailEText: {
 		color: Color.white,
 		fontSize: 14,
-		fontFamily: "SF_PRO_REGULAR",
 	},
 	detailT: {
 		backgroundColor: "#171717",
@@ -227,23 +223,19 @@ const styles = StyleSheet.create({
 	detailTTitle: {
 		color: Color.white,
 		fontSize: 16,
-		fontFamily: "SF_PRO_BOLD",
 		marginBottom: 10,
 	},
 	detailTText: {
 		color: Color.white,
 		fontSize: 14,
-		fontFamily: "SF_PRO_REGULAR",
 	},
 	noteTitle: {
 		color: Color.white,
 		fontSize: 16,
-		fontFamily: "SF_PRO_BOLD",
 		marginBottom: 10,
 	},
 	noteText: {
 		color: Color.white,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 14,
 	},
 });

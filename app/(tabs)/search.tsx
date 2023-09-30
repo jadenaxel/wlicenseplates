@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 		marginTop: 70,
 		marginBottom: 29,
-		fontFamily: "SF_PRO_BOLD",
 	},
 	bar: {
 		flexDirection: "row",

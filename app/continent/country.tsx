@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoDescription: {
 		color: Color.white,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 15,
 	},
 	subheaderInfoPlates: {
@@ -123,7 +122,6 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoText: {
 		color: Color.white,
-		fontFamily: "SF_PRO_REGULAR",
 		fontSize: 15,
 	},
 	plates: {
