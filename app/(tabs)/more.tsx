@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		gap: 10,
+        justifyContent: "space-between",
 	},
 	app: {
 		flexDirection: "column",
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
 		height: 80.696,
 		borderRadius: 15,
 		backgroundColor: "#D9D9D9",
-        marginBottom: 10
+		marginBottom: 10,
 	},
 	appName: {
 		fontSize: 12,
