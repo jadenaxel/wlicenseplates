@@ -22,11 +22,11 @@ const Search: FC = (): JSX.Element => {
 					<View style={styles.searchBar}>
 						<Icons.SearchIcon size={20} color={"white"} />
 						<TextInput style={styles.searchInput} autoFocus autoCorrect onChangeText={handleSearch} defaultValue={search} />
-						<Pressable onPress={() => setSearch("")}>
+						<Pressable onPress={(): void => setSearch("")}>
 							<Icons.X size={20} />
 						</Pressable>
 					</View>
-					<Pressable onPress={() => setSearch("")}>
+					<Pressable onPress={(): void => setSearch("")}>
 						<Text style={styles.cancelButton}>Cancel</Text>
 					</Pressable>
 				</View>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	searchBar: {
-		width: 296,
+		width: WindowWidth - 100,
 		height: 36,
 		borderRadius: 12,
 		backgroundColor: "#292929",

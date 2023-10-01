@@ -6,8 +6,10 @@ import { ICountries } from "../types";
 import Icons from "./Icons";
 import { Color } from "../config";
 
+type TProps = ICountries | any;
+
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
-	const { image, title, countryP, RemoveHeart } = props;
+	const { image, title, countryP, RemoveHeart }: TProps = props;
 
 	return (
 		<View style={styles.container}>
@@ -22,7 +24,7 @@ const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Elemen
 					</View>
 				</View>
 			</View>
-			<Pressable onPress={() => RemoveHeart(props.item)}>
+			<Pressable onPress={(): any => RemoveHeart(props.item)}>
 				<Icons.X size={24} />
 			</Pressable>
 		</View>

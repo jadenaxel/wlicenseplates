@@ -9,15 +9,16 @@ import { Color } from "../../config";
 import { FavoriteCard } from "../../components";
 import { ICountries } from "../../types";
 
+type ParseCountry = ICountries[] | null;
+
 const Favorite: FC = (): JSX.Element => {
 	const [data, setData] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const GetCountry = async () => {
+	const GetCountry = async (): Promise<void> => {
 		try {
 			const data: any = await AsyncStorage.getItem("country");
-			const parsing = JSON.parse(data);
-
+			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) return;
 			setData(parsing);
 		} catch (e: any) {
@@ -25,13 +26,13 @@ const Favorite: FC = (): JSX.Element => {
 		}
 	};
 
-	const RemoveHeart = async (item: ICountries) => {
+	const RemoveHeart = async (item: ICountries): Promise<void> => {
 		try {
 			setLoading(true);
 			const data: any = await AsyncStorage.getItem("country");
-			const parsing = JSON.parse(data);
+			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) return;
-			const deleteItem = parsing.filter((items: any) => items.title !== item.title);
+			const deleteItem: ICountries[] = parsing.filter((items: ICountries) => items.title !== item.title);
 			await AsyncStorage.setItem("country", JSON.stringify(deleteItem));
 			setLoading(false);
 		} catch (e: any) {
@@ -39,11 +40,11 @@ const Favorite: FC = (): JSX.Element => {
 		}
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		GetCountry();
 	}, [loading]);
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (data.length > 0) setLoading(false);
 	}, [data]);
 
@@ -54,7 +55,7 @@ const Favorite: FC = (): JSX.Element => {
 				{!loading &&
 					data.map((item: ICountries, i: number) => {
 						return (
-							<Link key={i} href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item), } }} asChild>
+							<Link key={i} href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item) } }} asChild>
 								<Pressable>
 									<FavoriteCard {...item} RemoveHeart={RemoveHeart} item={item} />
 								</Pressable>
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: 28,
 		marginTop: 70,
-		marginBottom: 29
+		marginBottom: 29,
 	},
 });
 

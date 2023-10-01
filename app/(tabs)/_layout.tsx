@@ -20,6 +20,7 @@ const AppLayout: FC = (): JSX.Element => {
 				tabBarHideOnKeyboard: true,
 				tabBarActiveTintColor: Color.white,
 				tabBarLabelStyle: { fontSize: 12 },
+                tabBarItemStyle: { flexDirection: "column"}
 			}}
 		>
 			<Tabs.Screen

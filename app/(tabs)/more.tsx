@@ -20,7 +20,7 @@ const More: FC = (): JSX.Element => {
 					</Pressable>
 				</View>
 				<View style={styles.appC}>
-					{[1, 2, 3, 4, 5, 6, 7, 8].map((item: any, i: number) => {
+					{[1, 2, 3, 4, 5, 6, 7, 8].map((item: number, i: number) => {
 						return (
 							<View style={styles.app} key={i}>
 								<View style={styles.appView}></View>

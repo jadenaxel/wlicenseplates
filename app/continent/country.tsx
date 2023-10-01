@@ -10,15 +10,17 @@ import { Color, WindowWidth } from "../../config";
 import { Filter, Icons, Plates } from "../../components";
 import { ICountries, IPlates } from "../../types";
 
-const filters = ["All", "Private/Passenger", "United Nations", "Media", "Notes"];
+type LocalParams = string | any;
+
+const filters: string[] = ["All", "Private/Passenger", "United Nations", "Media", "Notes"];
 
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>("All");
 
-	const { data }: any = useLocalSearchParams();
+	const { data }: LocalParams = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
 	const newData: ICountries = JSON.parse(data);
-	const { description, flag, image, platesNumber, title, plates } = newData;
+	const { description, flag, image, platesNumber, title, plates }: ICountries = newData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -32,7 +34,7 @@ const Country: FC = (): JSX.Element => {
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={containerStyle}>
 			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
-				<Pressable onPress={() => router.back()}>
+				<Pressable onPress={(): void => router.back()}>
 					<Icons.ArrowLongLeft size={24} color={Color.white} />
 				</Pressable>
 				<View style={styles.continent}>
@@ -48,7 +50,7 @@ const Country: FC = (): JSX.Element => {
 			</View>
 			<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 				{filters &&
-					filters.map((item: any, i: number) => {
+					filters.map((item: string, i: number) => {
 						return (
 							<Pressable key={i} onPress={() => setFilterSelected(item)}>
 								<Filter title={item} isSelected={filterSelected} />

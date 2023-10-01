@@ -9,16 +9,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Color, WindowWidth } from "../../config";
 import { Icons } from "../../components";
-import { IPlates } from "../../types";
+import { ICountries, IPlates } from "../../types";
+
+type TPlates = IPlates | any;
+type LocalParams = string | any;
+type TCountry = string | null;
+type ParseCountry = ICountries[] | null;
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
 
-	const { data, country }: any = useLocalSearchParams();
+	const { data, country }: LocalParams = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
-	let newData: IPlates | any = JSON.parse(data);
-	const countryP = country ? JSON.parse(country) : null;
-	const { bg, year, image, description, eligibility, plateType, note, title } = newData;
+	let newData: TPlates = JSON.parse(data);
+	const countryP: TCountry = country ? JSON.parse(country) : null;
+	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = newData;
 	newData = country ? { ...newData, countryP } : newData;
 
 	const containerStyle: any = {
@@ -33,7 +38,7 @@ const Plate: FC = (): JSX.Element => {
 	const SaveCountry = async () => {
 		try {
 			const data: any = await AsyncStorage.getItem("country");
-			const parsing = JSON.parse(data);
+			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) await AsyncStorage.setItem("country", JSON.stringify([newData]));
 			else await AsyncStorage.setItem("country", JSON.stringify([...parsing, newData]));
 		} catch (e: any) {
@@ -44,34 +49,34 @@ const Plate: FC = (): JSX.Element => {
 	const GetCountry = async () => {
 		try {
 			const data: any = await AsyncStorage.getItem("country");
-			const parsing = JSON.parse(data);
+			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) return;
-			const getTitle = parsing.filter((item: any) => item.title === title);
+			const getTitle: ICountries[] = parsing.filter((item: ICountries) => item.title === title);
 			setHeart(getTitle.length > 0 ? true : false);
 		} catch (e: any) {
 			console.log(e.message);
 		}
 	};
 
-	const RemoveHeart = async () => {
+	const RemoveHeart = async (): Promise<void> => {
 		try {
 			const data: any = await AsyncStorage.getItem("country");
-			const parsing = JSON.parse(data);
+			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) return;
-			const deleteItem = parsing.filter((item: any) => item.title !== title);
+			const deleteItem: ICountries[] = parsing.filter((item: ICountries) => item.title !== title);
 			await AsyncStorage.setItem("country", JSON.stringify(deleteItem));
 		} catch (e: any) {
 			console.log(e.message);
 		}
 	};
 
-	const handleHeart = () => {
+	const handleHeart = (): void => {
 		if (heart === true) RemoveHeart();
 		if (heart === false) SaveCountry();
-		setHeart((prev): boolean => !prev);
+		setHeart((prev: boolean): boolean => !prev);
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		GetCountry();
 	}, []);
 

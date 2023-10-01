@@ -1,16 +1,16 @@
-export interface IColor {
+export type IColor = {
 	[key: string]: string;
-}
-export interface ICard {
+};
+export type ICard = {
 	image: string;
 	title: string;
 	platesNumber: number;
 	countriesQuantity: number;
 	description: string;
 	countries: [ICountries];
-}
+};
 
-export interface ICountries {
+export type ICountries = {
 	image: string;
 	title: string;
 	flag: string;
@@ -18,9 +18,9 @@ export interface ICountries {
 	platesNumber: number;
 	continent: [ICard];
 	plates: [IPlates];
-}
+};
 
-export interface IPlates {
+export type IPlates = {
 	title: string;
 	bg: string;
 	year: number;
@@ -30,4 +30,4 @@ export interface IPlates {
 	eligibility: string;
 	plateType: string;
 	categories: any;
-}
+};

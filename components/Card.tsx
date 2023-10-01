@@ -4,7 +4,7 @@ import type { ICard } from "../types";
 import { View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 
 import Icons from "./Icons";
-import { WindowWidth, Color } from "../config";
+import { Color } from "../config";
 
 const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICard): JSX.Element => {
 	return (

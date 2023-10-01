@@ -3,7 +3,7 @@ import type { FC } from "react";
 
 // Imports for Expo and Reac Native libraries
 import { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Text, Pressable, SafeAreaView } from "react-native";
+import { StyleSheet, View, ScrollView, Pressable, SafeAreaView } from "react-native";
 import { Link } from "expo-router";
 
 // Others imports
@@ -21,7 +21,7 @@ const Home: FC = (): JSX.Element => {
 		setData(json.result);
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		getData();
 	}, []);
 

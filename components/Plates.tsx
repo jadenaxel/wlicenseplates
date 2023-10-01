@@ -6,7 +6,7 @@ import { IPlates } from "../types";
 import { Color, WindowWidth } from "../config";
 
 const Plates: FC<IPlates> = (props: IPlates): JSX.Element => {
-	const { image, title } = props;
+	const { image, title }: IPlates  = props;
 
 	return (
 		<View>

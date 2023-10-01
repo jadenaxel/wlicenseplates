@@ -10,12 +10,14 @@ import { ICard, ICountries } from "../../types";
 import { Color, WindowWidth } from "../../config";
 import { Icons, ContinentList } from "../../components";
 
+type LocalParams = string | any;
+
 const Continent: FC = () => {
-	const { data }: any = useLocalSearchParams();
+	const { data }: LocalParams = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
 	const newData: ICard = JSON.parse(data);
 
-	const { title, description, countriesQuantity, countries, image, platesNumber } = newData;
+	const { title, description, countriesQuantity, countries, image, platesNumber }: ICard = newData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -29,7 +31,7 @@ const Continent: FC = () => {
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={containerStyle}>
 			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
-				<Pressable onPress={() => router.back()}>
+				<Pressable onPress={(): void => router.back()}>
 					<Icons.ArrowLongLeft size={24} color={Color.white} />
 				</Pressable>
 				<View style={styles.continent}>
@@ -50,7 +52,7 @@ const Continent: FC = () => {
 				</View>
 			</View>
 			{countries &&
-				countries.map((item: ICountries, i: number) => {
+				countries.map((item: ICountries, i: number): JSX.Element => {
 					return (
 						<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
 							<Pressable>
