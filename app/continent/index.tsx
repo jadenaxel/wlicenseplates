@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { useContext, type FC } from "react";
 import type { EdgeInsets } from "react-native-safe-area-context";
 
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Pressable } from "react-native";
@@ -9,15 +9,14 @@ import { router, useLocalSearchParams, Link } from "expo-router";
 import { ICard, ICountries } from "../../types";
 import { Color, WindowWidth } from "../../config";
 import { Icons, ContinentList } from "../../components";
+import { Actions, Context } from "../../Wrapper";
 
 type LocalParams = string | any;
 
 const Continent: FC = () => {
-	const { data }: LocalParams = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
-	const newData: ICard = JSON.parse(data);
-
-	const { title, description, countriesQuantity, countries, image, platesNumber }: ICard = newData;
+	const { state, dispatch }: any = useContext(Context);
+	const { title, description, countriesQuantity, countries, image, platesNumber }: ICard = state.ContinentData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -55,7 +54,7 @@ const Continent: FC = () => {
 				countries.map((item: ICountries, i: number): JSX.Element => {
 					return (
 						<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
-							<Pressable>
+							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: item })}>
 								<ContinentList {...item} />
 							</Pressable>
 						</Link>

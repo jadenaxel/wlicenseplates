@@ -2,25 +2,22 @@ import type { FC } from "react";
 import type { EdgeInsets } from "react-native-safe-area-context";
 
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link, router, useLocalSearchParams } from "expo-router";
 
 import { Color, WindowWidth } from "../../config";
 import { Filter, Icons, Plates } from "../../components";
 import { ICountries, IPlates } from "../../types";
-
-type LocalParams = string | any;
+import { Actions, Context } from "../../Wrapper";
 
 const filters: string[] = ["All", "Private/Passenger", "United Nations", "Media", "Notes"];
 
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>("All");
-
-	const { data }: LocalParams = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
-	const newData: ICountries = JSON.parse(data);
-	const { description, flag, image, platesNumber, title, plates }: ICountries = newData;
+	const { state, dispatch }: any = useContext(Context);
+	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -62,12 +59,8 @@ const Country: FC = (): JSX.Element => {
 				{plates &&
 					plates.map((item: IPlates, i: number) => {
 						return (
-							<Link
-								key={i}
-								href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item), country: JSON.stringify(title) } }}
-								asChild
-							>
-								<Pressable>
+							<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
+								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: title } })}>
 									<Plates {...item} />
 								</Pressable>
 							</Link>

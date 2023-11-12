@@ -2,10 +2,9 @@
 import Icons from "./Icons";
 import Card from "./Card";
 import ContinentList from "./ContinentList";
-import Loading from "./Loading";
 import Filter from "./Filter";
 import Plates from "./Plates";
 import FavoriteCard from "./FavoriteCard";
 import Title from "./Title";
 
-export { Icons, Card, ContinentList, Loading, Filter, Plates, FavoriteCard, Title };
+export { Icons, Card, ContinentList, Filter, Plates, FavoriteCard, Title };

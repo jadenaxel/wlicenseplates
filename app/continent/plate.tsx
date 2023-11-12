@@ -1,30 +1,25 @@
 import type { FC } from "react";
 import type { EdgeInsets } from "react-native-safe-area-context";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Color, WindowWidth } from "../../config";
 import { Icons } from "../../components";
 import { ICountries, IPlates } from "../../types";
+import { Context } from "../../Wrapper";
 
 type TPlates = IPlates | any;
-type LocalParams = string | any;
-type TCountry = string | null;
 type ParseCountry = ICountries[] | null;
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
-
-	const { data, country }: LocalParams = useLocalSearchParams();
 	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
-	let newData: TPlates = JSON.parse(data);
-	const countryP: TCountry = country ? JSON.parse(country) : null;
-	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = newData;
-	newData = country ? { ...newData, countryP } : newData;
+	const { state }: any = useContext(Context);
+	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = state.PlatesData;
 
 	const containerStyle: any = {
 		flex: 1,
@@ -39,8 +34,8 @@ const Plate: FC = (): JSX.Element => {
 		try {
 			const data: any = await AsyncStorage.getItem("country");
 			const parsing: ParseCountry = JSON.parse(data);
-			if (parsing === null) await AsyncStorage.setItem("country", JSON.stringify([newData]));
-			else await AsyncStorage.setItem("country", JSON.stringify([...parsing, newData]));
+			if (parsing === null) await AsyncStorage.setItem("country", JSON.stringify([state.PlatesData]));
+			else await AsyncStorage.setItem("country", JSON.stringify([...parsing, state.PlatesData]));
 		} catch (e: any) {
 			console.log(e.message);
 		}
