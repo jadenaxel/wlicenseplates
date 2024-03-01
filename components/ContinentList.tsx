@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import { ICountries } from "../types";
-import { Color } from "../config";
+import { Color, paddingHorizontal } from "../config";
 
 const ContinentList: FC<ICountries> = (props: ICountries): JSX.Element => {
 	const { platesNumber, title, flag }: ICountries = props;
@@ -24,7 +24,7 @@ const ContinentList: FC<ICountries> = (props: ICountries): JSX.Element => {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingHorizontal: 16,
+		paddingHorizontal,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",

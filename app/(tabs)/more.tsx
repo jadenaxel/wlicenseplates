@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
 
-import { Color } from "../../config";
+import { Color, paddingHorizontal } from "../../config";
 import { Icons } from "../../components";
 
 const More: FC = (): JSX.Element => {
@@ -37,7 +37,7 @@ const More: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal: 16,
+		paddingHorizontal,
 		backgroundColor: Color.black,
 	},
 	title: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		gap: 10,
-        justifyContent: "space-between",
+		justifyContent: "space-between",
 	},
 	app: {
 		flexDirection: "column",

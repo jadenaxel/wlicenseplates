@@ -1,10 +1,9 @@
 import type { FC } from "react";
-import type { EdgeInsets } from "react-native-safe-area-context";
 
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
 import { useContext, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link, router } from "expo-router";
 
 import { Color, WindowWidth } from "../../config";
 import { Filter, Icons, Plates } from "../../components";
@@ -15,23 +14,13 @@ const filters: string[] = ["All", "Private/Passenger", "United Nations", "Media"
 
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>("All");
-	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
 	const { state, dispatch }: any = useContext(Context);
 	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData;
 
-	const containerStyle: any = {
-		flex: 1,
-		backgroundColor: Color.black,
-		paddingTop: safeAreaInsets.top,
-		paddingBottom: safeAreaInsets.bottom,
-		paddingLeft: safeAreaInsets.left,
-		paddingRight: safeAreaInsets.right,
-	};
-
 	return (
-		<ScrollView showsVerticalScrollIndicator={false} style={containerStyle}>
+		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
 			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
-				<Pressable onPress={(): void => router.back()}>
+				<Pressable onPress={(): void => router.back()} style={styles.back}>
 					<Icons.ArrowLongLeft size={24} color={Color.white} />
 				</Pressable>
 				<View style={styles.continent}>
@@ -55,6 +44,7 @@ const Country: FC = (): JSX.Element => {
 						);
 					})}
 			</ScrollView>
+
 			<View style={styles.plates}>
 				{plates &&
 					plates.map((item: IPlates, i: number) => {
@@ -72,8 +62,15 @@ const Country: FC = (): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
+	main: {
+		flex: 1,
+		backgroundColor: Color.black,
+	},
+	back: {
+		marginTop: 30,
+	},
 	header: {
-		height: 217,
+		height: 317,
 		width: WindowWidth,
 		paddingHorizontal: 17,
 		paddingTop: 25,

@@ -6,5 +6,6 @@ import Filter from "./Filter";
 import Plates from "./Plates";
 import FavoriteCard from "./FavoriteCard";
 import Title from "./Title";
+import Loading from "./Loading";
 
-export { Icons, Card, ContinentList, Filter, Plates, FavoriteCard, Title };
+export { Icons, Card, ContinentList, Filter, Plates, FavoriteCard, Title, Loading };

@@ -1,16 +1,16 @@
 import type { FC } from "react";
 import type { ICard } from "../types";
 
-import { View, Text, ImageBackground, Image, StyleSheet } from "react-native";
+import { View, Text, ImageBackground, StyleSheet } from "react-native";
 
 import Icons from "./Icons";
-import { Color } from "../config";
+import { Color, WindowHeight, WindowWidth } from "../config";
 
 const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICard): JSX.Element => {
 	return (
 		<ImageBackground source={{ uri: image }} style={styles.card} blurRadius={17}>
 			<View style={styles.overlay}>
-				<View style={{ flexDirection: "row" }}>
+				<View style={{ flexDirection: "row", alignItems: "center" }}>
 					<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
 						<Icons.AfricaIcon type={title} />
 					</ImageBackground>
@@ -45,32 +45,36 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	portrait: {
-		width: 80,
-		height: 80,
+		width: WindowWidth / 5,
+		height: WindowHeight / 10,
 		alignItems: "center",
 		justifyContent: "center",
 	},
 	data: {
 		alignSelf: "flex-end",
 		marginLeft: 10,
+		width: WindowWidth / 2,
 	},
 	dataTitle: {
 		color: Color.white,
-		fontSize: 21,
+		fontSize: WindowWidth / 21,
 		fontWeight: "800",
 	},
 	dataDetails: {
+		width: WindowWidth / 2,
+		justifyContent: "space-between",
+		flexDirection: "row",
 		borderTopColor: "rgba(255,255,255,.10)",
 		marginTop: 10,
 		paddingTop: 10,
 		borderStyle: "solid",
 		borderTopWidth: 1,
-		flexDirection: "row",
+		flexWrap: "wrap",
 	},
 	dataDetailsItem: {
 		color: "white",
 		fontWeight: "300",
-		fontSize: 12,
+		fontSize: WindowWidth / 33,
 		marginBottom: 5,
 	},
 	arrowAccess: {

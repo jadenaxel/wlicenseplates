@@ -2,33 +2,52 @@
 import type { FC } from "react";
 
 // Imports for Expo and Reac Native libraries
-import { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Pressable, SafeAreaView } from "react-native";
-import { Link } from "expo-router";
+// import { useContext, useEffect, useState } from "react";
+import {
+	StyleSheet,
+	View,
+	ScrollView,
+	// Pressable
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+// import { Link } from "expo-router";
 
 // Others imports
-import { Color } from "../../config";
-import { Card, Title } from "../../components";
-import { ICard } from "../../types";
-import Query from "../../query";
-import { Actions, Context } from "../../Wrapper";
+import { Color, paddingHorizontal } from "../../config";
+import {
+	// Card, Loading,
+
+	Title,
+} from "../../components";
+// import { ICard } from "../../types";
+// import Query from "../../query";
+// import { Actions, Context } from "../../Wrapper";
+
+// const controller: AbortController = new AbortController();
 
 const Home: FC = (): JSX.Element => {
-	const [data, setData] = useState<ICard | any>();
+	// const [data, setData] = useState<ICard | any>();
 
-	const { dispatch }: any = useContext(Context);
+	// const { dispatch }: any = useContext(Context);
 
-	const getData = async (): Promise<void> => {
-		const response: Response = await fetch(Query.query.Home.Continent.query);
-		const json: any = await response.json();
-		setData(json.result);
-		dispatch({ type: Actions.All, payload: json.result });
-	};
-	useEffect((): void => {
-		getData();
-	}, []);
+	// const getData = async (): Promise<void> => {
+	// 	try {
+	// 		const response: Response = await fetch(Query.query.Home.Continent.query, { signal: controller.signal });
+	// 		if (!response.ok) throw new Error();
+	// 		const json: any = await response.json();
+	// 		setData(json.result);
+	// 		// dispatch({ type: Actions.All, payload: json.result });
+	// 	} catch (e: any) {
+	// 		console.log(`We've got a problem trying to react the server. Error message: ${e.message}`);
+	// 	}
+	// };
 
-	if (data === undefined) return <View />;
+	// useEffect(() => {
+	// 	getData();
+
+	// 	return () => controller.abort();
+	// }, []);
 
 	return (
 		<SafeAreaView style={styles.body}>
@@ -36,15 +55,21 @@ const Home: FC = (): JSX.Element => {
 				<View style={styles.container}>
 					<Title text="Explore" />
 					<View style={styles.group}>
-						{data.map((item: ICard | any, i: number) => {
-							return (
-								<Link key={i} href={{ pathname: "/continent" }} asChild>
-									<Pressable onPress={() => dispatch({ type: Actions.Continent, payload: item })}>
-										<Card {...item} />
-									</Pressable>
-								</Link>
-							);
-						})}
+						{/* {data === undefined ? (
+							<Loading />
+						) : ( */}
+						{/* data.map((item: ICard | any, i: number) => { */}
+						{/* return ( */}
+						{/* <Link key={i} href={{ pathname: "/continent" }} asChild> */}
+						{/* <Pressable */}
+						{/* // onPress={() => dispatch({ type: Actions.Continent, payload: item })} */}
+						{/* > */}
+						{/* <Card {...item} /> */}
+						{/* </Pressable> */}
+						{/* </Link> */}
+						{/* ); */}
+						{/* }) */}
+						{/* )} */}
 					</View>
 				</View>
 			</ScrollView>
@@ -58,7 +83,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Color.black,
 	},
 	container: {
-		paddingHorizontal: 16,
+		paddingHorizontal: paddingHorizontal,
 	},
 	group: {
 		marginVertical: 15,
