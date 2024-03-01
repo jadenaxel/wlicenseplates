@@ -82,9 +82,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: Color.black,
 	},
-	container: {
-		paddingHorizontal: paddingHorizontal,
-	},
+	container: { paddingHorizontal },
+
 	group: {
 		marginVertical: 15,
 	},

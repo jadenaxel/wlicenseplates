@@ -4,8 +4,12 @@ import { Text, StyleSheet } from "react-native";
 
 import { Color, WindowWidth } from "../config";
 
-const Title: FC<any> = (props: any): JSX.Element => {
-	const { text }: { text: string } = props;
+interface Props {
+	text: string;
+}
+
+const Title: FC<Props> = (props: Props): JSX.Element => {
+	const { text }: Props = props;
 
 	return <Text style={styles.text}>{text}</Text>;
 };
