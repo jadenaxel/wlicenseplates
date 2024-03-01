@@ -5,15 +5,15 @@ import { createContext, useReducer } from "react";
 const initialValue: any = {
 	Data: "",
 	ContinentData: "",
-	// CountryData: "",
-	// PlatesData: "",
+	CountryData: "",
+	PlatesData: "",
 };
 
 export const Actions = {
 	All: "All",
 	Continent: "Contient",
-	// Country: "Country",
-	// Plates: "Plates",
+	Country: "Country",
+	Plates: "Plates",
 };
 
 const reducer = (state: any, action: any): any => {
@@ -22,11 +22,11 @@ const reducer = (state: any, action: any): any => {
 			return { ...state, Data: action.payload };
 		case Actions.Continent:
 			return { ...state, ContinentData: action.payload };
-		// 	case Actions.Country:
-		// 		return { ...state, CountryData: action.payload };
-		// 	case Actions.Plates:
-		// 		const { item, country } = action.payload;
-		// 		return { ...state, PlatesData: { ...item, country } };
+		case Actions.Country:
+			return { ...state, CountryData: action.payload };
+		case Actions.Plates:
+			const { item, country } = action.payload;
+			return { ...state, PlatesData: { ...item, country } };
 		default:
 			return state;
 	}

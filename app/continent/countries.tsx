@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
 import { useContext, useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { Link, router } from "expo-router";
 
 import { Color, WindowWidth } from "../../config";
@@ -15,7 +15,7 @@ const filters: string[] = ["All", "Private/Passenger", "United Nations", "Media"
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>("All");
 	const { state, dispatch }: any = useContext(Context);
-	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData;
+	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData.item;
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
@@ -35,31 +35,33 @@ const Country: FC = (): JSX.Element => {
 				</View>
 			</View>
 			<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-				{filters &&
-					filters.map((item: string, i: number) => {
-						return (
-							<Pressable key={i} onPress={() => setFilterSelected(item)}>
-								<Filter title={item} isSelected={filterSelected} />
-							</Pressable>
-						);
-					})}
+				{filters
+					? filters.map((item: string, i: number) => {
+							return (
+								<Pressable key={i} onPress={() => setFilterSelected(item)}>
+									<Filter title={item} isSelected={filterSelected} />
+								</Pressable>
+							);
+					  })
+					: null}
 			</ScrollView>
 
 			<View style={styles.plates}>
-				{plates &&
+				{plates ? (
 					plates.map((item: IPlates, i: number) => {
 						return (
 							<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
-								<Pressable
-								// onPress={() =>
-								//     dispatch({ type: Actions.Plates, payload: { item, country: title } })
-								//     }
-								>
+								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: title } })}>
 									<Plates {...item} />
 								</Pressable>
 							</Link>
 						);
-					})}
+					})
+				) : (
+					<View>
+						<Text style={{ color: "white" }}>There's not plate</Text>
+					</View>
+				)}
 			</View>
 		</ScrollView>
 	);

@@ -1,11 +1,11 @@
 import type { FC } from "react";
 
 import { useContext } from "react";
-import { View, Text, StyleSheet, ImageBackground, ScrollView, Pressable, FlatList } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Pressable, FlatList } from "react-native";
 
 import { router, Link } from "expo-router";
 
-import { ICard, ICountries } from "../../types";
+import { ICard } from "../../types";
 import { Color, WindowWidth, paddingHorizontal, elements } from "../../config";
 import { ContinentList } from "../../components";
 import { Actions, Context } from "../../Wrapper";
@@ -15,13 +15,9 @@ import { SVGIcon } from "@/components/Card";
 import BackArrow from "@/assets/images/icons/arrow-left.svg";
 import Filter from "@/assets/images/icons/filter.svg";
 
-type LocalParams = string | any;
-
 const Continent: FC = () => {
 	const { state, dispatch }: any = useContext(Context);
 	const { title, description, countriesQuantity, countries, platesNumber, image }: ICard = state.ContinentData;
-	// const continentTitle = state?.ContinentData?.countries[0]?.continent?.title;
-	// console.log(state.ContinentData.countries);
 
 	return (
 		<View style={styles.main}>
@@ -50,23 +46,13 @@ const Continent: FC = () => {
 				data={countries}
 				renderItem={(item: any) => (
 					<Link href={{ pathname: "/continent/countries" }} asChild>
-						<Pressable>
+						<Pressable onPress={() => dispatch({ type: Actions.Country, payload: item })}>
 							<ContinentList {...item} />
 						</Pressable>
 					</Link>
 				)}
 				keyExtractor={(item: any) => item._id}
 			/>
-			{/* {countries &&
-				countries.map((item: ICountries, i: number): JSX.Element => {
-					return (
-						<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
-							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: item })}>
-								<ContinentList {...item} />
-							</Pressable>
-						</Link>
-					);
-				})} */}
 		</View>
 	);
 };

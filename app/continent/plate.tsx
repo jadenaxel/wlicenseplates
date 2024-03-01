@@ -1,34 +1,26 @@
 import type { FC } from "react";
-import type { EdgeInsets } from "react-native-safe-area-context";
 
 import { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { Color, WindowWidth } from "../../config";
-import { Icons } from "../../components";
+import { Color, WindowWidth, paddingHorizontal } from "../../config";
 import { ICountries, IPlates } from "../../types";
 import { Context } from "../../Wrapper";
+
+import Cross from "@/assets/images/icons/cross.svg";
+import Heart from "@/assets/images/icons/heart.svg";
+import HeartRed from "@/assets/images/icons/heart-red.svg";
 
 type TPlates = IPlates | any;
 type ParseCountry = ICountries[] | null;
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
-	const safeAreaInsets: EdgeInsets = useSafeAreaInsets();
 	const { state }: any = useContext(Context);
 	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = state.PlatesData;
-
-	const containerStyle: any = {
-		flex: 1,
-		backgroundColor: Color.black,
-		paddingTop: safeAreaInsets.top,
-		paddingBottom: safeAreaInsets.bottom,
-		paddingLeft: safeAreaInsets.left,
-		paddingRight: safeAreaInsets.right,
-	};
 
 	const SaveCountry = async () => {
 		try {
@@ -60,6 +52,7 @@ const Plate: FC = (): JSX.Element => {
 			if (parsing === null) return;
 			const deleteItem: ICountries[] = parsing.filter((item: ICountries) => item.title !== title);
 			await AsyncStorage.setItem("country", JSON.stringify(deleteItem));
+			2;
 		} catch (e: any) {
 			console.log(e.message);
 		}
@@ -76,19 +69,17 @@ const Plate: FC = (): JSX.Element => {
 	}, []);
 
 	return (
-		<ScrollView style={containerStyle}>
+		<ScrollView style={styles.main}>
 			<ImageBackground source={{ uri: bg }} style={styles.header} resizeMode="cover">
-				<Pressable style={styles.close} onPress={() => router.back()}>
-					<Icons.X size={24} />
-				</Pressable>
-				<View style={styles.continent}>
-					<View>
-						<Text style={styles.continentTextYear}>{year}</Text>
-						<Text style={styles.continentTextTitle}>Year</Text>
-					</View>
-					<Pressable style={styles.subheaderIcon} onPress={handleHeart}>
-						<Icons.Favorite size={20} color={heart ? Color.red : "transparent"} stroke={heart ? Color.red : "white"} />
+				<View style={styles.action_button}>
+					<Pressable onPress={handleHeart}>{heart ? <HeartRed /> : <Heart />}</Pressable>
+					<Pressable onPress={() => router.back()}>
+						<Cross />
 					</Pressable>
+				</View>
+				<View>
+					<Text style={styles.continentTextYear}>{year}</Text>
+					<Text style={styles.continentTextTitle}>Year</Text>
 				</View>
 			</ImageBackground>
 			<View style={styles.content}>
@@ -114,55 +105,52 @@ const Plate: FC = (): JSX.Element => {
 						<Text style={styles.detailTText}>{plateType}</Text>
 					</View>
 				</View>
-				{note && (
-					<View>
+				{note ? (
+					<View style={{ paddingHorizontal: 10 }}>
 						<Text style={styles.noteTitle}>Note:</Text>
 						<Text style={styles.noteText}>{note}</Text>
 					</View>
-				)}
+				) : null}
 			</View>
 		</ScrollView>
 	);
 };
 const styles = StyleSheet.create({
+	main: {
+		flex: 1,
+		backgroundColor: Color.black,
+	},
 	header: {
-		height: 217,
+		height: 317,
 		width: WindowWidth,
-		paddingHorizontal: 17,
+		paddingHorizontal,
 		paddingTop: 25,
 		paddingBottom: 16,
 		justifyContent: "space-between",
 		marginBottom: 16,
 	},
-	close: {
-		alignItems: "flex-end",
-	},
-	content: {
-		paddingHorizontal: 16,
-	},
-	continent: {
+	action_button: {
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-between",
+		gap: 10,
+		alignSelf: "flex-end",
+		marginTop: 30,
 	},
-	continentTextYear: { color: Color.white, fontSize: 24 },
+	content: { paddingHorizontal },
+	continentTextYear: {
+		color: Color.white,
+		fontSize: 24,
+		fontWeight: "bold",
+	},
 	continentTextTitle: {
 		color: Color.white,
 		fontSize: 18,
-	},
-	contientIcon: {
-		width: 57,
-		height: 57,
-		marginRight: 17,
+		textTransform: "uppercase",
 	},
 	continentText: {
 		fontSize: 41,
 		fontWeight: "bold",
 		color: Color.white,
-	},
-	subheaderIcon: {
-		alignSelf: "flex-end",
-		marginBottom: 16,
 	},
 	platesContainer: {
 		borderRadius: 4,
@@ -193,8 +181,9 @@ const styles = StyleSheet.create({
 	},
 	detail: {
 		flexDirection: "row",
-		gap: 10,
-		width: WindowWidth / 2.1,
+		alignItems: "center",
+		justifyContent: "space-between",
+		width: "100%",
 		marginBottom: 15,
 	},
 	detailE: {
@@ -203,11 +192,13 @@ const styles = StyleSheet.create({
 		paddingVertical: 12,
 		paddingLeft: 12,
 		paddingRight: 16,
+		width: WindowWidth / 2.2,
 	},
 	detailETitle: {
 		color: Color.white,
 		fontSize: 16,
 		marginBottom: 10,
+		fontWeight: "bold",
 	},
 	detailEText: {
 		color: Color.white,
@@ -219,11 +210,13 @@ const styles = StyleSheet.create({
 		paddingVertical: 12,
 		paddingLeft: 12,
 		paddingRight: 16,
+		width: WindowWidth / 2.2,
 	},
 	detailTTitle: {
 		color: Color.white,
 		fontSize: 16,
 		marginBottom: 10,
+		fontWeight: "bold",
 	},
 	detailTText: {
 		color: Color.white,
@@ -233,6 +226,7 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: 16,
 		marginBottom: 10,
+		fontWeight: "bold",
 	},
 	noteText: {
 		color: Color.white,

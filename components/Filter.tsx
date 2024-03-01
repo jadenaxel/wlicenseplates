@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 import { View, Text, StyleSheet } from "react-native";
-import { Color } from "../config";
+import { Color, paddingHorizontal } from "../config";
 
 const Filter: FC<any> = (props: any): JSX.Element => {
 	const { title, isSelected } = props;
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		borderRadius: 24,
 		paddingVertical: 6,
-		paddingHorizontal: 16,
+		paddingHorizontal,
 		backgroundColor: "#D6D6D6",
 		marginRight: 8,
 		marginBottom: 15,
