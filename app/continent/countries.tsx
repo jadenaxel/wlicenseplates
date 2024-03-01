@@ -50,7 +50,11 @@ const Country: FC = (): JSX.Element => {
 					plates.map((item: IPlates, i: number) => {
 						return (
 							<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
-								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: title } })}>
+								<Pressable
+								// onPress={() =>
+								//     dispatch({ type: Actions.Plates, payload: { item, country: title } })
+								//     }
+								>
 									<Plates {...item} />
 								</Pressable>
 							</Link>

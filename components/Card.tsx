@@ -5,9 +5,9 @@ import { View, Text, ImageBackground, StyleSheet } from "react-native";
 
 import { Color, WindowHeight, WindowWidth, elements } from "../config";
 
-import Arrow from "@/assets/images/icons/arrow.svg";
+import Arrow from "@/assets/images/icons/arrow-chvron-right.svg";
 
-const SVGIcon = ({ name, ele }: { name: string; ele: any }): JSX.Element | null => {
+export const SVGIcon = ({ name, ele }: { name: string; ele: any }): JSX.Element | null => {
 	const Component: any = ele[name];
 	return Component ? <Component /> : null;
 };

@@ -2,11 +2,7 @@
 import type { FC } from "react";
 
 // Imports for Expo and Reac Native libraries
-import {
-	//  useContext,
-	useEffect,
-	useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -17,14 +13,13 @@ import { Color, paddingHorizontal } from "../../config";
 import { Card, Loading, Title } from "../../components";
 import { ICard } from "../../types";
 import Query from "../../query";
-// import { Actions, Context } from "../../Wrapper";
+import { Actions, Context } from "../../Wrapper";
 
 const controller: AbortController = new AbortController();
 
 const Home: FC = (): JSX.Element => {
 	const [data, setData] = useState<ICard[]>([]);
-
-	// const { dispatch }: any = useContext(Context);
+	const { dispatch }: any = useContext(Context);
 
 	const syncData = async (): Promise<void> => {
 		try {
@@ -57,7 +52,19 @@ const Home: FC = (): JSX.Element => {
 								return (
 									<Link key={i} href={{ pathname: "/continent" }} asChild>
 										<Pressable
-										//   onPress={() => dispatch({ type: Actions.Continent, payload: item })}
+											onPress={() =>
+												dispatch({
+													type: Actions.Continent,
+													payload: {
+														image: item.image,
+														title: item.title,
+														platesNumber: item.platesNumber,
+														countriesQuantity: item.countriesQuantity,
+														description: item.description,
+														countries: item.countries,
+													},
+												})
+											}
 										>
 											<Card {...item} />
 										</Pressable>

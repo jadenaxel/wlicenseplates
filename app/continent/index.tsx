@@ -1,31 +1,36 @@
 import type { FC } from "react";
 
 import { useContext } from "react";
-import { View, Text, StyleSheet, ImageBackground, ScrollView, Pressable } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, ScrollView, Pressable, FlatList } from "react-native";
 
 import { router, Link } from "expo-router";
 
 import { ICard, ICountries } from "../../types";
-import { Color, WindowWidth, paddingHorizontal } from "../../config";
-import { Icons, ContinentList } from "../../components";
+import { Color, WindowWidth, paddingHorizontal, elements } from "../../config";
+import { ContinentList } from "../../components";
 import { Actions, Context } from "../../Wrapper";
+
+import { SVGIcon } from "@/components/Card";
+
+import BackArrow from "@/assets/images/icons/arrow-left.svg";
+import Filter from "@/assets/images/icons/filter.svg";
 
 type LocalParams = string | any;
 
 const Continent: FC = () => {
 	const { state, dispatch }: any = useContext(Context);
-	const { title, description, countriesQuantity, countries, image, platesNumber }: ICard = state.ContinentData;
-	const continentTitle = state?.ContinentData?.countries[0]?.continent?.title;
+	const { title, description, countriesQuantity, countries, platesNumber, image }: ICard = state.ContinentData;
+	// const continentTitle = state?.ContinentData?.countries[0]?.continent?.title;
+	// console.log(state.ContinentData.countries);
 
 	return (
-		<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.main}>
+		<View style={styles.main}>
 			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
 				<Pressable onPress={(): void => router.back()} style={styles.back}>
-					<Icons.ArrowLongLeft size={24} color={Color.white} />
+					<BackArrow />
 				</Pressable>
 				<View style={styles.continent}>
-					{/* <Image style={styles.contientIcon} source={{ uri: icons }} /> */}
-					<Icons.AfricaIcon type={continentTitle} />
+					<SVGIcon name={title} ele={elements} />
 					<Text style={styles.continentText}>{title}</Text>
 				</View>
 			</ImageBackground>
@@ -38,10 +43,21 @@ const Continent: FC = () => {
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
 				<View style={styles.subheaderIcon}>
-					<Icons.FilterIcon size={16} />
+					<Filter />
 				</View>
 			</View>
-			{countries &&
+			<FlatList
+				data={countries}
+				renderItem={(item: any) => (
+					<Link href={{ pathname: "/continent/countries" }} asChild>
+						<Pressable>
+							<ContinentList {...item} />
+						</Pressable>
+					</Link>
+				)}
+				keyExtractor={(item: any) => item._id}
+			/>
+			{/* {countries &&
 				countries.map((item: ICountries, i: number): JSX.Element => {
 					return (
 						<Link href={{ pathname: "/continent/country", params: { data: JSON.stringify(item) } }} key={i} asChild>
@@ -50,8 +66,8 @@ const Continent: FC = () => {
 							</Pressable>
 						</Link>
 					);
-				})}
-		</ScrollView>
+				})} */}
+		</View>
 	);
 };
 
@@ -110,6 +126,7 @@ const styles = StyleSheet.create({
 		fontSize: WindowWidth / 10,
 		fontWeight: "bold",
 		color: Color.white,
+		marginLeft: 17,
 	},
 	subheaderIcon: {
 		alignSelf: "flex-end",

@@ -10,7 +10,7 @@ const StackLayout = () => {
 					headerShown: false,
 				}}
 			/>
-			<Stack.Screen name="country" />
+			<Stack.Screen name="countries" />
 			<Stack.Screen name="plate" />
 		</Stack>
 	);

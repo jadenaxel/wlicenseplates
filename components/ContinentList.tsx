@@ -5,8 +5,8 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { ICountries } from "../types";
 import { Color, paddingHorizontal } from "../config";
 
-const ContinentList: FC<ICountries> = (props: ICountries): JSX.Element => {
-	const { platesNumber, title, flag }: ICountries = props;
+const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {
+	const { platesNumber, title, flag }: ICountries = props.item;
 
 	return (
 		<View>
