@@ -1,11 +1,11 @@
 import type { FC } from "react";
 
 import { useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Animated, Easing } from "react-native";
+import { View, StyleSheet, Animated, Easing } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 
-import { Color, WindowHeight, paddingHorizontal, WindowWidth } from "../config";
+import { Color, WindowHeight, WindowWidth } from "../config";
 
 const Linear = Animated.createAnimatedComponent(LinearGradient);
 

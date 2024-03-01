@@ -1,6 +1,8 @@
+
 export type IColor = {
 	[key: string]: string;
 };
+
 export type ICard = {
 	image: string;
 	title: string;

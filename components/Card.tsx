@@ -3,18 +3,23 @@ import type { ICard } from "../types";
 
 import { View, Text, ImageBackground, StyleSheet } from "react-native";
 
-import Icons from "./Icons";
-import { Color, WindowHeight, WindowWidth } from "../config";
+import { Color, WindowHeight, WindowWidth, elements } from "../config";
+
+import Arrow from "@/assets/images/icons/arrow.svg";
+
+const SVGIcon = ({ name, ele }: { name: string; ele: any }): JSX.Element | null => {
+	const Component: any = ele[name];
+	return Component ? <Component /> : null;
+};
 
 const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICard): JSX.Element => {
 	return (
-		<ImageBackground source={{ uri: image }} style={styles.card} blurRadius={17}>
+		<ImageBackground source={{ uri: image }} style={styles.card} borderRadius={14} blurRadius={17}>
 			<View style={styles.overlay}>
 				<View style={{ flexDirection: "row", alignItems: "center" }}>
 					<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
-						<Icons.AfricaIcon type={title} />
+						<SVGIcon name={title} ele={elements} />
 					</ImageBackground>
-
 					<View style={styles.data}>
 						<Text style={styles.dataTitle}>{title}</Text>
 						<View style={styles.dataDetails}>
@@ -24,7 +29,7 @@ const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICar
 					</View>
 				</View>
 				<View style={styles.arrowAccess}>
-					<Icons.ArrowRight size={13.08} />
+					<Arrow />
 				</View>
 			</View>
 		</ImageBackground>
@@ -33,11 +38,10 @@ const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICar
 
 const styles = StyleSheet.create({
 	card: {
-		overflow: "hidden",
-		borderRadius: 14,
 		marginBottom: 15,
 	},
 	overlay: {
+		borderRadius: 14,
 		backgroundColor: "rgba(70,63,65,0.35)",
 		flexDirection: "row",
 		alignItems: "center",
