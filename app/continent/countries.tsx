@@ -1,21 +1,56 @@
 import type { FC } from "react";
 
+import { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
-import { useContext, useState } from "react";
 
 import { Link, router } from "expo-router";
 
-import { Color, WindowWidth, filters } from "@/config";
+import { Color, WindowWidth, paddingHorizontal } from "@/config";
 import { Filter, Plates } from "@/components";
 import { ICountries, IPlates } from "@/types";
 import { Actions, Context } from "@/Wrapper";
+import Query from "@/query";
 
 import ArrowLeft from "@/assets/images/icons/arrow-left.svg";
 
+const controller: AbortController = new AbortController();
+
+const ALL: string = "All";
+
 const Country: FC = (): JSX.Element => {
-	const [filterSelected, setFilterSelected] = useState<string>("All");
+	const [filterSelected, setFilterSelected] = useState<string>(ALL);
+	const [data, setData] = useState<any>();
 	const { state, dispatch }: any = useContext(Context);
+	const [loading, setLoading] = useState<boolean>(true);
 	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData.item;
+
+	const getCategories = async (): Promise<void> => {
+		try {
+			const response: Response = await fetch(Query.query.Category.query, { signal: controller.signal });
+			if (!response.ok) throw new Error();
+			const json: any = await response.json();
+			setData([{ title: ALL }, ...json.result]);
+			setLoading(false);
+		} catch (e: any) {
+			console.log(`We've got a problem trying to reach the server. Error message: ${e.message}`);
+		}
+	};
+
+	useEffect(() => {
+		getCategories();
+	}, []);
+
+	const filterPlates = (plates: any, filter: any) => {
+		if (filter === ALL) return plates;
+    
+		return plates.filter((plate: any) => {
+			return plate.categories.some((cat: any) => cat.title === filter);
+		});
+	};
+
+	const newItem = filterPlates(plates, filterSelected);
+
+	if (loading) return <View />;
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
@@ -34,21 +69,20 @@ const Country: FC = (): JSX.Element => {
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
 			</View>
-			<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-				{filters
-					? filters.map((item: string, i: number) => {
-							return (
-								<Pressable key={i} onPress={() => setFilterSelected(item)}>
-									<Filter title={item} isSelected={filterSelected} />
-								</Pressable>
-							);
-					  })
-					: null}
+			<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filter}>
+				{data.length > 0 &&
+					data.map((item: any, i: number) => {
+						return (
+							<Pressable key={i} onPress={() => setFilterSelected(item.title)}>
+								<Filter title={item.title} isSelected={filterSelected} />
+							</Pressable>
+						);
+					})}
 			</ScrollView>
 
 			<View style={styles.plates}>
-				{plates ? (
-					plates.map((item: IPlates, i: number) => {
+				{newItem ? (
+					newItem.map((item: IPlates, i: number) => {
 						return (
 							<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
 								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: title } })}>
@@ -58,8 +92,8 @@ const Country: FC = (): JSX.Element => {
 						);
 					})
 				) : (
-					<View>
-						<Text style={{ color: "white" }}>There's no plate</Text>
+					<View style={styles.nocontent}>
+						<Text style={styles.nocontentText}>There's no content</Text>
 					</View>
 				)}
 			</View>
@@ -122,10 +156,24 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: 15,
 	},
+	filter: {
+		paddingHorizontal,
+	},
 	plates: {
+		paddingHorizontal,
 		flexDirection: "row",
 		flexWrap: "wrap",
 		gap: 15,
+	},
+	nocontent: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	nocontentText: {
+		color: Color.white,
+		fontWeight: "bold",
+		fontSize: WindowWidth / 20,
 	},
 });
 

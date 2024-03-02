@@ -9,11 +9,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 
 // Others imports
-import { Color, paddingHorizontal } from "../../config";
-import { Card, Loading, Title } from "../../components";
-import { ICard } from "../../types";
-import Query from "../../query";
-import { Actions, Context } from "../../Wrapper";
+import { Color, paddingHorizontal } from "@/config";
+import { Card, Loading, Title } from "@/components";
+import { ICard } from "@/types";
+import Query from "@/query";
+import { Actions, Context } from "@/Wrapper";
 
 const controller: AbortController = new AbortController();
 

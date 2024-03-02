@@ -38,9 +38,9 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
-				<View style={styles.subheaderIcon}>
+				{/* <View style={styles.subheaderIcon}>
 					<Filter />
-				</View>
+				</View> */}
 			</View>
 			{countries ? (
 				<FlatList
@@ -55,8 +55,8 @@ const Continent: FC = (): JSX.Element => {
 					keyExtractor={(item: any) => item._id}
 				/>
 			) : (
-				<View>
-					<Text style={{ color: "white" }}>There's no country</Text>
+				<View style={styles.nocontent}>
+					<Text style={styles.nocontentText}>There's no content</Text>
 				</View>
 			)}
 		</View>
@@ -120,9 +120,19 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		marginLeft: 17,
 	},
-	subheaderIcon: {
-		alignSelf: "flex-end",
-		marginBottom: 16,
+	// subheaderIcon: {
+	// 	alignSelf: "flex-end",
+	// 	marginBottom: 16,
+	// },
+	nocontent: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	nocontentText: {
+		color: Color.white,
+		fontWeight: "bold",
+		fontSize: WindowWidth / 20,
 	},
 });
 
