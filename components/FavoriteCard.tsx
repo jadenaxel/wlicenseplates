@@ -14,12 +14,14 @@ type TProps = ICountries | any;
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
 	const { image, title, country, RemoveHeart }: TProps = props;
 
+	const imageType = typeof image === "string" ? image : image[0];
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.detial}>
-				<Image source={{ uri: image[0] }} style={styles.image} />
+				<Image source={{ uri: imageType }} style={styles.image} />
 				<View>
-					<Text style={styles.detialTextTitle}>{title}</Text>
+					{typeof image !== "string" ? <Text style={styles.detialTextTitle}>{title}</Text> : null}
 					<View style={styles.detialTextCountry}>
 						<Dot />
 						<Text style={styles.detialTextCountryText}>Country</Text>
@@ -27,9 +29,11 @@ const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Elemen
 					</View>
 				</View>
 			</View>
-			<Pressable onPress={(): any => RemoveHeart(props.item)}>
-				<X />
-			</Pressable>
+			{RemoveHeart ? (
+				<Pressable onPress={(): any => RemoveHeart(props.item)}>
+					<X />
+				</Pressable>
+			) : null}
 		</View>
 	);
 };

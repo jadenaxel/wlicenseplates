@@ -16,6 +16,8 @@ export const WindowHeight: number = Dimensions.get("window").height;
 
 export const paddingHorizontal: number = 16;
 
+export const filters: string[] = ["All", "Private/Passenger", "United Nations", "Media", "Notes"];
+
 //This code is used to define a set of colors that can be used in other parts of the code.
 export const Color: IColor = {
 	black: "#000000",

@@ -5,12 +5,12 @@ import { useContext, useState } from "react";
 
 import { Link, router } from "expo-router";
 
-import { Color, WindowWidth } from "../../config";
-import { Filter, Icons, Plates } from "../../components";
-import { ICountries, IPlates } from "../../types";
-import { Actions, Context } from "../../Wrapper";
+import { Color, WindowWidth, filters } from "@/config";
+import { Filter, Plates } from "@/components";
+import { ICountries, IPlates } from "@/types";
+import { Actions, Context } from "@/Wrapper";
 
-const filters: string[] = ["All", "Private/Passenger", "United Nations", "Media", "Notes"];
+import ArrowLeft from "@/assets/images/icons/arrow-left.svg";
 
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>("All");
@@ -21,7 +21,7 @@ const Country: FC = (): JSX.Element => {
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
 			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
 				<Pressable onPress={(): void => router.back()} style={styles.back}>
-					<Icons.ArrowLongLeft size={24} color={Color.white} />
+					<ArrowLeft />
 				</Pressable>
 				<View style={styles.continent}>
 					<Image style={styles.contientIcon} source={{ uri: flag }} />

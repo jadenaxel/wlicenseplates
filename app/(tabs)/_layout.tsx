@@ -9,8 +9,12 @@ import { Text } from "react-native";
 import { Tabs } from "expo-router/tabs";
 
 // Others imports
-import { Icons } from "../../components";
-import { Color } from "../../config";
+import { Color } from "@/config";
+
+import IExplorer from "@/assets/images/icons/explore";
+import IFavorite from "@/assets/images/icons/heart";
+import ISearch from "@/assets/images/icons/search";
+import IMore from "@/assets/images/icons/more";
 
 const AppLayout: FC = (): JSX.Element => {
 	return (
@@ -30,7 +34,7 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "Explore",
-					tabBarIcon: ({ color, size }) => <Icons.Explore color={color} size={size} />,
+					tabBarIcon: ({ color }) => <IExplorer color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Explore</Text>,
 				}}
 			/>
@@ -40,10 +44,9 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "Favorite",
-					tabBarIcon: ({ color, size }) => <Icons.HeartIcon color={color} size={size} />,
+					tabBarIcon: ({ color, size }) => <IFavorite color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Favorite</Text>,
 					unmountOnBlur: true,
-                    
 				}}
 			/>
 			<Tabs.Screen
@@ -51,7 +54,7 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "Search",
-					tabBarIcon: ({ color, size }) => <Icons.SearchIcon color={color} size={size} />,
+					tabBarIcon: ({ color, size }) => <ISearch color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Search</Text>,
 					unmountOnBlur: true,
 				}}
@@ -61,7 +64,7 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "More",
-					tabBarIcon: ({ color, size }) => <Icons.FireIcon color={color} size={size} />,
+					tabBarIcon: ({ color, size }) => <IMore color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>More</Text>,
 				}}
 			/>

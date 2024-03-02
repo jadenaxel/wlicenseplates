@@ -11,8 +11,7 @@ import { ICountries, IPlates } from "../../types";
 import { Context } from "../../Wrapper";
 
 import Cross from "@/assets/images/icons/cross.svg";
-import Heart from "@/assets/images/icons/heart.svg";
-import HeartRed from "@/assets/images/icons/heart-red.svg";
+import Heart from "@/assets/images/icons/heart";
 
 type TPlates = IPlates | any;
 type ParseCountry = ICountries[] | null;
@@ -72,7 +71,9 @@ const Plate: FC = (): JSX.Element => {
 		<ScrollView style={styles.main}>
 			<ImageBackground source={{ uri: bg }} style={styles.header} resizeMode="cover">
 				<View style={styles.action_button}>
-					<Pressable onPress={handleHeart}>{heart ? <HeartRed /> : <Heart />}</Pressable>
+					<Pressable onPress={handleHeart}>
+						<Heart color={heart ? "red" : "white"} fill={heart ? "red" : "none"} />
+					</Pressable>
 					<Pressable onPress={() => router.back()}>
 						<Cross />
 					</Pressable>

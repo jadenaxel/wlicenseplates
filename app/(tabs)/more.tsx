@@ -5,7 +5,9 @@ import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Color, paddingHorizontal } from "@/config";
-import { Icons, Title } from "@/components";
+import { Title } from "@/components";
+
+import Coffee from "@/assets/images/icons/coffee.svg";
 
 const More: FC = (): JSX.Element => {
 	return (
@@ -14,7 +16,7 @@ const More: FC = (): JSX.Element => {
 				<Title text="More" />
 				<View style={styles.buyacoffee}>
 					<View style={styles.coffee}>
-						<Icons.Coffee size={40} />
+						<Coffee />
 						<Text style={styles.coffeeText}>Buy me a coffee</Text>
 					</View>
 					<Pressable style={styles.goButton}>
@@ -22,7 +24,7 @@ const More: FC = (): JSX.Element => {
 					</Pressable>
 				</View>
 				<View style={styles.appC}>
-					{[1, 2, 3, 4, 5, 6, 7, 8].map((item: number, i: number) => {
+					{new Array(8).fill(2).map((item: number, i: number) => {
 						return (
 							<View style={styles.app} key={i}>
 								<View style={styles.appView}></View>

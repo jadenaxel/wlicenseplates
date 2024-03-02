@@ -27,7 +27,7 @@ const Home: FC = (): JSX.Element => {
 			if (!response.ok) throw new Error();
 			const json: any = await response.json();
 			setData(json.result);
-			// dispatch({ type: Actions.All, payload: json.result });
+			dispatch({ type: Actions.All, payload: json.result });
 		} catch (e: any) {
 			console.log(`We've got a problem trying to reach the server. Error message: ${e.message}`);
 		}

@@ -13,7 +13,7 @@ import { ICountries } from "@/types";
 import { Actions, Context } from "@/Wrapper";
 
 import NoPlate from "@/assets/images/icons/no-plate.svg";
-import MenuDot from "@/assets/images/icons/menu-dot.svg";
+// import MenuDot from "@/assets/images/icons/menu-dot.svg";
 
 type ParseCountry = ICountries[] | null;
 
