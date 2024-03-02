@@ -3,29 +3,32 @@ import type { FC } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 
 import { ICountries } from "../types";
-import Icons from "./Icons";
+
 import { Color } from "../config";
+
+import Dot from "@/assets/images/icons/dot.svg";
+import X from "@/assets/images/icons/cross.svg";
 
 type TProps = ICountries | any;
 
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
-	const { image, title, countryP, RemoveHeart }: TProps = props;
+	const { image, title, country, RemoveHeart }: TProps = props;
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.detial}>
 				<Image source={{ uri: image[0] }} style={styles.image} />
-				<View style={styles.detialText}>
+				<View>
 					<Text style={styles.detialTextTitle}>{title}</Text>
 					<View style={styles.detialTextCountry}>
-						<Icons.Circle size={12} />
+						<Dot />
 						<Text style={styles.detialTextCountryText}>Country</Text>
-						<Text style={styles.detialTextCountryTextTwo}>{countryP}</Text>
+						<Text style={styles.detialTextCountryTextTwo}>{country}</Text>
 					</View>
 				</View>
 			</View>
 			<Pressable onPress={(): any => RemoveHeart(props.item)}>
-				<Icons.X size={24} />
+				<X />
 			</Pressable>
 		</View>
 	);
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		borderRadius: 14,
 		backgroundColor: "#171717",
-		marginBottom: 15,
+		marginVertical: 15,
 		paddingHorizontal: 16,
 		paddingVertical: 12,
 		justifyContent: "space-between",
@@ -46,7 +49,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		flexDirection: "row",
 	},
-	detialText: {},
 	image: {
 		width: 70.006,
 		height: 40.775,
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
 	},
 	detialTextCountryText: {
 		color: "#FF1464",
-		marginRight: 4,
+		marginHorizontal: 4,
 	},
 	detialTextCountryTextTwo: {
 		color: "white",

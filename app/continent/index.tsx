@@ -15,7 +15,7 @@ import { SVGIcon } from "@/components/Card";
 import BackArrow from "@/assets/images/icons/arrow-left.svg";
 import Filter from "@/assets/images/icons/filter.svg";
 
-const Continent: FC = () => {
+const Continent: FC = (): JSX.Element => {
 	const { state, dispatch }: any = useContext(Context);
 	const { title, description, countriesQuantity, countries, platesNumber, image }: ICard = state.ContinentData;
 
@@ -42,17 +42,23 @@ const Continent: FC = () => {
 					<Filter />
 				</View>
 			</View>
-			<FlatList
-				data={countries}
-				renderItem={(item: any) => (
-					<Link href={{ pathname: "/continent/countries" }} asChild>
-						<Pressable onPress={() => dispatch({ type: Actions.Country, payload: item })}>
-							<ContinentList {...item} />
-						</Pressable>
-					</Link>
-				)}
-				keyExtractor={(item: any) => item._id}
-			/>
+			{countries ? (
+				<FlatList
+					data={countries}
+					renderItem={(item: any) => (
+						<Link href={{ pathname: "/continent/countries" }} asChild>
+							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: item })}>
+								<ContinentList {...item} />
+							</Pressable>
+						</Link>
+					)}
+					keyExtractor={(item: any) => item._id}
+				/>
+			) : (
+				<View>
+					<Text style={{ color: "white" }}>There's no country</Text>
+				</View>
+			)}
 		</View>
 	);
 };

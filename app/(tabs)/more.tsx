@@ -2,14 +2,16 @@ import type { FC } from "react";
 
 import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
 
-import { Color, paddingHorizontal } from "../../config";
-import { Icons } from "../../components";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { Color, paddingHorizontal } from "@/config";
+import { Icons, Title } from "@/components";
 
 const More: FC = (): JSX.Element => {
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.title}>More</Text>
+				<Title text="More" />
 				<View style={styles.buyacoffee}>
 					<View style={styles.coffee}>
 						<Icons.Coffee size={40} />
@@ -30,7 +32,7 @@ const More: FC = (): JSX.Element => {
 					})}
 				</View>
 			</ScrollView>
-		</View>
+		</SafeAreaView>
 	);
 };
 
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		marginBottom: 17,
+		marginVertical: 15,
 	},
 	coffee: {
 		flexDirection: "row",

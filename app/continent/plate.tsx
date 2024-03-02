@@ -20,6 +20,7 @@ type ParseCountry = ICountries[] | null;
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
 	const { state }: any = useContext(Context);
+
 	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = state.PlatesData;
 
 	const SaveCountry = async () => {
@@ -52,7 +53,6 @@ const Plate: FC = (): JSX.Element => {
 			if (parsing === null) return;
 			const deleteItem: ICountries[] = parsing.filter((item: ICountries) => item.title !== title);
 			await AsyncStorage.setItem("country", JSON.stringify(deleteItem));
-			2;
 		} catch (e: any) {
 			console.log(e.message);
 		}

@@ -1,11 +1,12 @@
 import type { FC } from "react";
 
 import { useState } from "react";
-import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from "react-native";
 
-import { Color, WindowWidth } from "../../config";
-import { Icons } from "../../components";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { Color, WindowWidth } from "@/config";
+import { Icons } from "@/components";
 
 const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>("");
@@ -15,9 +16,8 @@ const Search: FC = (): JSX.Element => {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.title}>Search</Text>
 				<View style={styles.bar}>
 					<View style={styles.searchBar}>
 						<Icons.SearchIcon size={20} color={"white"} />
@@ -31,7 +31,7 @@ const Search: FC = (): JSX.Element => {
 					</Pressable>
 				</View>
 			</ScrollView>
-		</View>
+		</SafeAreaView>
 	);
 };
 

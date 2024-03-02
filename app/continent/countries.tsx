@@ -59,7 +59,7 @@ const Country: FC = (): JSX.Element => {
 					})
 				) : (
 					<View>
-						<Text style={{ color: "white" }}>There's not plate</Text>
+						<Text style={{ color: "white" }}>There's no plate</Text>
 					</View>
 				)}
 			</View>

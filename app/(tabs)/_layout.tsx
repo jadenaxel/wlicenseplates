@@ -23,6 +23,7 @@ const AppLayout: FC = (): JSX.Element => {
 				// tabBarLabelStyle: { fontSize: 12 },
 				// tabBarItemStyle: { flexDirection: "column" },
 			}}
+			initialRouteName="favorite"
 		>
 			<Tabs.Screen
 				name="explore"
@@ -42,6 +43,7 @@ const AppLayout: FC = (): JSX.Element => {
 					tabBarIcon: ({ color, size }) => <Icons.HeartIcon color={color} size={size} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Favorite</Text>,
 					unmountOnBlur: true,
+                    
 				}}
 			/>
 			<Tabs.Screen

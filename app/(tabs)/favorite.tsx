@@ -1,19 +1,27 @@
 import type { FC } from "react";
 
+import { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
-import { useState, useEffect } from "react";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 
-import { Color } from "../../config";
-import { FavoriteCard } from "../../components";
-import { ICountries } from "../../types";
+import { Color, WindowHeight } from "@/config";
+import { FavoriteCard, Title } from "@/components";
+import { ICountries } from "@/types";
+import { Actions, Context } from "@/Wrapper";
+
+import NoPlate from "@/assets/images/icons/no-plate.svg";
+import MenuDot from "@/assets/images/icons/menu-dot.svg";
 
 type ParseCountry = ICountries[] | null;
 
 const Favorite: FC = (): JSX.Element => {
 	const [data, setData] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
+
+	const { dispatch }: any = useContext(Context);
 
 	const GetCountry = async (): Promise<void> => {
 		try {
@@ -42,28 +50,35 @@ const Favorite: FC = (): JSX.Element => {
 
 	useEffect((): void => {
 		GetCountry();
-	}, [loading]);
+	}, [loading, data]);
 
 	useEffect((): void => {
 		if (data.length > 0) setLoading(false);
 	}, [data]);
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.title}>Favorite</Text>
-				{!loading &&
-					data.map((item: ICountries, i: number) => {
-						return (
-							<Link key={i} href={{ pathname: "/continent/plate", params: { data: JSON.stringify(item) } }} asChild>
-								<Pressable>
-									<FavoriteCard {...item} RemoveHeart={RemoveHeart} item={item} />
-								</Pressable>
-							</Link>
-						);
-					})}
+				<Title text="Favorite" />
+				{!loading
+					? data.map((item: ICountries, i: number) => {
+							return (
+								<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
+									<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item } })}>
+										<FavoriteCard {...item} RemoveHeart={RemoveHeart} item={item} />
+									</Pressable>
+								</Link>
+							);
+					  })
+					: null}
+				{data.length === 0 ? (
+					<View style={styles.plate}>
+						<NoPlate />
+						<Text style={styles.plateText}>You don’t have a favorite plate yet. </Text>
+					</View>
+				) : null}
 			</ScrollView>
-		</View>
+		</SafeAreaView>
 	);
 };
 
@@ -73,11 +88,27 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		backgroundColor: Color.black,
 	},
+	header: {
+		marginTop: 70,
+		marginBottom: 29,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
 	title: {
 		color: Color.white,
 		fontSize: 28,
-		marginTop: 70,
-		marginBottom: 29,
+		fontWeight: "bold",
+	},
+	plate: {
+		alignItems: "center",
+		justifyContent: "center",
+		height: WindowHeight / 1.55,
+	},
+	plateText: {
+		color: Color.white,
+		marginTop: 15,
+		fontWeight: "500",
 	},
 });
 
