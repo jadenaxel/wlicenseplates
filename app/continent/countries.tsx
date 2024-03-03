@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 import { useContext, useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, ActivityIndicator } from "react-native";
 
 import { Link, router } from "expo-router";
 
@@ -19,7 +19,7 @@ const ALL: string = "All";
 
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>(ALL);
-	const [data, setData] = useState<any>();
+	const [data, setData] = useState<any>([]);
 	const { state, dispatch }: any = useContext(Context);
 	const [loading, setLoading] = useState<boolean>(true);
 	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData.item;
@@ -32,7 +32,7 @@ const Country: FC = (): JSX.Element => {
 			setData([{ title: ALL }, ...json.result]);
 			setLoading(false);
 		} catch (e: any) {
-			console.log(`We've got a problem trying to reach the server. Error message: ${e.message}`);
+			console.log(`We've got a problem. Error message: ${e.message}`);
 		}
 	};
 
@@ -42,7 +42,7 @@ const Country: FC = (): JSX.Element => {
 
 	const filterPlates = (plates: any, filter: any) => {
 		if (filter === ALL) return plates;
-    
+
 		return plates.filter((plate: any) => {
 			return plate.categories.some((cat: any) => cat.title === filter);
 		});
@@ -50,7 +50,12 @@ const Country: FC = (): JSX.Element => {
 
 	const newItem = filterPlates(plates, filterSelected);
 
-	if (loading) return <View />;
+	if (loading)
+		return (
+			<View style={{ flex: 1, backgroundColor: Color.black, justifyContent: "center", alignItems: "center" }}>
+				<ActivityIndicator color={Color.red} size={30} />
+			</View>
+		);
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>

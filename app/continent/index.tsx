@@ -38,9 +38,10 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
-				{/* <View style={styles.subheaderIcon}>
+
+				<Pressable style={styles.subheaderIcon}>
 					<Filter />
-				</View> */}
+				</Pressable>
 			</View>
 			{countries ? (
 				<FlatList
@@ -120,10 +121,10 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		marginLeft: 17,
 	},
-	// subheaderIcon: {
-	// 	alignSelf: "flex-end",
-	// 	marginBottom: 16,
-	// },
+	subheaderIcon: {
+		alignSelf: "flex-end",
+		marginBottom: 16,
+	},
 	nocontent: {
 		flex: 1,
 		justifyContent: "center",

@@ -1,63 +1,99 @@
 import type { FC } from "react";
 
-import { useState, useContext } from "react";
-import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from "react-native";
+import { useState, useContext, useEffect } from "react";
+import { View, StyleSheet, ScrollView, Text, Pressable, TextInput, ActivityIndicator } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Link } from "expo-router";
 
-import { Color, WindowWidth, filters } from "@/config";
-import { Context } from "@/Wrapper";
+import { Color, WindowHeight, WindowWidth } from "@/config";
+import { Actions, Context } from "@/Wrapper";
 import { FavoriteCard, Filter } from "@/components";
+import Query from "@/query";
 
 import X from "@/assets/images/icons/cross.svg";
 import SearchIcon from "@/assets/images/icons/search";
 
+const country: any = [];
+const ALL: string = "All";
+
+const controller: AbortController = new AbortController();
+
 const Search: FC = (): JSX.Element => {
+	const [loading, setLoading] = useState<boolean>(true);
+	const [data, setData] = useState<any>([]);
 	const [search, setSearch] = useState<string>("");
-	const [country, setCountry] = useState([]);
-	const [plate, setPlate] = useState([]);
-	const [plates, setPlates] = useState([]);
+	const [countryState, setCountryState] = useState<any>([]);
+	const [platesState, setPlatesState] = useState<any>([]);
+
 	const [filterSelected, setFilterSelected] = useState<string>("All");
-	const { state }: any = useContext(Context);
+	const { state, dispatch }: any = useContext(Context);
+	const StateData: any = state.Data;
 
 	const handleSearch = (text: string): void => {
+		if (text.length === 0) onCancel();
+
 		setSearch(text);
-		const data: any = [];
+		setPlatesState([]);
+		setCountryState([]);
 
-		const CountryData = state.Data.filter((item: any, i: number) => {
-			return item.countries?.filter((items: any) => {
-				return items.title.toLowerCase().includes(text.toLowerCase());
+		StateData.map((stateItem: any) => {
+			const result = stateItem?.countries?.filter((country: any) => {
+				return country.title.toLowerCase().includes(text.toLowerCase());
+			});
+			result !== undefined && setCountryState((prev: any) => [...prev, ...result]);
+		});
+
+		StateData.map((stateItem: any) => {
+			stateItem?.countries?.map((country: any) => {
+				const result = country.plates.filter((plat: any) => plat.title.toLowerCase().includes(text.toLowerCase()));
+				result !== undefined && setPlatesState((prev: any) => [...prev, ...result]);
 			});
 		});
 
-		const PlatesData = state.Data.filter((item: any) => {
-			return item.countries?.filter((item: any) => {
-				return item?.plates?.filter((item: any) => {
-					return item.title.toLowerCase().includes(text.toLowerCase());
-				});
-			});
+		StateData.map((stateItem: any) => {
+			stateItem.countries !== null && country.push(...stateItem.countries);
 		});
-
-		PlatesData[0].countries.map((item: any) => {
-			data.push(item.plates);
-		});
-
-		if (text.length === 0) {
-			onCancel();
-			return;
-		}
-
-		setPlates(data.flat());
-		setPlate(PlatesData[0].countries);
-		setCountry(CountryData[0].countries);
 	};
 
 	const onCancel = () => {
 		setSearch("");
-		setCountry([]);
-		setPlate([]);
-		setPlates([]);
+		setCountryState([]);
+		setPlatesState([]);
 	};
+
+	const getCategories = async (): Promise<void> => {
+		try {
+			const response: Response = await fetch(Query.query.Category.query, { signal: controller.signal });
+			if (!response.ok) throw new Error();
+			const json: any = await response.json();
+			setData([{ title: ALL }, ...json.result]);
+			setLoading(false);
+		} catch (e: any) {
+			console.log(`We've got a problem. Error message: ${e.message}`);
+		}
+	};
+
+	useEffect(() => {
+		getCategories();
+	}, []);
+
+	const filterPlates = (plates: any, filter: any) => {
+		if (filter === ALL) return plates;
+
+		return plates.filter((plate: any) => {
+			return plate.categories.some((cat: any) => cat.title === filter);
+		});
+	};
+
+	const newItem: any = filterPlates(platesState, filterSelected);
+
+	if (loading)
+		return (
+			<View style={{ flex: 1, backgroundColor: Color.black, justifyContent: "center", alignItems: "center" }}>
+				<ActivityIndicator color={Color.red} size={30} />
+			</View>
+		);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -83,30 +119,49 @@ const Search: FC = (): JSX.Element => {
 					)}
 				</View>
 				{search.length <= 0 && (
-					<View>
-						<Text style={{ color: "white" }}>There's no search</Text>
+					<View style={styles.nocontent}>
+						<Text style={styles.nocontentText}>¡Search somthing!</Text>
 					</View>
 				)}
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					{plates.length > 0 || (country.length > 0 && filters)
-						? filters.map((item: string, i: number) => {
-								return (
-									<Pressable key={i} onPress={() => setFilterSelected(item)}>
-										<Filter title={item} isSelected={filterSelected} />
-									</Pressable>
-								);
-						  })
-						: null}
+					{search.length > 0 &&
+						data !== undefined &&
+						data.map((item: any, i: number) => {
+							return (
+								<Pressable key={i} onPress={() => setFilterSelected(item.title)}>
+									<Filter title={item.title} isSelected={filterSelected} />
+								</Pressable>
+							);
+						})}
 				</ScrollView>
-				{plates.length > 0 &&
-					plates.map((item: any, i: number) => {
-						const countryTitle: any = plate.filter((items: any) => items._id === item.country._ref)[0];
-						return <FavoriteCard image={item.image} country={countryTitle.title} title={item.title} key={i} />;
+				{newItem.length > 0 &&
+					newItem.map((item: any, i: number) => {
+						const countryTitle: any = country.filter((items: any) => items._id === item.country._ref)[0];
+						return (
+							<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
+								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: countryTitle.title ?? "" } })}>
+									<FavoriteCard image={item.image} country={countryTitle.title ?? ""} title={item.title} key={i} />
+								</Pressable>
+							</Link>
+						);
 					})}
-				{country.length > 0 &&
-					country.map((item: any, i: number) => {
-						return <FavoriteCard image={item.flag} country={item.title} key={i} />;
+				{countryState.length > 0 &&
+					filterSelected === ALL &&
+					countryState.map((item: any, i: number) => {
+						return (
+							<Link key={i} href={{ pathname: "/continent/countries" }} asChild>
+								<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>
+									<FavoriteCard image={item.flag} country={item.title} />
+								</Pressable>
+							</Link>
+						);
 					})}
+
+				{search.length > 0 && countryState.length <= 0 && platesState.length <= 0 && (
+					<View style={styles.nocontent}>
+						<Text style={styles.nocontentText}>No results</Text>
+					</View>
+				)}
 			</ScrollView>
 		</SafeAreaView>
 	);
@@ -147,6 +202,17 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 17,
 		fontWeight: "400",
+	},
+	nocontent: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		height: WindowHeight / 1.2,
+	},
+	nocontentText: {
+		color: Color.white,
+		fontWeight: "bold",
+		fontSize: WindowWidth / 20,
 	},
 });
 

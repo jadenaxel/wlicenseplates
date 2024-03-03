@@ -88,18 +88,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		backgroundColor: Color.black,
 	},
-	header: {
-		marginTop: 70,
-		marginBottom: 29,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-	},
-	title: {
-		color: Color.white,
-		fontSize: 28,
-		fontWeight: "bold",
-	},
 	plate: {
 		alignItems: "center",
 		justifyContent: "center",
