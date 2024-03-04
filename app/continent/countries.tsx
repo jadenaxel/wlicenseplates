@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
 		marginRight: 17,
 	},
 	continentText: {
-		fontSize: 41,
+		fontSize: WindowWidth / 15,
 		fontWeight: "bold",
 		color: Color.white,
 	},

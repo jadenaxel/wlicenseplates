@@ -4,7 +4,7 @@ import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Color, paddingHorizontal } from "@/config";
+import { Color, WindowWidth, paddingHorizontal } from "@/config";
 import { Title } from "@/components";
 
 import Coffee from "@/assets/images/icons/coffee.svg";
@@ -17,14 +17,14 @@ const More: FC = (): JSX.Element => {
 				<View style={styles.buyacoffee}>
 					<View style={styles.coffee}>
 						<Coffee />
-						<Text style={styles.coffeeText}>Buy me a coffee</Text>
+						<Text style={styles.coffeeText}>Buy us a coffee</Text>
 					</View>
 					<Pressable style={styles.goButton}>
 						<Text style={styles.goButtonText}>Go now</Text>
 					</Pressable>
 				</View>
 				<View style={styles.appC}>
-					{new Array(1).fill(2).map((item: number, i: number) => {
+					{new Array(0).fill(2).map((item: number, i: number) => {
 						return (
 							<View style={styles.app} key={i}>
 								<View style={styles.appView}></View>
@@ -44,12 +44,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal,
 		backgroundColor: Color.black,
 	},
-	title: {
-		color: Color.white,
-		fontSize: 28,
-		marginTop: 70,
-		marginBottom: 29,
-	},
 	buyacoffee: {
 		backgroundColor: "#FFFF64",
 		borderRadius: 14,
@@ -65,9 +59,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	coffeeText: {
-		fontSize: 17,
+		fontSize: WindowWidth / 20,
 		fontWeight: "bold",
-		width: 77,
+		width: WindowWidth / 3,
 		marginLeft: 13,
 	},
 	goButton: {
