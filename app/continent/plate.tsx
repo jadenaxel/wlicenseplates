@@ -107,7 +107,7 @@ const Plate: FC = (): JSX.Element => {
 					</View>
 				</View>
 				{note ? (
-					<View style={{ paddingHorizontal: 10 }}>
+					<View style={{ padding: 10 }}>
 						<Text style={styles.noteTitle}>Note:</Text>
 						<Text style={styles.noteText}>{note}</Text>
 					</View>

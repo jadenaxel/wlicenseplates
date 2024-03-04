@@ -29,7 +29,7 @@ const Home: FC = (): JSX.Element => {
 			setData(json.result);
 			dispatch({ type: Actions.All, payload: json.result });
 		} catch (e: any) {
-			console.log(`We've got a problem trying to reach the server. Error message: ${e.message}`);
+			console.log(`We've got a problem. Error message: ${e.message}`);
 		}
 	};
 

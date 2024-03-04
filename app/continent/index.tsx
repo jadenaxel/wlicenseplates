@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ImageBackground, Pressable, FlatList } from "re
 import { router, Link } from "expo-router";
 
 import { ICard } from "../../types";
-import { Color, WindowWidth, paddingHorizontal, elements } from "../../config";
+import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight } from "../../config";
 import { ContinentList } from "../../components";
 import { Actions, Context } from "../../Wrapper";
 
@@ -42,7 +42,6 @@ const Continent: FC = (): JSX.Element => {
 				{/* <Pressable style={styles.subheaderIcon}>
 					<Filter />
 				</Pressable> */}
-
 			</View>
 			{countries ? (
 				<FlatList
