@@ -7,11 +7,11 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import { Color, WindowHeight, WindowWidth } from "../config";
 
-const Linear = Animated.createAnimatedComponent(LinearGradient);
+const Linear: Animated.AnimatedComponent<typeof LinearGradient> = Animated.createAnimatedComponent(LinearGradient);
 
 const Loading: FC = (): JSX.Element => {
-	const pulseAnim = useRef(new Animated.Value(0)).current;
-	const width = WindowWidth - 20;
+	const pulseAnim: Animated.Value = useRef(new Animated.Value(0)).current;
+	const width: number = WindowWidth - 20;
 
 	useEffect(() => {
 		Animated.loop(
@@ -36,7 +36,7 @@ const Loading: FC = (): JSX.Element => {
 		};
 	}, []);
 
-	const translateX = pulseAnim.interpolate({
+	const translateX: Animated.AnimatedInterpolation<string | number> = pulseAnim.interpolate({
 		inputRange: [0, 1],
 		outputRange: [0, width - 19],
 		extrapolate: "clamp",
@@ -68,6 +68,7 @@ const Loading: FC = (): JSX.Element => {
 		</View>
 	);
 };
+
 const styles = StyleSheet.create({
 	main: {
 		backgroundColor: Color.black,

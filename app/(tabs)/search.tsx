@@ -56,7 +56,7 @@ const Search: FC = (): JSX.Element => {
 		});
 	};
 
-	const onCancel = () => {
+	const onCancel = (): void => {
 		setSearch("");
 		setCountryState([]);
 		setPlatesState([]);
@@ -78,7 +78,7 @@ const Search: FC = (): JSX.Element => {
 		getCategories();
 	}, []);
 
-	const filterPlates = (plates: any, filter: any) => {
+	const filterPlates = (plates: any, filter: any): any => {
 		if (filter === ALL) return plates;
 
 		return plates.filter((plate: any) => {

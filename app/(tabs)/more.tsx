@@ -24,7 +24,7 @@ const More: FC = (): JSX.Element => {
 					</Pressable>
 				</View>
 				<View style={styles.appC}>
-					{new Array(8).fill(2).map((item: number, i: number) => {
+					{new Array(1).fill(2).map((item: number, i: number) => {
 						return (
 							<View style={styles.app} key={i}>
 								<View style={styles.appView}></View>

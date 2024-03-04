@@ -3,8 +3,13 @@ import type { FC } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Color, paddingHorizontal } from "../config";
 
-const Filter: FC<any> = (props: any): JSX.Element => {
-	const { title, isSelected } = props;
+interface Filter {
+	title: string;
+	isSelected: string;
+}
+
+const Filter: FC<any> = (props: Filter): JSX.Element => {
+	const { title, isSelected }: Filter = props;
 
 	return (
 		<View style={[styles.container, isSelected === title ? { backgroundColor: Color.red } : {}]}>

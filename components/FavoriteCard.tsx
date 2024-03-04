@@ -14,7 +14,7 @@ type TProps = ICountries | any;
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
 	const { image, title, country, RemoveHeart }: TProps = props;
 
-	const imageType = typeof image === "string" ? image : image[0];
+	const imageType: any = typeof image === "string" ? image : image[0];
 
 	return (
 		<View style={styles.container}>
@@ -37,6 +37,7 @@ const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Elemen
 		</View>
 	);
 };
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

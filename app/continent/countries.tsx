@@ -48,7 +48,7 @@ const Country: FC = (): JSX.Element => {
 		});
 	};
 
-	const newItem = filterPlates(plates, filterSelected);
+	const newItem: any = filterPlates(plates, filterSelected);
 
 	if (loading)
 		return (

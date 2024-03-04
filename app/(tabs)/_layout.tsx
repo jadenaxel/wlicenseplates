@@ -23,9 +23,6 @@ const AppLayout: FC = (): JSX.Element => {
 				tabBarStyle: { backgroundColor: Color.black, borderTopWidth: 0 },
 				tabBarHideOnKeyboard: true,
 				tabBarActiveTintColor: Color.white,
-
-				// tabBarLabelStyle: { fontSize: 12 },
-				// tabBarItemStyle: { flexDirection: "column" },
 			}}
 			initialRouteName="favorite"
 		>

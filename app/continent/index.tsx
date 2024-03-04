@@ -13,7 +13,7 @@ import { Actions, Context } from "../../Wrapper";
 import { SVGIcon } from "@/components/Card";
 
 import BackArrow from "@/assets/images/icons/arrow-left.svg";
-import Filter from "@/assets/images/icons/filter.svg";
+// import Filter from "@/assets/images/icons/filter.svg";
 
 const Continent: FC = (): JSX.Element => {
 	const { state, dispatch }: any = useContext(Context);
@@ -39,9 +39,10 @@ const Continent: FC = (): JSX.Element => {
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
 
-				<Pressable style={styles.subheaderIcon}>
+				{/* <Pressable style={styles.subheaderIcon}>
 					<Filter />
-				</Pressable>
+				</Pressable> */}
+
 			</View>
 			{countries ? (
 				<FlatList

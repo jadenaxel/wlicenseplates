@@ -7,7 +7,12 @@ import { Color, WindowHeight, WindowWidth, elements } from "../config";
 
 import Arrow from "@/assets/images/icons/arrow-chvron-right.svg";
 
-export const SVGIcon = ({ name, ele }: { name: string; ele: any }): JSX.Element | null => {
+interface SVGProps {
+	name: string;
+	ele: any;
+}
+
+export const SVGIcon = ({ name, ele }: SVGProps): JSX.Element | null => {
 	const Component: any = ele[name];
 	return Component ? <Component /> : null;
 };

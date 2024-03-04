@@ -9,7 +9,7 @@ const initialValue: any = {
 	PlatesData: "",
 };
 
-export const Actions = {
+export const Actions: any = {
 	All: "All",
 	Continent: "Contient",
 	Country: "Country",
