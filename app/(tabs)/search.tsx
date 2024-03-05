@@ -11,7 +11,7 @@ import { Actions, Context } from "@/Wrapper";
 import { FavoriteCard, Filter } from "@/components";
 import Query from "@/query";
 
-import X from "@/assets/images/icons/cross.svg";
+import X from "@/assets/images/icons/cross1.svg";
 import SearchIcon from "@/assets/images/icons/search";
 
 const country: any = [];
@@ -37,22 +37,16 @@ const Search: FC = (): JSX.Element => {
 		setPlatesState([]);
 		setCountryState([]);
 
-		StateData.map((stateItem: any) => {
-			const result = stateItem?.countries?.filter((country: any) => {
-				return country.title.toLowerCase().includes(text.toLowerCase());
-			});
-			result !== undefined && setCountryState((prev: any) => [...prev, ...result]);
-		});
+		StateData.forEach((stateItem: any) => {
+            stateItem.countries !== null && country.push(...stateItem.countries);
 
-		StateData.map((stateItem: any) => {
-			stateItem?.countries?.map((country: any) => {
-				const result = country.plates.filter((plat: any) => plat.title.toLowerCase().includes(text.toLowerCase()));
-				result !== undefined && setPlatesState((prev: any) => [...prev, ...result]);
-			});
-		});
+			const countryResults = stateItem?.countries?.filter((country: any) => country.title.toLowerCase().includes(text.toLowerCase()));
+			if (countryResults) setCountryState((prev: any) => [...prev, ...countryResults]);
 
-		StateData.map((stateItem: any) => {
-			stateItem.countries !== null && country.push(...stateItem.countries);
+			stateItem?.countries?.forEach((country: any) => {
+				const plateResults = country.plates.filter((plate: any) => plate.title.toLowerCase().includes(text.toLowerCase()));
+				if (plateResults) setPlatesState((prev: any) => [...prev, ...plateResults]);
+			});
 		});
 	};
 
