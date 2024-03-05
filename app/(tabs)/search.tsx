@@ -11,7 +11,7 @@ import { Actions, Context } from "@/Wrapper";
 import { FavoriteCard, Filter } from "@/components";
 import Query from "@/query";
 
-import X from "@/assets/images/icons/cross1.svg";
+import X from "@/assets/images/icons/cross.svg";
 import SearchIcon from "@/assets/images/icons/search";
 
 const country: any = [];
@@ -38,7 +38,7 @@ const Search: FC = (): JSX.Element => {
 		setCountryState([]);
 
 		StateData.forEach((stateItem: any) => {
-            stateItem.countries !== null && country.push(...stateItem.countries);
+			stateItem.countries !== null && country.push(...stateItem.countries);
 
 			const countryResults = stateItem?.countries?.filter((country: any) => country.title.toLowerCase().includes(text.toLowerCase()));
 			if (countryResults) setCountryState((prev: any) => [...prev, ...countryResults]);
