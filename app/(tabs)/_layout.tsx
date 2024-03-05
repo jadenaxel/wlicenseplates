@@ -14,7 +14,7 @@ import { Color } from "@/config";
 import IExplorer from "@/assets/images/icons/explore";
 import IFavorite from "@/assets/images/icons/heart";
 import ISearch from "@/assets/images/icons/search";
-import IMore from "@/assets/images/icons/more";
+// import IMore from "@/assets/images/icons/more";
 
 const AppLayout: FC = (): JSX.Element => {
 	return (
@@ -56,7 +56,7 @@ const AppLayout: FC = (): JSX.Element => {
 					unmountOnBlur: true,
 				}}
 			/>
-			<Tabs.Screen
+			{/* <Tabs.Screen
 				name="more"
 				options={{
 					headerShown: false,
@@ -64,7 +64,7 @@ const AppLayout: FC = (): JSX.Element => {
 					tabBarIcon: ({ color, size }) => <IMore color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>More</Text>,
 				}}
-			/>
+			/> */}
 		</Tabs>
 	);
 };
