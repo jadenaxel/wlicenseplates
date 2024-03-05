@@ -6,7 +6,7 @@ import { ICountries } from "../types";
 import { Color, paddingHorizontal } from "../config";
 
 const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {
-	const { platesNumber, title, flag }: ICountries = props.item;
+	const { platesNumber, title, flag }: ICountries = props;
 
 	return (
 		<View>

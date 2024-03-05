@@ -1,23 +1,28 @@
 import type { FC } from "react";
 
-import { useContext } from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable, FlatList } from "react-native";
+import { useContext, useState } from "react";
+import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
 
 import { router, Link } from "expo-router";
 
-import { ICard } from "../../types";
-import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight } from "../../config";
-import { ContinentList } from "../../components";
-import { Actions, Context } from "../../Wrapper";
+import { ICard } from "@/types";
+import { Color, WindowWidth, paddingHorizontal, elements } from "@/config";
+import { ContinentList, POPUP } from "@/components";
+import { Actions, Context } from "@/Wrapper";
 
 import { SVGIcon } from "@/components/Card";
 
 import BackArrow from "@/assets/images/icons/arrow-left.svg";
-// import Filter from "@/assets/images/icons/filter.svg";
 
 const Continent: FC = (): JSX.Element => {
+	const [isFilter, setIsFilter] = useState<string>("Random");
 	const { state, dispatch }: any = useContext(Context);
 	const { title, description, countriesQuantity, countries, platesNumber, image }: ICard = state.ContinentData;
+
+	const sortType = (a: any, b: any) => {
+		if (isFilter === "Random") return b.title.localeCompare(a.title);
+		else return a.title.localeCompare(b.title);
+	};
 
 	return (
 		<View style={styles.main}>
@@ -38,23 +43,18 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
-
-				{/* <Pressable style={styles.subheaderIcon}>
-					<Filter />
-				</Pressable> */}
+				<POPUP setIsFilter={setIsFilter} />
 			</View>
 			{countries ? (
-				<FlatList
-					data={countries}
-					renderItem={(item: any) => (
-						<Link href={{ pathname: "/continent/countries" }} asChild>
-							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: item })}>
+				countries.sort(sortType).map((item: any, i: number) => {
+					return (
+						<Link key={i} href={{ pathname: "/continent/countries" }} asChild>
+							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>
 								<ContinentList {...item} />
 							</Pressable>
 						</Link>
-					)}
-					keyExtractor={(item: any) => item._id}
-				/>
+					);
+				})
 			) : (
 				<View style={styles.nocontent}>
 					<Text style={styles.nocontentText}>There's no content</Text>
