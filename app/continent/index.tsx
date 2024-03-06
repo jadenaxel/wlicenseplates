@@ -20,7 +20,7 @@ const Continent: FC = (): JSX.Element => {
 	const { title, description, countriesQuantity, countries, platesNumber, image }: ICard = state.ContinentData;
 
 	const sortType = (a: any, b: any) => {
-		if (isFilter === "Random") return b.title.localeCompare(a.title);
+		if (isFilter === "Random") return Math.random() - 0.5;
 		else return a.title.localeCompare(b.title);
 	};
 
