@@ -7,5 +7,6 @@ import FavoriteCard from "./FavoriteCard";
 import Title from "./Title";
 import Loading from "./Loading";
 import POPUP from "./Popup";
+import useFecth from "./useFetch";
 
-export { Card, ContinentList, Filter, Plates, FavoriteCard, Title, Loading, POPUP };
+export { Card, ContinentList, Filter, Plates, FavoriteCard, Title, Loading, POPUP, useFecth };

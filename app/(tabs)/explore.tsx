@@ -2,7 +2,7 @@
 import type { FC } from "react";
 
 // Imports for Expo and Reac Native libraries
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,34 +10,15 @@ import { Link } from "expo-router";
 
 // Others imports
 import { Color, paddingHorizontal } from "@/config";
-import { Card, Loading, Title } from "@/components";
+import { Card, Loading, Title, useFecth } from "@/components";
 import { ICard } from "@/types";
 import Query from "@/query";
 import { Actions, Context } from "@/Wrapper";
 
-const controller: AbortController = new AbortController();
-
 const Home: FC = (): JSX.Element => {
-	const [data, setData] = useState<ICard[]>([]);
 	const { dispatch }: any = useContext(Context);
 
-	const syncData = async (): Promise<void> => {
-		try {
-			const response: Response = await fetch(Query.query.Home.Continent.query, { signal: controller.signal });
-			if (!response.ok) throw new Error();
-			const json: any = await response.json();
-			setData(json.result);
-			dispatch({ type: Actions.All, payload: json.result });
-		} catch (e: any) {
-			console.log(`We've got a problem. Error message: ${e.message}`);
-		}
-	};
-
-	useEffect(() => {
-		syncData();
-
-		return () => controller.abort();
-	}, []);
+	const { data, isLoading } = useFecth({ uri: Query.query.Home.Continent.query, dispatch, dispatchType: Actions.All });
 
 	return (
 		<SafeAreaView style={styles.body}>
@@ -45,7 +26,7 @@ const Home: FC = (): JSX.Element => {
 				<View style={styles.container}>
 					<Title text="Explore" />
 					<View style={styles.group}>
-						{data.length <= 0 ? (
+						{isLoading ? (
 							<Loading />
 						) : (
 							data.map((item: ICard | any, i: number) => {

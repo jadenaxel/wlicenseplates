@@ -8,7 +8,7 @@ import { Link } from "expo-router";
 
 import { Color, WindowHeight, WindowWidth } from "@/config";
 import { Actions, Context } from "@/Wrapper";
-import { FavoriteCard, Filter } from "@/components";
+import { FavoriteCard, Filter, useFecth } from "@/components";
 import Query from "@/query";
 
 import X from "@/assets/images/icons/cross.svg";
@@ -20,8 +20,6 @@ const ALL: string = "All";
 const controller: AbortController = new AbortController();
 
 const Search: FC = (): JSX.Element => {
-	const [loading, setLoading] = useState<boolean>(true);
-	const [data, setData] = useState<any>([]);
 	const [search, setSearch] = useState<string>("");
 	const [countryState, setCountryState] = useState<any>([]);
 	const [platesState, setPlatesState] = useState<any>([]);
@@ -30,8 +28,13 @@ const Search: FC = (): JSX.Element => {
 	const { state, dispatch }: any = useContext(Context);
 	const StateData: any = state.Data;
 
+	const { data, isLoading } = useFecth({ uri: Query.query.Category.query, type: "search" });
+
 	const handleSearch = (text: string): void => {
-		if (text.length === 0) onCancel();
+		if (text.length === 0) {
+			onCancel();
+			return;
+		}
 
 		setSearch(text);
 		setPlatesState([]);
@@ -56,22 +59,6 @@ const Search: FC = (): JSX.Element => {
 		setPlatesState([]);
 	};
 
-	const getCategories = async (): Promise<void> => {
-		try {
-			const response: Response = await fetch(Query.query.Category.query, { signal: controller.signal });
-			if (!response.ok) throw new Error();
-			const json: any = await response.json();
-			setData([{ title: ALL }, ...json.result]);
-			setLoading(false);
-		} catch (e: any) {
-			console.log(`We've got a problem. Error message: ${e.message}`);
-		}
-	};
-
-	useEffect(() => {
-		getCategories();
-	}, []);
-
 	const filterPlates = (plates: any, filter: any): any => {
 		if (filter === ALL) return plates;
 
@@ -82,7 +69,7 @@ const Search: FC = (): JSX.Element => {
 
 	const newItem: any = filterPlates(platesState, filterSelected);
 
-	if (loading)
+	if (isLoading)
 		return (
 			<View style={{ flex: 1, backgroundColor: Color.black, justifyContent: "center", alignItems: "center" }}>
 				<ActivityIndicator color={Color.red} size={30} />
