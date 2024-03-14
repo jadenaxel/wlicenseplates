@@ -38,12 +38,12 @@ const useFetch = (props: Props): Return => {
 			setIsLoading(false);
 		} catch (error: any) {
 			setError([true, error.message]);
+			setIsLoading(false);
 		}
 	};
 
 	useEffect(() => {
 		callData();
-
 		return () => controller.abort();
 	}, []);
 

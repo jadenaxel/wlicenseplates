@@ -17,7 +17,6 @@ import { Actions, Context } from "@/Wrapper";
 
 const Home: FC = (): JSX.Element => {
 	const { dispatch }: any = useContext(Context);
-
 	const { data, isLoading } = useFecth({ uri: Query.query.Home.Continent.query, dispatch, dispatchType: Actions.All });
 
 	return (
@@ -29,29 +28,27 @@ const Home: FC = (): JSX.Element => {
 						{isLoading ? (
 							<Loading />
 						) : (
-							data.map((item: ICard | any, i: number) => {
-								return (
-									<Link key={i} href={{ pathname: "/continent" }} asChild>
-										<Pressable
-											onPress={() =>
-												dispatch({
-													type: Actions.Continent,
-													payload: {
-														image: item.image,
-														title: item.title,
-														platesNumber: item.platesNumber,
-														countriesQuantity: item.countriesQuantity,
-														description: item.description,
-														countries: item.countries,
-													},
-												})
-											}
-										>
-											<Card {...item} />
-										</Pressable>
-									</Link>
-								);
-							})
+							data.map((item: ICard | any, i: number) => (
+								<Link key={i} href={{ pathname: "/continent" }} asChild>
+									<Pressable
+										onPress={() =>
+											dispatch({
+												type: Actions.Continent,
+												payload: {
+													image: item.image,
+													title: item.title,
+													platesNumber: item.platesNumber,
+													countriesQuantity: item.countriesQuantity,
+													description: item.description,
+													countries: item.countries,
+												},
+											})
+										}
+									>
+										<Card {...item} />
+									</Pressable>
+								</Link>
+							))
 						)}
 					</View>
 				</View>

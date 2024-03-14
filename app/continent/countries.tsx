@@ -1,44 +1,25 @@
 import type { FC } from "react";
 
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, ActivityIndicator } from "react-native";
 
 import { Link, router } from "expo-router";
 
 import { Color, WindowWidth, paddingHorizontal } from "@/config";
-import { Filter, Plates } from "@/components";
+import { Filter, Plates, useFecth } from "@/components";
 import { ICountries, IPlates } from "@/types";
 import { Actions, Context } from "@/Wrapper";
 import Query from "@/query";
 
 import ArrowLeft from "@/assets/images/icons/arrow-left.svg";
 
-const controller: AbortController = new AbortController();
-
 const ALL: string = "All";
 
 const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>(ALL);
-	const [data, setData] = useState<any>([]);
 	const { state, dispatch }: any = useContext(Context);
-	const [loading, setLoading] = useState<boolean>(true);
+	const { data, isLoading } = useFecth({ type: "countries", uri: Query.query.Category.query });
 	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData.item;
-
-	const getCategories = async (): Promise<void> => {
-		try {
-			const response: Response = await fetch(Query.query.Category.query, { signal: controller.signal });
-			if (!response.ok) throw new Error();
-			const json: any = await response.json();
-			setData([{ title: ALL }, ...json.result]);
-			setLoading(false);
-		} catch (e: any) {
-			console.log(`We've got a problem. Error message: ${e.message}`);
-		}
-	};
-
-	useEffect(() => {
-		getCategories();
-	}, []);
 
 	const filterPlates = (plates: any, filter: any) => {
 		if (filter === ALL) return plates;
@@ -50,7 +31,7 @@ const Country: FC = (): JSX.Element => {
 
 	const newItem: any = filterPlates(plates, filterSelected);
 
-	if (loading)
+	if (isLoading)
 		return (
 			<View style={{ flex: 1, backgroundColor: Color.black, justifyContent: "center", alignItems: "center" }}>
 				<ActivityIndicator color={Color.red} size={30} />

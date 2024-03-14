@@ -61,20 +61,18 @@ const Favorite: FC = (): JSX.Element => {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Title text="Favorite" />
 				{!loading
-					? data.map((item: ICountries, i: number) => {
-							return (
-								<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
-									<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item } })}>
-										<FavoriteCard {...item} RemoveHeart={RemoveHeart} item={item} />
-									</Pressable>
-								</Link>
-							);
-					  })
+					? data.map((item: ICountries, i: number) => (
+							<Link key={i} href={{ pathname: "/continent/plate" }} asChild>
+								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item } })}>
+									<FavoriteCard {...item} RemoveHeart={RemoveHeart} item={item} />
+								</Pressable>
+							</Link>
+					  ))
 					: null}
 				{data.length === 0 ? (
 					<View style={styles.plate}>
 						<NoPlate />
-						<Text style={styles.plateText}>You don’t have a favorite plate yet. </Text>
+						<Text style={styles.plateText}>You don’t have a favorite plate yet.</Text>
 					</View>
 				) : null}
 			</ScrollView>

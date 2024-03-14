@@ -1,6 +1,6 @@
 import type { FC } from "react";
 
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { View, StyleSheet, ScrollView, Text, Pressable, TextInput, ActivityIndicator } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,8 +16,6 @@ import SearchIcon from "@/assets/images/icons/search";
 
 const country: any = [];
 const ALL: string = "All";
-
-const controller: AbortController = new AbortController();
 
 const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>("");
