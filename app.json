@@ -8,11 +8,11 @@
                 "backgroundColor": "#000",
                 "foregroundImage": "./assets/icon.png"
             },
-            "package": "com.jondydiaz07.wlicenseplates"
+            "package": "com.sdjd.wlicenseplates"
         },
         "icon": "./assets/icon.png",
         "ios": {
-            "bundleIdentifier": "com.jondydiaz07.wlicenseplates",
+            "bundleIdentifier": "com.sdjd.wlicenseplates",
             "supportsTablet": true
         },
         "jsEngine": "hermes",
