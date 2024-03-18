@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 
 import { ICountries } from "../types";
 
-import { Color } from "../config";
+import { Color, WindowHeight, WindowWidth } from "../config";
 
 import Dot from "@/assets/images/icons/dot.svg";
 import X from "@/assets/images/icons/cross.svg";
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	image: {
-		width: 70.006,
-		height: 40.775,
+		width: WindowWidth / 4,
+		height: WindowHeight / 15,
 		borderRadius: 4,
 		marginRight: 16,
 	},
