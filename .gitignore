@@ -12,6 +12,7 @@ web-build/
 *.orig.*
 *.jks
 *.p8
+*.apk
 *.p12
 *.key
 *.mobileprovision

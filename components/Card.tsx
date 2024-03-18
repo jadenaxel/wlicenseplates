@@ -17,7 +17,7 @@ export const SVGIcon = ({ name, ele }: SVGProps): JSX.Element | null => {
 	return Component ? <Component /> : null;
 };
 
-const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICard): JSX.Element => {
+const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.Element => {
 	return (
 		<ImageBackground source={{ uri: image }} style={styles.card} borderRadius={14} blurRadius={17}>
 			<View style={styles.overlay}>
@@ -29,7 +29,7 @@ const Card: FC<ICard> = ({ title, image, platesNumber, countriesQuantity }: ICar
 						<Text style={styles.dataTitle}>{title}</Text>
 						<View style={styles.dataDetails}>
 							<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{platesNumber} - License Plates</Text>
-							<Text style={styles.dataDetailsItem}>{countriesQuantity} Countries</Text>
+							<Text style={styles.dataDetailsItem}>{countries?.length ?? 0} Countries</Text>
 						</View>
 					</View>
 				</View>

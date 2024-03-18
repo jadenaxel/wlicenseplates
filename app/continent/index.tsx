@@ -17,7 +17,7 @@ import BackArrow from "@/assets/images/icons/arrow-left.svg";
 const Continent: FC = (): JSX.Element => {
 	const [isFilter, setIsFilter] = useState<string>("Random");
 	const { state, dispatch }: any = useContext(Context);
-	const { title, description, countriesQuantity, countries, platesNumber, image }: ICard = state.ContinentData;
+	const { title, description, countries, image }: ICard = state.ContinentData;
 
 	const sortType = (a: any, b: any) => {
 		if (isFilter === "Random") return Math.random() - 0.5;
@@ -38,8 +38,8 @@ const Continent: FC = (): JSX.Element => {
 			<View style={styles.subheader}>
 				<View style={styles.subheaderSideOne}>
 					<View style={styles.subheaderInfo}>
-						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{platesNumber} - License Plates</Text>
-						<Text style={styles.subheaderInfoText}>{countriesQuantity} Countries</Text>
+						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{countries?.plates?.length ?? 0} - License Plates</Text>
+						<Text style={styles.subheaderInfoText}>{countries?.length ?? 0} Countries</Text>
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>

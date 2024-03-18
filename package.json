@@ -30,7 +30,8 @@
         "android": "expo run:android",
         "ios": "expo run:ios",
         "start": "expo start",
-        "web": "expo start --web"
+        "web": "expo start --web",
+        "build-a": "rm build-* && eas build -p android --profile production --local"
     },
     "version": "1.0.0"
 }

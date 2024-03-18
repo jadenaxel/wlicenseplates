@@ -6,7 +6,7 @@ import { ICountries } from "../types";
 import { Color, WindowHeight, WindowWidth, paddingHorizontal } from "../config";
 
 const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {
-	const { platesNumber, title, flag }: ICountries = props;
+	const { plates, title, flag }: ICountries = props;
 
 	return (
 		<View>
@@ -15,7 +15,7 @@ const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => 
 					<Image style={styles.flagsContinaerImage} source={{ uri: flag }} />
 					<Text style={styles.flagsContinaerText}>{title}</Text>
 				</View>
-				<Text style={styles.platesNumber}>{platesNumber}</Text>
+				<Text style={styles.platesNumber}>{plates?.length ?? 0}</Text>
 			</View>
 			<View style={styles.line} />
 		</View>

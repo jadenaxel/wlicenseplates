@@ -19,7 +19,7 @@ const Country: FC = (): JSX.Element => {
 	const [filterSelected, setFilterSelected] = useState<string>(ALL);
 	const { state, dispatch }: any = useContext(Context);
 	const { data, isLoading } = useFecth({ type: "countries", uri: Query.query.Category.query });
-	const { description, flag, image, platesNumber, title, plates }: ICountries = state.CountryData.item;
+	const { description, flag, image, title, plates }: ICountries = state.CountryData.item;
 
 	const filterPlates = (plates: any, filter: any) => {
 		if (filter === ALL) return plates;
@@ -46,12 +46,13 @@ const Country: FC = (): JSX.Element => {
 			</ImageBackground>
 			<View style={styles.subheader}>
 				<View style={styles.subheaderSideOne}>
-					<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{platesNumber} - License Plates</Text>
+					<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{plates?.length ?? 0} - License Plates</Text>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
 			</View>
 			<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filter}>
 				{data.length > 0 &&
+					newItem?.length > 0 &&
 					data.map((item: any, i: number) => {
 						return (
 							<Pressable key={i} onPress={() => setFilterSelected(item.title)}>

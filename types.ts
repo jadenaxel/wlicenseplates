@@ -8,7 +8,7 @@ export type ICard = {
 	platesNumber: number;
 	countriesQuantity: number;
 	description: string;
-	countries: [ICountries];
+	countries: [ICountries] | any;
 };
 
 export type ICountries = {

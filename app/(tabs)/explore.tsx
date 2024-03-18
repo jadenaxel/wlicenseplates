@@ -38,7 +38,6 @@ const Home: FC = (): JSX.Element => {
 													image: item.image,
 													title: item.title,
 													platesNumber: item.platesNumber,
-													countriesQuantity: item.countriesQuantity,
 													description: item.description,
 													countries: item.countries,
 												},
