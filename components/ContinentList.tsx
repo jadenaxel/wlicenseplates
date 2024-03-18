@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 		fontSize: WindowWidth / 30,
 	},
 	platesNumber: {
-		fontSize: 14,
+		fontSize: WindowWidth / 25,
 		color: Color.white,
 	},
 	line: {

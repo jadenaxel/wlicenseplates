@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native
 import { router, Link } from "expo-router";
 
 import { ICard } from "@/types";
-import { Color, WindowWidth, paddingHorizontal, elements } from "@/config";
+import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight } from "@/config";
 import { ContinentList, POPUP } from "@/components";
 import { Actions, Context } from "@/Wrapper";
 
@@ -31,7 +31,7 @@ const Continent: FC = (): JSX.Element => {
 					<BackArrow />
 				</Pressable>
 				<View style={styles.continent}>
-					<SVGIcon name={title} ele={elements} />
+					<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight / 2.4} />
 					<Text style={styles.continentText}>{title}</Text>
 				</View>
 			</ImageBackground>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Color.black,
 	},
 	header: {
-		height: 317,
+		height: WindowHeight / 2.9,
 		paddingHorizontal,
 		paddingTop: 25,
 		paddingBottom: 16,

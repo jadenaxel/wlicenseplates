@@ -10,11 +10,13 @@ import Arrow from "@/assets/images/icons/arrow-chvron-right.svg";
 interface SVGProps {
 	name: string;
 	ele: any;
+	height: number;
+	width: number;
 }
 
-export const SVGIcon = ({ name, ele }: SVGProps): JSX.Element | null => {
+export const SVGIcon = ({ name, ele, width, height }: SVGProps): JSX.Element | null => {
 	const Component: any = ele[name];
-	return Component ? <Component /> : null;
+	return Component ? <Component width={width} height={height} /> : null;
 };
 
 const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.Element => {
@@ -23,7 +25,7 @@ const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.
 			<View style={styles.overlay}>
 				<View style={{ flexDirection: "row", alignItems: "center" }}>
 					<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
-						<SVGIcon name={title} ele={elements} />
+						<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight} />
 					</ImageBackground>
 					<View style={styles.data}>
 						<Text style={styles.dataTitle}>{title}</Text>

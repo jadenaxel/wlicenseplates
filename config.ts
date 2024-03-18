@@ -2,13 +2,9 @@ import type { IColor } from "./types";
 
 import { Dimensions } from "react-native";
 
-import Africa from "@/assets/images/contient/Africa.svg";
-import America from "@/assets/images/contient/America.svg";
-import Asia from "@/assets/images/contient/Asia.svg";
-import Europe from "@/assets/images/contient/Europe.svg";
-import Australia from "@/assets/images/contient/Oceans.svg";
+import { Africa, America, Asia, Australia, Europe } from "@/assets/images/contient";
 
-export const elements: any = { Africa, America, Asia, Europe, Australia };
+export const elements: any = { Africa, America, Asia, Australia, Europe };
 
 // Getting dimensions
 export const WindowWidth: number = Dimensions.get("window").width;
