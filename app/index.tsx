@@ -5,6 +5,7 @@ import type { FC } from "react";
 import { Redirect } from "expo-router";
 
 const Home: FC = (): JSX.Element => {
+	// Redirection to the primary screen
 	return <Redirect href="/explore" />;
 };
 
