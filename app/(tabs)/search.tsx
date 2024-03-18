@@ -81,7 +81,7 @@ const Search: FC = (): JSX.Element => {
 					<View style={[styles.searchBar, search.length > 0 ? { width: WindowWidth - 100 } : { width: "100%" }]}>
 						<SearchIcon color={"white"} />
 						<TextInput
-							style={[styles.searchInput, search.length > 0 ? { width: WindowWidth - 190 } : { width: "78%" }]}
+							style={[styles.searchInput, search.length > 0 ? { width: WindowWidth - 190 } : { width: "100%" }]}
 							autoFocus
 							autoCorrect
 							onChangeText={handleSearch}
