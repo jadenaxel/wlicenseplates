@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import { ICountries } from "../types";
-import { Color, paddingHorizontal } from "../config";
+import { Color, WindowHeight, WindowWidth, paddingHorizontal } from "../config";
 
 const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {
 	const { platesNumber, title, flag }: ICountries = props;
@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	flagsContinaerImage: {
-		width: 44,
-		height: 25,
+		width: WindowWidth / 10,
+		height: WindowHeight / 25,
 		marginRight: 8.47,
 		borderRadius: 4,
 	},
 	flagsContinaerText: {
 		color: Color.white,
-		fontSize: 14,
+		fontSize: WindowWidth / 30,
 	},
 	platesNumber: {
 		fontSize: 14,

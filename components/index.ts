@@ -8,5 +8,6 @@ import Title from "./Title";
 import Loading from "./Loading";
 import POPUP from "./Popup";
 import useFecth from "./useFetch";
+import LoadingActivity from "./Activity";
 
-export { Card, ContinentList, Filter, Plates, FavoriteCard, Title, Loading, POPUP, useFecth };
+export { Card, ContinentList, Filter, Plates, FavoriteCard, Title, Loading, POPUP, useFecth, LoadingActivity };

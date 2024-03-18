@@ -99,7 +99,7 @@ const Search: FC = (): JSX.Element => {
 				</View>
 				{search.length <= 0 && (
 					<View style={styles.nocontent}>
-						<Text style={styles.nocontentText}>¡Search somthing!</Text>
+						<Text style={styles.nocontentText}>¡Search something!</Text>
 					</View>
 				)}
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>

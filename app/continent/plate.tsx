@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image }
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { Color, WindowWidth, paddingHorizontal } from "../../config";
+import { Color, WindowHeight, WindowWidth, paddingHorizontal } from "../../config";
 import { ICountries, IPlates } from "../../types";
 import { Context } from "../../Wrapper";
 
@@ -140,18 +140,13 @@ const styles = StyleSheet.create({
 	content: { paddingHorizontal },
 	continentTextYear: {
 		color: Color.white,
-		fontSize: 24,
+		fontSize: WindowWidth / 25,
 		fontWeight: "bold",
 	},
 	continentTextTitle: {
 		color: Color.white,
-		fontSize: 18,
+		fontSize: WindowWidth / 20,
 		textTransform: "uppercase",
-	},
-	continentText: {
-		fontSize: 41,
-		fontWeight: "bold",
-		color: Color.white,
 	},
 	platesContainer: {
 		borderRadius: 4,
@@ -164,8 +159,8 @@ const styles = StyleSheet.create({
 		marginBottom: 16,
 	},
 	platesImages: {
-		width: 75,
-		height: 50,
+		width: WindowWidth / 4,
+		height: WindowHeight / 15,
 		resizeMode: "contain",
 	},
 	description: {
@@ -177,8 +172,7 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		color: Color.white,
-		lineHeight: 20,
-		fontSize: 16,
+		fontSize: WindowWidth / 25,
 	},
 	detail: {
 		flexDirection: "row",
@@ -197,13 +191,13 @@ const styles = StyleSheet.create({
 	},
 	detailETitle: {
 		color: Color.white,
-		fontSize: 16,
+		fontSize: WindowWidth / 25,
 		marginBottom: 10,
 		fontWeight: "bold",
 	},
 	detailEText: {
 		color: Color.white,
-		fontSize: 14,
+		fontSize: WindowWidth / 25,
 	},
 	detailT: {
 		backgroundColor: "#171717",
@@ -212,26 +206,27 @@ const styles = StyleSheet.create({
 		paddingLeft: 12,
 		paddingRight: 16,
 		width: WindowWidth / 2.2,
+		minHeight: WindowHeight / 10,
 	},
 	detailTTitle: {
 		color: Color.white,
-		fontSize: 16,
+		fontSize: WindowWidth / 25,
 		marginBottom: 10,
 		fontWeight: "bold",
 	},
 	detailTText: {
 		color: Color.white,
-		fontSize: 14,
+		fontSize: WindowWidth / 27,
 	},
 	noteTitle: {
 		color: Color.white,
-		fontSize: 16,
+		fontSize: WindowWidth / 25,
 		marginBottom: 10,
 		fontWeight: "bold",
 	},
 	noteText: {
 		color: Color.white,
-		fontSize: 14,
+		fontSize: WindowWidth / 25,
 	},
 });
 

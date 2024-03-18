@@ -55,13 +55,14 @@ const styles = StyleSheet.create({
 	},
 	portrait: {
 		width: WindowWidth / 5,
-		height: WindowHeight / 10,
+		height: WindowHeight / 11,
+		maxHeight: WindowHeight / 11,
 		alignItems: "center",
 		justifyContent: "center",
 	},
 	data: {
 		alignSelf: "flex-end",
-		marginLeft: 10,
+		marginLeft: 20,
 		width: WindowWidth / 2,
 	},
 	dataTitle: {

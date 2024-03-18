@@ -20,7 +20,7 @@ const AppLayout: FC = (): JSX.Element => {
 	return (
 		<Tabs
 			screenOptions={{
-				tabBarStyle: { backgroundColor: Color.black, borderTopWidth: 0 },
+				tabBarStyle: { backgroundColor: Color.black, borderTopWidth: 0, flexDirection: "column" },
 				tabBarHideOnKeyboard: true,
 				tabBarActiveTintColor: Color.white,
 			}}
@@ -41,7 +41,7 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "Favorite",
-					tabBarIcon: ({ color, size }) => <IFavorite color={color} />,
+					tabBarIcon: ({ color }) => <IFavorite color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Favorite</Text>,
 					unmountOnBlur: true,
 				}}
@@ -51,7 +51,7 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "Search",
-					tabBarIcon: ({ color, size }) => <ISearch color={color} />,
+					tabBarIcon: ({ color }) => <ISearch color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>Search</Text>,
 					unmountOnBlur: true,
 				}}
@@ -61,7 +61,7 @@ const AppLayout: FC = (): JSX.Element => {
 				options={{
 					headerShown: false,
 					title: "More",
-					tabBarIcon: ({ color, size }) => <IMore color={color} />,
+					tabBarIcon: ({ color }) => <IMore color={color} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>More</Text>,
 				}}
 			/> */}

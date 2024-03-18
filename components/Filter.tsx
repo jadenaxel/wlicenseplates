@@ -1,7 +1,8 @@
 import type { FC } from "react";
 
 import { View, Text, StyleSheet } from "react-native";
-import { Color, paddingHorizontal } from "../config";
+
+import { Color, WindowWidth, paddingHorizontal } from "@/config";
 
 interface Filter {
 	title: string;
@@ -13,7 +14,7 @@ const Filter: FC<any> = (props: Filter): JSX.Element => {
 
 	return (
 		<View style={[styles.container, isSelected === title ? { backgroundColor: Color.red } : {}]}>
-			<Text style={[isSelected === title ? { color: Color.white } : {}]}>{title}</Text>
+			<Text style={[styles.text, isSelected === title ? { color: Color.white } : {}]}>{title}</Text>
 		</View>
 	);
 };
@@ -27,6 +28,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "#D6D6D6",
 		marginRight: 8,
 		marginBottom: 15,
+	},
+	text: {
+		fontSize: WindowWidth / 25,
 	},
 });
 

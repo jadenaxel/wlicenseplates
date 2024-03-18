@@ -1,12 +1,12 @@
 import type { FC } from "react";
 
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
 
 import { Link, router } from "expo-router";
 
-import { Color, WindowWidth, paddingHorizontal } from "@/config";
-import { Filter, Plates, useFecth } from "@/components";
+import { Color, WindowHeight, WindowWidth, paddingHorizontal } from "@/config";
+import { Filter, Plates, useFecth, LoadingActivity } from "@/components";
 import { ICountries, IPlates } from "@/types";
 import { Actions, Context } from "@/Wrapper";
 import Query from "@/query";
@@ -31,12 +31,7 @@ const Country: FC = (): JSX.Element => {
 
 	const newItem: any = filterPlates(plates, filterSelected);
 
-	if (isLoading)
-		return (
-			<View style={{ flex: 1, backgroundColor: Color.black, justifyContent: "center", alignItems: "center" }}>
-				<ActivityIndicator color={Color.red} size={30} />
-			</View>
-		);
+	if (isLoading) return <LoadingActivity />;
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
@@ -108,9 +103,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	contientIcon: {
-		width: 57,
-		height: 57,
+		width: WindowWidth / 10,
+		height: WindowHeight / 25,
 		marginRight: 17,
+		borderRadius: 4,
 	},
 	continentText: {
 		fontSize: WindowWidth / 15,
@@ -128,11 +124,10 @@ const styles = StyleSheet.create({
 	subheaderSideOne: {
 		flexDirection: "column",
 		justifyContent: "space-between",
-		width: 290,
 	},
 	subheaderInfoDescription: {
 		color: Color.white,
-		fontSize: 15,
+		fontSize: WindowWidth / 25,
 	},
 	subheaderInfoPlates: {
 		marginRight: 22,
@@ -140,7 +135,7 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoText: {
 		color: Color.white,
-		fontSize: 15,
+		fontSize: WindowWidth / 25,
 	},
 	filter: {
 		paddingHorizontal,

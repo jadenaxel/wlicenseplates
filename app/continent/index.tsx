@@ -43,7 +43,7 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
-				<POPUP setIsFilter={setIsFilter} />
+				{WindowWidth < 450 ? <POPUP setIsFilter={setIsFilter} /> : null}
 			</View>
 			{countries ? (
 				countries.sort(sortType).map((item: any, i: number) => {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 	subheaderSideOne: {
 		flexDirection: "column",
 		justifyContent: "space-between",
-		width: 290,
+		width: WindowWidth / 1.2,
 	},
 	subheaderInfo: {
 		flexDirection: "row",
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoDescription: {
 		color: Color.white,
-		fontSize: 15,
+		fontSize: WindowWidth / 25,
 	},
 	subheaderInfoPlates: {
 		marginRight: 22,
@@ -110,13 +110,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 	},
-	contientIcon: {
-		width: 57,
-		height: 57,
-		marginRight: 17,
-	},
 	continentText: {
-		fontSize: WindowWidth / 10,
+		fontSize: WindowWidth / 11,
 		fontWeight: "bold",
 		color: Color.white,
 		marginLeft: 17,

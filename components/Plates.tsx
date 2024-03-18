@@ -3,10 +3,10 @@ import type { FC } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 
 import { IPlates } from "../types";
-import { Color, WindowWidth } from "../config";
+import { Color, WindowHeight, WindowWidth } from "../config";
 
 const Plates: FC<IPlates> = (props: IPlates): JSX.Element => {
-	const { image, title }: IPlates  = props;
+	const { image, title }: IPlates = props;
 
 	return (
 		<View>
@@ -18,7 +18,7 @@ const Plates: FC<IPlates> = (props: IPlates): JSX.Element => {
 const styles = StyleSheet.create({
 	plateImage: {
 		width: WindowWidth / 3.3,
-		height: 61.009,
+		height: WindowHeight / 10,
 		resizeMode: "cover",
 		borderRadius: 4,
 		marginBottom: 11,
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		width: WindowWidth / 3.3,
 		textAlign: "center",
+        fontSize: WindowWidth / 25
 	},
 });
 

@@ -13,7 +13,11 @@
                 "buildType": "apk"
             }
         },
-        "production": {}
+        "production": {
+            "developmentClient": false,
+            "distribution": "internal",
+            "bun": "1.0.31"
+        }
     },
     "submit": {
         "production": {}
