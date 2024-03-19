@@ -3,6 +3,8 @@ import IFavorite from './heart';
 import ISearch from './search';
 
 import ArrowChvronRight from './arrowchright';
+import Cross from './cross';
+import Dot from './dot';
 
 export { IExplorer, IFavorite, ISearch };
-export { ArrowChvronRight };
+export { ArrowChvronRight, Cross, Dot };

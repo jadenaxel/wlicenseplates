@@ -1,13 +1,15 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from 'react-native';
 
-import { Color, WindowWidth, paddingHorizontal } from "@/config";
+import { Color, WindowWidth, paddingHorizontal, SCREEN_SIZE_COMPARATION } from '@/config';
 
 interface Filter {
 	title: string;
 	isSelected: string;
 }
+
+const TEXT_SIZE = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : WindowWidth / 30;
 
 const Filter: FC<any> = (props: Filter): JSX.Element => {
 	const { title, isSelected }: Filter = props;
@@ -25,12 +27,12 @@ const styles = StyleSheet.create({
 		borderRadius: 24,
 		paddingVertical: 6,
 		paddingHorizontal,
-		backgroundColor: "#D6D6D6",
+		backgroundColor: '#D6D6D6',
 		marginRight: 8,
 		marginBottom: 15,
 	},
 	text: {
-		fontSize: WindowWidth / 25,
+		fontSize: TEXT_SIZE,
 	},
 });
 

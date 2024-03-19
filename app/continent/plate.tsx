@@ -1,17 +1,16 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from "react-native";
+import { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from 'react-native';
 
-import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Color, WindowHeight, WindowWidth, paddingHorizontal } from "../../config";
-import { ICountries, IPlates } from "../../types";
-import { Context } from "../../Wrapper";
+import { Color, WindowHeight, WindowWidth, paddingHorizontal } from '../../config';
+import { ICountries, IPlates } from '../../types';
+import { Context } from '../../Wrapper';
 
-import Cross from "@/assets/images/icons/cross.svg";
-import Heart from "@/assets/images/icons/heart";
+import { Cross, ISearch as Heart } from '@/assets/images/icons';
 
 type TPlates = IPlates | any;
 type ParseCountry = ICountries[] | null;
@@ -24,10 +23,10 @@ const Plate: FC = (): JSX.Element => {
 
 	const SaveCountry = async () => {
 		try {
-			const data: any = await AsyncStorage.getItem("country");
+			const data: any = await AsyncStorage.getItem('country');
 			const parsing: ParseCountry = JSON.parse(data);
-			if (parsing === null) await AsyncStorage.setItem("country", JSON.stringify([state.PlatesData]));
-			else await AsyncStorage.setItem("country", JSON.stringify([...parsing, state.PlatesData]));
+			if (parsing === null) await AsyncStorage.setItem('country', JSON.stringify([state.PlatesData]));
+			else await AsyncStorage.setItem('country', JSON.stringify([...parsing, state.PlatesData]));
 		} catch (e: any) {
 			console.log(e.message);
 		}
@@ -35,7 +34,7 @@ const Plate: FC = (): JSX.Element => {
 
 	const GetCountry = async () => {
 		try {
-			const data: any = await AsyncStorage.getItem("country");
+			const data: any = await AsyncStorage.getItem('country');
 			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) return;
 			const getTitle: ICountries[] = parsing.filter((item: ICountries) => item.title === title);
@@ -47,11 +46,11 @@ const Plate: FC = (): JSX.Element => {
 
 	const RemoveHeart = async (): Promise<void> => {
 		try {
-			const data: any = await AsyncStorage.getItem("country");
+			const data: any = await AsyncStorage.getItem('country');
 			const parsing: ParseCountry = JSON.parse(data);
 			if (parsing === null) return;
 			const deleteItem: ICountries[] = parsing.filter((item: ICountries) => item.title !== title);
-			await AsyncStorage.setItem("country", JSON.stringify(deleteItem));
+			await AsyncStorage.setItem('country', JSON.stringify(deleteItem));
 		} catch (e: any) {
 			console.log(e.message);
 		}
@@ -69,10 +68,10 @@ const Plate: FC = (): JSX.Element => {
 
 	return (
 		<ScrollView style={styles.main}>
-			<ImageBackground source={{ uri: bg }} style={styles.header} resizeMode="cover">
+			<ImageBackground source={{ uri: bg }} style={styles.header} resizeMode='cover'>
 				<View style={styles.action_button}>
 					<Pressable onPress={handleHeart}>
-						<Heart color={heart ? "red" : "white"} fill={heart ? "red" : "none"} />
+						<Heart color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
 					</Pressable>
 					<Pressable onPress={() => router.back()}>
 						<Cross />
@@ -127,45 +126,45 @@ const styles = StyleSheet.create({
 		paddingHorizontal,
 		paddingTop: 25,
 		paddingBottom: 16,
-		justifyContent: "space-between",
+		justifyContent: 'space-between',
 		marginBottom: 16,
 	},
 	action_button: {
-		flexDirection: "row",
-		alignItems: "center",
+		flexDirection: 'row',
+		alignItems: 'center',
 		gap: 10,
-		alignSelf: "flex-end",
+		alignSelf: 'flex-end',
 		marginTop: 30,
 	},
 	content: { paddingHorizontal },
 	continentTextYear: {
 		color: Color.white,
 		fontSize: WindowWidth / 25,
-		fontWeight: "bold",
+		fontWeight: 'bold',
 	},
 	continentTextTitle: {
 		color: Color.white,
 		fontSize: WindowWidth / 20,
-		textTransform: "uppercase",
+		textTransform: 'uppercase',
 	},
 	platesContainer: {
 		borderRadius: 4,
 		backgroundColor: Color.white,
 		paddingHorizontal: 8.37,
 		paddingVertical: 5.14,
-		justifyContent: "center",
-		alignItems: "center",
+		justifyContent: 'center',
+		alignItems: 'center',
 		marginRight: 10,
 		marginBottom: 16,
 	},
 	platesImages: {
 		width: WindowWidth / 4,
 		height: WindowHeight / 15,
-		resizeMode: "contain",
+		resizeMode: 'contain',
 	},
 	description: {
 		marginVertical: 15,
-		backgroundColor: "#171717",
+		backgroundColor: '#171717',
 		borderRadius: 14,
 		paddingHorizontal: 11.07,
 		paddingVertical: 23.06,
@@ -175,14 +174,14 @@ const styles = StyleSheet.create({
 		fontSize: WindowWidth / 25,
 	},
 	detail: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		width: "100%",
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		width: '100%',
 		marginBottom: 15,
 	},
 	detailE: {
-		backgroundColor: "#171717",
+		backgroundColor: '#171717',
 		borderRadius: 14,
 		paddingVertical: 12,
 		paddingLeft: 12,
@@ -193,14 +192,14 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: WindowWidth / 25,
 		marginBottom: 10,
-		fontWeight: "bold",
+		fontWeight: 'bold',
 	},
 	detailEText: {
 		color: Color.white,
 		fontSize: WindowWidth / 25,
 	},
 	detailT: {
-		backgroundColor: "#171717",
+		backgroundColor: '#171717',
 		borderRadius: 14,
 		paddingVertical: 12,
 		paddingLeft: 12,
@@ -212,7 +211,7 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: WindowWidth / 25,
 		marginBottom: 10,
-		fontWeight: "bold",
+		fontWeight: 'bold',
 	},
 	detailTText: {
 		color: Color.white,
@@ -222,7 +221,7 @@ const styles = StyleSheet.create({
 		color: Color.white,
 		fontSize: WindowWidth / 25,
 		marginBottom: 10,
-		fontWeight: "bold",
+		fontWeight: 'bold',
 	},
 	noteText: {
 		color: Color.white,
