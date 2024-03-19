@@ -1,11 +1,11 @@
-import type { FC } from "react";
-import type { ICard } from "../types";
+import type { FC } from 'react';
+import type { ICard } from '../types';
 
-import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 
-import { Color, WindowHeight, WindowWidth, elements } from "../config";
+import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, elements } from '@/config';
 
-import Arrow from "@/assets/images/icons/arrow-chvron-right.svg";
+import { ArrowChvronRight } from '@/assets/images/icons';
 
 interface SVGProps {
 	name: string;
@@ -19,11 +19,14 @@ export const SVGIcon = ({ name, ele, width, height }: SVGProps): JSX.Element | n
 	return Component ? <Component width={width} height={height} /> : null;
 };
 
+const ARROW_WIDTH_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 10;
+const ARROW_HEIGHT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 40 : 10;
+
 const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.Element => {
 	return (
 		<ImageBackground source={{ uri: image }} style={styles.card} borderRadius={14} blurRadius={17}>
 			<View style={styles.overlay}>
-				<View style={{ flexDirection: "row", alignItems: "center" }}>
+				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 					<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
 						<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight} />
 					</ImageBackground>
@@ -36,7 +39,7 @@ const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.
 					</View>
 				</View>
 				<View style={styles.arrowAccess}>
-					<Arrow />
+					<ArrowChvronRight width={ARROW_WIDTH_SIZE} height={ARROW_HEIGHT_SIZE} />
 				</View>
 			</View>
 		</ImageBackground>
@@ -49,43 +52,43 @@ const styles = StyleSheet.create({
 	},
 	overlay: {
 		borderRadius: 14,
-		backgroundColor: "rgba(70,63,65,0.35)",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
+		backgroundColor: 'rgba(70,63,65,0.35)',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 		padding: 10,
 	},
 	portrait: {
 		width: WindowWidth / 5,
 		height: WindowHeight / 11,
 		maxHeight: WindowHeight / 11,
-		alignItems: "center",
-		justifyContent: "center",
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	data: {
-		alignSelf: "flex-end",
+		alignSelf: 'flex-end',
 		marginLeft: 20,
 		width: WindowWidth / 2,
 	},
 	dataTitle: {
 		color: Color.white,
 		fontSize: WindowWidth / 21,
-		fontWeight: "800",
+		fontWeight: '800',
 	},
 	dataDetails: {
 		width: WindowWidth / 2,
-		justifyContent: "space-between",
-		flexDirection: "row",
-		borderTopColor: "rgba(255,255,255,.10)",
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		borderTopColor: 'rgba(255,255,255,.10)',
 		marginTop: 10,
 		paddingTop: 10,
-		borderStyle: "solid",
+		borderStyle: 'solid',
 		borderTopWidth: 1,
-		flexWrap: "wrap",
+		flexWrap: 'wrap',
 	},
 	dataDetailsItem: {
-		color: "white",
-		fontWeight: "300",
+		color: 'white',
+		fontWeight: '300',
 		fontSize: WindowWidth / 33,
 		marginBottom: 5,
 	},
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
 		marginLeft: 20,
 		marginRight: 5,
 		marginBottom: 5,
-		alignSelf: "flex-end",
+		alignSelf: 'flex-end',
 	},
 });
 
