@@ -31,7 +31,7 @@
         "ios": "expo run:ios",
         "start": "expo start",
         "web": "expo start --web",
-        "build-a": "rm build-* && eas build -p android --profile production --local"
+        "build-a": "eas build -p android --profile production --local"
     },
-    "version": "1.0.0"
+    "version": "2.0.0"
 }

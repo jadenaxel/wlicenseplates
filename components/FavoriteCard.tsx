@@ -16,19 +16,21 @@ const DOT_SCREEN_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 12;
 
 const DETAIL_COUNTRY_LABEL: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 12;
 
-const DETAIL_TITLE: number = SCREEN_SIZE_COMPARATION ? 20 : 1250;
+const DETAIL_TITLE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 35 : 12;
+
+const CROSS_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 30 : 16;
 
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
 	const { image, title, country, RemoveHeart }: TProps = props;
 
-	const imageType: any = typeof image === 'string' ? image : image[0];
+	const imageType: any = image.hasOwnProperty('asset') ? image.asset?.url : image[0]?.asset?.url;
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.detail}>
 				<Image source={{ uri: imageType }} style={styles.image} />
 				<View>
-					{typeof image !== 'string' ? <Text style={styles.detailTextTitle}>{title}</Text> : null}
+					{!image.hasOwnProperty('asset') ? <Text style={styles.detailTextTitle}>{title}</Text> : null}
 					<View style={styles.detailTextCountry}>
 						<Dot height={DOT_SCREEN_SIZE} width={DOT_SCREEN_SIZE} />
 						<Text style={styles.detailTextCountryText}>Country</Text>
@@ -38,7 +40,7 @@ const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Elemen
 			</View>
 			{RemoveHeart ? (
 				<Pressable onPress={(): any => RemoveHeart(props.item)}>
-					<X />
+					<X width={CROSS_SIZE} height={CROSS_SIZE} />
 				</Pressable>
 			) : null}
 		</View>

@@ -1,34 +1,35 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import { useContext, useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
+import { useContext, useState } from 'react';
+import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
 
-import { router, Link } from "expo-router";
+import { router, Link } from 'expo-router';
 
-import { ICard } from "@/types";
-import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight } from "@/config";
-import { ContinentList, POPUP } from "@/components";
-import { Actions, Context } from "@/Wrapper";
+import { ICard } from '@/types';
+import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight, SCREEN_SIZE_COMPARATION } from '@/config';
+import { ContinentList, POPUP } from '@/components';
+import { Actions, Context } from '@/Wrapper';
 
-import { SVGIcon } from "@/components/Card";
+import { SVGIcon } from '@/components/Card';
+import { ArrowLeft } from '@/assets/images/icons';
 
-import BackArrow from "@/assets/images/icons/arrow-left.svg";
+const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
 
 const Continent: FC = (): JSX.Element => {
-	const [isFilter, setIsFilter] = useState<string>("Random");
+	const [isFilter, setIsFilter] = useState<string>('Random');
 	const { state, dispatch }: any = useContext(Context);
 	const { title, description, countries, image }: ICard = state.ContinentData;
 
 	const sortType = (a: any, b: any) => {
-		if (isFilter === "Random") return Math.random() - 0.5;
+		if (isFilter === 'Random') return Math.random() - 0.5;
 		else return a.title.localeCompare(b.title);
 	};
 
 	return (
 		<View style={styles.main}>
-			<ImageBackground source={{ uri: image }} style={styles.header} resizeMode="cover">
+			<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
 				<Pressable onPress={(): void => router.back()} style={styles.back}>
-					<BackArrow />
+					<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
 				</Pressable>
 				<View style={styles.continent}>
 					<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight / 2.4} />
@@ -48,7 +49,7 @@ const Continent: FC = (): JSX.Element => {
 			{countries ? (
 				countries.sort(sortType).map((item: any, i: number) => {
 					return (
-						<Link key={i} href={{ pathname: "/continent/countries" }} asChild>
+						<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
 							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>
 								<ContinentList {...item} />
 							</Pressable>
@@ -74,25 +75,25 @@ const styles = StyleSheet.create({
 		paddingHorizontal,
 		paddingTop: 25,
 		paddingBottom: 16,
-		justifyContent: "space-between",
+		justifyContent: 'space-between',
 	},
 	back: {
 		marginTop: 30,
 	},
 	subheader: {
-		backgroundColor: "#463F41",
+		backgroundColor: '#463F41',
 		padding: paddingHorizontal,
-		flexDirection: "row",
-		justifyContent: "space-between",
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 		marginBottom: 7,
 	},
 	subheaderSideOne: {
-		flexDirection: "column",
-		justifyContent: "space-between",
+		flexDirection: 'column',
+		justifyContent: 'space-between',
 		width: WindowWidth / 1.2,
 	},
 	subheaderInfo: {
-		flexDirection: "row",
+		flexDirection: 'row',
 		marginBottom: 20,
 	},
 	subheaderInfoDescription: {
@@ -107,27 +108,27 @@ const styles = StyleSheet.create({
 		fontSize: WindowWidth / 25,
 	},
 	continent: {
-		flexDirection: "row",
-		alignItems: "center",
+		flexDirection: 'row',
+		alignItems: 'center',
 	},
 	continentText: {
 		fontSize: WindowWidth / 11,
-		fontWeight: "bold",
+		fontWeight: 'bold',
 		color: Color.white,
 		marginLeft: 17,
 	},
 	subheaderIcon: {
-		alignSelf: "flex-end",
+		alignSelf: 'flex-end',
 		marginBottom: 16,
 	},
 	nocontent: {
 		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	nocontentText: {
 		color: Color.white,
-		fontWeight: "bold",
+		fontWeight: 'bold',
 		fontSize: WindowWidth / 20,
 	},
 });

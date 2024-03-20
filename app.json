@@ -8,6 +8,7 @@
                 "backgroundColor": "#000",
                 "foregroundImage": "./assets/icon.png"
             },
+            "versionCode": 3,
             "package": "com.sdjd.wlicenseplates"
         },
         "icon": "./assets/icon.png",
@@ -28,8 +29,8 @@
             "image": "./assets/splash.png",
             "resizeMode": "cover"
         },
+        "version": "1.2.0",
         "userInterfaceStyle": "dark",
-        "version": "1.0.0",
         "extra": {
             "router": {
                 "origin": false

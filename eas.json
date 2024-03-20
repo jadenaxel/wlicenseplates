@@ -16,7 +16,7 @@
         "production": {
             "developmentClient": false,
             "distribution": "internal",
-            "bun": "1.0.31"
+            "bun": "1.0.33"
         }
     },
     "submit": {

@@ -1,9 +1,9 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet } from 'react-native';
 
-import { ICountries } from "../types";
-import { Color, WindowHeight, WindowWidth, paddingHorizontal } from "../config";
+import { ICountries } from '../types';
+import { Color, WindowHeight, WindowWidth, paddingHorizontal } from '../config';
 
 const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {
 	const { plates, title, flag }: ICountries = props;
@@ -12,7 +12,7 @@ const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => 
 		<View>
 			<View style={styles.container}>
 				<View style={styles.flagsContinaer}>
-					<Image style={styles.flagsContinaerImage} source={{ uri: flag }} />
+					<Image style={styles.flagsContinaerImage} source={{ uri: flag?.asset?.url }} />
 					<Text style={styles.flagsContinaerText}>{title}</Text>
 				</View>
 				<Text style={styles.platesNumber}>{plates?.length ?? 0}</Text>
@@ -25,14 +25,14 @@ const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => 
 const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 		paddingVertical: 15,
 	},
 	flagsContinaer: {
-		flexDirection: "row",
-		alignItems: "center",
+		flexDirection: 'row',
+		alignItems: 'center',
 	},
 	flagsContinaerImage: {
 		width: WindowWidth / 10,

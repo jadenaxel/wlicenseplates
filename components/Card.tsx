@@ -24,10 +24,10 @@ const ARROW_HEIGHT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 40 : 
 
 const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.Element => {
 	return (
-		<ImageBackground source={{ uri: image }} style={styles.card} borderRadius={14} blurRadius={17}>
+		<ImageBackground source={{ uri: image?.asset?.url }} style={styles.card} borderRadius={14} blurRadius={17}>
 			<View style={styles.overlay}>
 				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-					<ImageBackground borderRadius={14} source={{ uri: image }} style={styles.portrait}>
+					<ImageBackground borderRadius={14} source={{ uri: image?.asset?.url }} style={styles.portrait}>
 						<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight} />
 					</ImageBackground>
 					<View style={styles.data}>

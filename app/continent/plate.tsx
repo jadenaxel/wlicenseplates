@@ -1,19 +1,20 @@
 import type { FC } from 'react';
+import type { IPlates } from '@/types';
 
 import { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from 'react-native';
 
 import { router } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Color, WindowHeight, WindowWidth, paddingHorizontal } from '../../config';
-import { ICountries, IPlates } from '../../types';
-import { Context } from '../../Wrapper';
+import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, GetCountry, RemoveHeart, SaveCountry } from '@/config';
+import { Context } from '@/Wrapper';
 
-import { Cross, ISearch as Heart } from '@/assets/images/icons';
+import { Cross, Heart } from '@/assets/images/icons';
 
 type TPlates = IPlates | any;
-type ParseCountry = ICountries[] | null;
+
+const X_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
+const HEART_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 24 : 22;
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
@@ -21,60 +22,30 @@ const Plate: FC = (): JSX.Element => {
 
 	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = state.PlatesData;
 
-	const SaveCountry = async () => {
-		try {
-			const data: any = await AsyncStorage.getItem('country');
-			const parsing: ParseCountry = JSON.parse(data);
-			if (parsing === null) await AsyncStorage.setItem('country', JSON.stringify([state.PlatesData]));
-			else await AsyncStorage.setItem('country', JSON.stringify([...parsing, state.PlatesData]));
-		} catch (e: any) {
-			console.log(e.message);
-		}
-	};
-
-	const GetCountry = async () => {
-		try {
-			const data: any = await AsyncStorage.getItem('country');
-			const parsing: ParseCountry = JSON.parse(data);
-			if (parsing === null) return;
-			const getTitle: ICountries[] = parsing.filter((item: ICountries) => item.title === title);
-			setHeart(getTitle.length > 0 ? true : false);
-		} catch (e: any) {
-			console.log(e.message);
-		}
-	};
-
-	const RemoveHeart = async (): Promise<void> => {
-		try {
-			const data: any = await AsyncStorage.getItem('country');
-			const parsing: ParseCountry = JSON.parse(data);
-			if (parsing === null) return;
-			const deleteItem: ICountries[] = parsing.filter((item: ICountries) => item.title !== title);
-			await AsyncStorage.setItem('country', JSON.stringify(deleteItem));
-		} catch (e: any) {
-			console.log(e.message);
-		}
+	const LocalStorage = async (): Promise<any> => {
+		const getTitle: any = await GetCountry(title);
+		setHeart(getTitle?.length > 0 ? true : false);
 	};
 
 	const handleHeart = (): void => {
-		if (heart === true) RemoveHeart();
-		if (heart === false) SaveCountry();
+		if (heart === true) RemoveHeart(state.PlatesData);
+		if (heart === false) SaveCountry(state.PlatesData);
 		setHeart((prev: boolean): boolean => !prev);
 	};
 
 	useEffect((): void => {
-		GetCountry();
+		LocalStorage();
 	}, []);
 
 	return (
 		<ScrollView style={styles.main}>
-			<ImageBackground source={{ uri: bg }} style={styles.header} resizeMode='cover'>
+			<ImageBackground source={{ uri: bg?.asset?.url }} style={styles.header} resizeMode='cover' blurRadius={3}>
 				<View style={styles.action_button}>
 					<Pressable onPress={handleHeart}>
-						<Heart color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
+						<Heart width={HEART_ICON_SIZE} height={HEART_ICON_SIZE} color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
 					</Pressable>
 					<Pressable onPress={() => router.back()}>
-						<Cross />
+						<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
 					</Pressable>
 				</View>
 				<View>
@@ -84,26 +55,32 @@ const Plate: FC = (): JSX.Element => {
 			</ImageBackground>
 			<View style={styles.content}>
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					{image.map((item: string, i: number) => {
+					{image.map((item: any, i: number) => {
 						return (
 							<View style={styles.platesContainer} key={i}>
-								<Image source={{ uri: item }} style={styles.platesImages} />
+								<Image source={{ uri: item?.asset?.url }} style={styles.platesImages} />
 							</View>
 						);
 					})}
 				</ScrollView>
-				<View style={styles.description}>
-					<Text style={styles.descriptionText}>{description}</Text>
-				</View>
+				{description ? (
+					<View style={styles.description}>
+						<Text style={styles.descriptionText}>{description}</Text>
+					</View>
+				) : null}
 				<View style={styles.detail}>
-					<View style={styles.detailE}>
-						<Text style={styles.detailETitle}>Eligibility</Text>
-						<Text style={styles.detailEText}>{eligibility}</Text>
-					</View>
-					<View style={styles.detailT}>
-						<Text style={styles.detailTTitle}>Plate Type</Text>
-						<Text style={styles.detailTText}>{plateType}</Text>
-					</View>
+					{eligibility ? (
+						<View style={styles.detailE}>
+							<Text style={styles.detailETitle}>Eligibility</Text>
+							<Text style={styles.detailEText}>{eligibility}</Text>
+						</View>
+					) : null}
+					{plateType ? (
+						<View style={styles.detailE}>
+							<Text style={styles.detailTTitle}>Plate Type</Text>
+							<Text style={styles.detailTText}>{plateType}</Text>
+						</View>
+					) : null}
 				</View>
 				{note ? (
 					<View style={{ padding: 10 }}>
@@ -121,7 +98,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Color.black,
 	},
 	header: {
-		height: 317,
+		height: WindowHeight / 2.9,
 		width: WindowWidth,
 		paddingHorizontal,
 		paddingTop: 25,
@@ -177,7 +154,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		width: '100%',
 		marginBottom: 15,
 	},
 	detailE: {
@@ -187,6 +163,8 @@ const styles = StyleSheet.create({
 		paddingLeft: 12,
 		paddingRight: 16,
 		width: WindowWidth / 2.2,
+		minHeight: WindowHeight / 6,
+		height: '100%',
 	},
 	detailETitle: {
 		color: Color.white,
@@ -197,15 +175,6 @@ const styles = StyleSheet.create({
 	detailEText: {
 		color: Color.white,
 		fontSize: WindowWidth / 25,
-	},
-	detailT: {
-		backgroundColor: '#171717',
-		borderRadius: 14,
-		paddingVertical: 12,
-		paddingLeft: 12,
-		paddingRight: 16,
-		width: WindowWidth / 2.2,
-		minHeight: WindowHeight / 10,
 	},
 	detailTTitle: {
 		color: Color.white,

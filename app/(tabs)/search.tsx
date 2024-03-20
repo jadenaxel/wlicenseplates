@@ -98,7 +98,9 @@ const Search: FC = (): JSX.Element => {
 				)}
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 					{search.length > 0 &&
-						data !== undefined &&
+						data.length > 0 &&
+						countryState.length === 0 &&
+						platesState.length > 0 &&
 						data.map((item: any, i: number) => {
 							return (
 								<Pressable key={i} onPress={() => setFilterSelected(item.title)}>

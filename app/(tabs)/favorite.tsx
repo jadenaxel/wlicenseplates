@@ -1,21 +1,20 @@
-import type { FC } from "react";
+import type { FC } from 'react';
+import type { ICountries } from '@/types';
 
-import { useState, useEffect, useContext } from "react";
-import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
+import { useState, useEffect, useContext } from 'react';
+import { View, StyleSheet, ScrollView, Text, Pressable } from 'react-native';
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Link } from "expo-router";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
 
-import { Color, WindowHeight } from "@/config";
-import { FavoriteCard, Title } from "@/components";
-import { ICountries } from "@/types";
-import { Actions, Context } from "@/Wrapper";
+import { Color, WindowHeight, GetCountry, RemoveHeart, SCREEN_SIZE_COMPARATION, WindowWidth } from '@/config';
+import { FavoriteCard, LoadingActivity, Title } from '@/components';
+import { Actions, Context } from '@/Wrapper';
 
-import NoPlate from "@/assets/images/icons/no-plate.svg";
+import { NoPlate } from '@/assets/images/icons';
 // import MenuDot from "@/assets/images/icons/menu-dot.svg";
 
-type ParseCountry = ICountries[] | null;
+const NoPlateSize: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 2 : 212;
 
 const Favorite: FC = (): JSX.Element => {
 	const [data, setData] = useState<any>([]);
@@ -87,14 +86,15 @@ const styles = StyleSheet.create({
 		backgroundColor: Color.black,
 	},
 	plate: {
-		alignItems: "center",
-		justifyContent: "center",
+		alignItems: 'center',
+		justifyContent: 'center',
 		height: WindowHeight / 1.55,
 	},
 	plateText: {
 		color: Color.white,
 		marginTop: 15,
-		fontWeight: "500",
+		fontWeight: '500',
+		fontSize: WindowWidth / 25,
 	},
 });
 

@@ -3,7 +3,7 @@ export type IColor = {
 };
 
 export type ICard = {
-	image: string;
+	image: any;
 	title: string;
 	platesNumber: number;
 	countriesQuantity: number;
@@ -12,9 +12,9 @@ export type ICard = {
 };
 
 export type ICountries = {
-	image: string;
+	image: any;
 	title: string;
-	flag: string;
+	flag: any;
 	description: string;
 	platesNumber: number;
 	continent: [ICard];
@@ -23,9 +23,9 @@ export type ICountries = {
 
 export type IPlates = {
 	title: string;
-	bg: string;
+	bg: any;
 	year: number;
-	image: [string];
+	image: any;
 	description: string;
 	note: string;
 	eligibility: string;
