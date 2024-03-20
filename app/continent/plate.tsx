@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import type { IPlates } from '@/types';
 
 import { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, Modal } from 'react-native';
 
 import { router } from 'expo-router';
 
@@ -18,6 +18,8 @@ const HEART_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 24 : 22;
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
+	const [modalImage, setModalImage] = useState<string>('');
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const { state }: any = useContext(Context);
 
 	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = state.PlatesData;
@@ -57,12 +59,37 @@ const Plate: FC = (): JSX.Element => {
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 					{image.map((item: any, i: number) => {
 						return (
-							<View style={styles.platesContainer} key={i}>
-								<Image source={{ uri: item?.asset?.url }} style={styles.platesImages} />
-							</View>
+							<Pressable
+								key={i}
+								onPress={() => {
+									setModalVisible(true);
+									setModalImage(item?.asset?.url);
+								}}
+							>
+								<View style={styles.platesContainer}>
+									<Image source={{ uri: item?.asset?.url }} style={styles.platesImages} />
+								</View>
+							</Pressable>
 						);
 					})}
 				</ScrollView>
+				<Modal
+					animationType='slide'
+					transparent={true}
+					visible={modalVisible}
+					onRequestClose={() => {
+						setModalVisible(!modalVisible);
+					}}
+				>
+					<View style={styles.modalContainer}>
+						<View style={styles.modalContent}>
+							<Image source={{ uri: modalImage }} style={styles.modalImage} />
+						</View>
+						<Pressable onPress={() => setModalVisible(false)}>
+							<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
+						</Pressable>
+					</View>
+				</Modal>
 				{description ? (
 					<View style={styles.description}>
 						<Text style={styles.descriptionText}>{description}</Text>
@@ -137,6 +164,27 @@ const styles = StyleSheet.create({
 	platesImages: {
 		width: WindowWidth / 4,
 		height: WindowHeight / 15,
+		resizeMode: 'contain',
+	},
+	modalContainer: {
+		width: WindowWidth,
+		height: WindowHeight,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	modalContent: {
+		backgroundColor: Color.white,
+		borderRadius: 6,
+		borderColor: Color.black,
+		borderWidth: 1,
+		width: WindowWidth / 1.6,
+		height: WindowHeight / 5,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	modalImage: {
+		width: WindowWidth / 2,
+		height: WindowHeight / 7,
 		resizeMode: 'contain',
 	},
 	description: {
