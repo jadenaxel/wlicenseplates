@@ -6,15 +6,19 @@ import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import { Color, WindowHeight, WindowWidth } from '@/config';
+import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/config';
 import { Actions, Context } from '@/Wrapper';
 import { FavoriteCard, Filter, LoadingActivity, useFecth } from '@/components';
 import Query from '@/query';
 
-import { ISearch, Cross as X } from '@/assets/images/icons';
+import { ISearch } from '@/assets/images/icons';
 
 const country: any = [];
 const ALL: string = 'All';
+
+const SEARCH_BAR_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 20 : 40;
+const SEARCH_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
+const SEARCH_BAR_TEXT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 25 : 15;
 
 const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>('');
@@ -72,18 +76,20 @@ const Search: FC = (): JSX.Element => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.bar}>
-					<View style={[styles.searchBar, search.length > 0 ? { width: WindowWidth - 100 } : { width: '100%' }]}>
-						<ISearch color={'white'} width={22} height={22} />
+					<View
+						style={[
+							styles.searchBar,
+							search.length > 0 ? { width: SCREEN_SIZE_COMPARATION ? WindowWidth - 130 : WindowWidth - 100 } : { width: '100%' },
+						]}
+					>
+						<ISearch color={'white'} width={SEARCH_ICON_SIZE} height={SEARCH_ICON_SIZE} />
 						<TextInput
-							style={[styles.searchInput, search.length > 0 ? { width: WindowWidth - 190 } : { width: '100%' }]}
+							style={[styles.searchInput, search.length > 0 ? { width: WindowWidth - 200 } : { width: '100%' }]}
 							autoFocus
 							autoCorrect
 							onChangeText={handleSearch}
 							defaultValue={search}
 						/>
-						<Pressable onPress={onCancel}>
-							<X width={22} height={22} />
-						</Pressable>
 					</View>
 					{search.length > 0 && (
 						<Pressable onPress={onCancel}>
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
 		marginVertical: 15,
 	},
 	searchBar: {
-		height: 36,
+		height: SEARCH_BAR_SIZE,
 		borderRadius: 12,
 		backgroundColor: '#292929',
 		flexDirection: 'row',
@@ -172,10 +178,11 @@ const styles = StyleSheet.create({
 		marginLeft: 12,
 		marginRight: 12,
 		color: 'white',
+		fontSize: SEARCH_BAR_TEXT_SIZE,
 	},
 	cancelButton: {
 		color: 'white',
-		fontSize: 17,
+		fontSize: SCREEN_SIZE_COMPARATION ? WindowWidth / 30 : 15,
 		fontWeight: '400',
 	},
 	nocontent: {

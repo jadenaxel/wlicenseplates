@@ -14,8 +14,6 @@ import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/con
 // Imports of icons for tab bottom navigation
 import { IExplorer, IFavorite, ISearch, IMore } from '@/assets/images/icons';
 
-// import IMore from "@/assets/images/icons/more";
-
 // Constant value for icons size
 const ICON_SIZE: number = 25;
 
@@ -37,7 +35,6 @@ const AppLayout: FC = (): JSX.Element => {
 					marginRight: MARING_RIGHT_SIZE,
 				},
 			}}
-			initialRouteName='favorite'
 		>
 			<Tabs.Screen
 				name='explore'
@@ -69,7 +66,6 @@ const AppLayout: FC = (): JSX.Element => {
 					unmountOnBlur: true,
 				}}
 			/>
-
 			<Tabs.Screen
 				name='more'
 				options={{
