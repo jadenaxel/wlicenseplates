@@ -19,7 +19,17 @@
         "jsEngine": "hermes",
         "orientation": "portrait",
         "plugins": [
-            "expo-router"
+            "expo-router",
+            [
+                "expo-build-properties",
+                {
+                    "android": {
+                        "compileSdkVersion": 34,
+                        "targetSdkVersion": 34,
+                        "buildToolsVersion": "34.0.0"
+                    }
+                }
+            ]
         ],
         "scheme": "your-app-scheme",
         "slug": "wlicenseplates",
@@ -39,5 +49,8 @@
                 "projectId": "39d4e5cd-e6e9-41aa-aa32-1d03f0448fc7"
             }
         }
+    },
+    "react-native-google-mobile-ads": {
+        "android_app_id": "ca-app-pub-3735161146039232~1358589131"
     }
 }

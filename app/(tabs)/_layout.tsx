@@ -5,14 +5,14 @@ import type { FC } from 'react';
 
 // Imports for Expo and Reac Native libraries
 
-import { Text } from 'react-native';
+import { Platform, Text } from 'react-native';
 import { Tabs } from 'expo-router/tabs';
 
 // Others imports
 import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/config';
 
 // Imports of icons for tab bottom navigation
-import { IExplorer, IFavorite, ISearch } from '@/assets/images/icons';
+import { IExplorer, IFavorite, ISearch, IMore } from '@/assets/images/icons';
 
 // import IMore from "@/assets/images/icons/more";
 
@@ -69,15 +69,16 @@ const AppLayout: FC = (): JSX.Element => {
 					unmountOnBlur: true,
 				}}
 			/>
-			{/* <Tabs.Screen
-				name="more"
+
+			<Tabs.Screen
+				name='more'
 				options={{
 					headerShown: false,
-					title: "More",
-					tabBarIcon: ({ color }) => <IMore color={color} />,
-					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray }}>More</Text>,
+					title: 'More',
+					tabBarIcon: ({ color }) => <IMore color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
+					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray, fontSize: FONT_SIZE_MOBILE_WIDTH }}>More</Text>,
 				}}
-			/> */}
+			/>
 		</Tabs>
 	);
 };
