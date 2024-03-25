@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, 
 
 import { router } from 'expo-router';
 
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, GetCountry, RemoveHeart, SaveCountry } from '@/config';
+import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, GetPlates, RemoveHeartPlates, SavePlates } from '@/config';
 import { Context } from '@/Wrapper';
 
 import { Cross, Heart } from '@/assets/images/icons';
@@ -22,16 +22,16 @@ const Plate: FC = (): JSX.Element => {
 	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const { state }: any = useContext(Context);
 
-	const { bg, year, image, description, eligibility, plateType, note, title }: TPlates = state.PlatesData;
+	const { bg, year, image, description, eligibility, plateType, note }: TPlates = state.PlatesData;
 
 	const LocalStorage = async (): Promise<any> => {
-		const getTitle: any = await GetCountry(title);
+		const getTitle: any = await GetPlates(year);
 		setHeart(getTitle?.length > 0 ? true : false);
 	};
 
 	const handleHeart = (): void => {
-		if (heart === true) RemoveHeart(state.PlatesData);
-		if (heart === false) SaveCountry(state.PlatesData);
+		if (heart === true) RemoveHeartPlates(state.PlatesData);
+		if (heart === false) SavePlates(state.PlatesData);
 		setHeart((prev: boolean): boolean => !prev);
 	};
 

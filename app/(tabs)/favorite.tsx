@@ -7,7 +7,7 @@ import { View, StyleSheet, ScrollView, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import { Color, WindowHeight, GetCountry, RemoveHeart, SCREEN_SIZE_COMPARATION, WindowWidth } from '@/config';
+import { Color, WindowHeight, GetPlates, RemoveHeartPlates, SCREEN_SIZE_COMPARATION, WindowWidth } from '@/config';
 import { FavoriteCard, LoadingActivity, Title } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 
@@ -21,16 +21,16 @@ const Favorite: FC = (): JSX.Element => {
 
 	const { dispatch }: any = useContext(Context);
 
-	const RemoveHearUpper = async (item: any): Promise<void> => {
+	const RemoveHeartPlatesUpper = async (item: any): Promise<void> => {
 		setLoading(true);
-		await RemoveHeart(item);
+		await RemoveHeartPlates(item);
 		setData([]);
 		await LoadData();
 		setLoading(false);
 	};
 
 	const LoadData = async (): Promise<void> => {
-		setData((await GetCountry()) ?? []);
+		setData((await GetPlates()) ?? []);
 		setLoading(false);
 	};
 
@@ -48,7 +48,7 @@ const Favorite: FC = (): JSX.Element => {
 					data.map((item: ICountries, i: number) => (
 						<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
 							<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item } })}>
-								<FavoriteCard {...item} RemoveHeart={RemoveHearUpper} item={item} />
+								<FavoriteCard {...item} RemoveHeartPlates={RemoveHeartPlatesUpper} item={item} />
 							</Pressable>
 						</Link>
 					))
