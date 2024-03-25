@@ -19,6 +19,7 @@ const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
 const Continent: FC = (): JSX.Element => {
 	const [isFilter, setIsFilter] = useState<string>('Random');
 	const { state, dispatch }: any = useContext(Context);
+
 	const { title, description, countries, image }: ICard = state.ContinentData;
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
@@ -27,6 +28,11 @@ const Continent: FC = (): JSX.Element => {
 		if (isFilter === 'Random') return Math.random() - 0.5;
 		else return a.title.localeCompare(b.title);
 	};
+
+	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => acc.plates.length + country.plates.length);
+	const PLATES_LESS: number = countries?.map((acc: any) => acc.plates.length)[0];
+
+	const PLATES_VALIDATION = TOTAL_PLATES !== undefined && typeof TOTAL_PLATES === 'number' ? TOTAL_PLATES : PLATES_LESS;
 
 	return (
 		<View style={styles.main}>
@@ -45,7 +51,7 @@ const Continent: FC = (): JSX.Element => {
 			<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
 				<View style={styles.subheaderSideOne}>
 					<View style={styles.subheaderInfo}>
-						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{countries?.plates?.length ?? 0} - License Plates</Text>
+						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{PLATES_VALIDATION ?? 0} - License Plates</Text>
 						<Text style={styles.subheaderInfoText}>{countries?.length ?? 0} Countries</Text>
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
@@ -80,7 +86,6 @@ const styles = StyleSheet.create({
 		height: WindowHeight / 2.9,
 		paddingHorizontal,
 		paddingTop: 25,
-		justifyContent: 'space-between',
 	},
 	headerContent: {
 		zIndex: 1,

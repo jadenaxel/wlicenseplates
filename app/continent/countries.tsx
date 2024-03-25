@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from 'react-native';
 
 import { Link, router } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal } from '@/config';
 import { Filter, Plates, useFecth, LoadingActivity } from '@/components';
@@ -35,6 +36,8 @@ const Country: FC = (): JSX.Element => {
 
 	if (isLoading) return <LoadingActivity />;
 
+	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
+
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
 			<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
@@ -45,8 +48,9 @@ const Country: FC = (): JSX.Element => {
 					<Image style={styles.contientIcon} source={{ uri: flag?.asset?.url }} />
 					<Text style={styles.continentText}>{title}</Text>
 				</View>
+				<LinearGradient colors={['rgba(0,0,0,0.1)', `${DYNAMIC_BACKGROUND_COLOR}`]} style={styles.linearGradient} />
 			</ImageBackground>
-			<View style={styles.subheader}>
+			<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
 				<View style={styles.subheaderSideOne}>
 					<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{plates?.length ?? 0} - License Plates</Text>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
@@ -104,6 +108,7 @@ const styles = StyleSheet.create({
 	continent: {
 		flexDirection: 'row',
 		alignItems: 'center',
+		zIndex: 1,
 	},
 	contientIcon: {
 		width: WindowWidth / 10,
@@ -116,8 +121,8 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		color: Color.white,
 	},
+	linearGradient: { aspectRatio: 1, bottom: 0, left: 0, position: 'absolute', right: 0, opacity: 0.7, height: WindowHeight / 8 },
 	subheader: {
-		backgroundColor: '#463F41',
 		paddingHorizontal: 16,
 		paddingVertical: 10,
 		flexDirection: 'row',
@@ -148,6 +153,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 15,
+        paddingBottom: 20
 	},
 	nocontent: {
 		flex: 1,

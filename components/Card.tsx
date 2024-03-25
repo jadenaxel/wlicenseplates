@@ -22,7 +22,12 @@ export const SVGIcon = ({ name, ele, width, height }: SVGProps): JSX.Element | n
 const ARROW_WIDTH_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 10;
 const ARROW_HEIGHT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 40 : 10;
 
-const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.Element => {
+const Card: FC<ICard> = ({ title, image, countries }: ICard): JSX.Element => {
+	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => acc.plates.length + country.plates.length);
+	const PLATES_LESS: number = countries?.map((acc: any) => acc.plates.length)[0];
+
+	const PLATES_VALIDATION = TOTAL_PLATES !== undefined && typeof TOTAL_PLATES === 'number' ? TOTAL_PLATES : PLATES_LESS;
+
 	return (
 		<ImageBackground source={{ uri: image?.asset?.url }} style={styles.card} borderRadius={14} blurRadius={17}>
 			<View style={styles.overlay}>
@@ -33,7 +38,7 @@ const Card: FC<ICard> = ({ title, image, platesNumber, countries }: ICard): JSX.
 					<View style={styles.data}>
 						<Text style={styles.dataTitle}>{title}</Text>
 						<View style={styles.dataDetails}>
-							<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{platesNumber} - License Plates</Text>
+							<Text style={[styles.dataDetailsItem, { marginRight: 12 }]}>{PLATES_VALIDATION ?? 0} - License Plates</Text>
 							<Text style={styles.dataDetailsItem}>{countries?.length ?? 0} Countries</Text>
 						</View>
 					</View>

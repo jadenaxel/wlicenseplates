@@ -1,35 +1,31 @@
 // Imports for react types
-import type { FC } from "react";
+import type { FC } from 'react';
 
 // Imports for Expo and Reac Native libraries
-import { useContext } from "react";
-import { StyleSheet, View, ScrollView, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useContext } from 'react';
+import { StyleSheet, View, ScrollView, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Link } from "expo-router";
+import { Link } from 'expo-router';
 
 // Others imports
-import { Color, paddingHorizontal } from "@/config";
-import { Card, Loading, Title, useFecth } from "@/components";
-import { ICard } from "@/types";
-import Query from "@/query";
-import { Actions, Context } from "@/Wrapper";
+import { Color, paddingHorizontal } from '@/config';
+import { Card, Title } from '@/components';
+import { ICard } from '@/types';
+import { Actions, Context } from '@/Wrapper';
 
 const Home: FC = (): JSX.Element => {
-	const { dispatch }: any = useContext(Context);
-	const { data, isLoading } = useFecth({ uri: Query.query.Home.Continent.query, dispatch, dispatchType: Actions.All });
+	const { state, dispatch }: any = useContext(Context);
 
 	return (
 		<SafeAreaView style={styles.body}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.container}>
-					<Title text="Explore" />
+					<Title text='Explore' />
 					<View style={styles.group}>
-						{isLoading ? (
-							<Loading />
-						) : (
-							data.map((item: ICard | any, i: number) => (
-								<Link key={i} href={{ pathname: "/continent" }} asChild>
+						{state.Data.map((item: ICard | any, i: number) => {
+							return (
+								<Link key={i} href={{ pathname: '/continent' }} asChild>
 									<Pressable
 										onPress={() =>
 											dispatch({
@@ -47,8 +43,8 @@ const Home: FC = (): JSX.Element => {
 										<Card {...item} />
 									</Pressable>
 								</Link>
-							))
-						)}
+							);
+						})}
 					</View>
 				</View>
 			</ScrollView>
