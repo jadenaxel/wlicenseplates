@@ -8,12 +8,12 @@ import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '../co
 const PLATES_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 3.3 : WindowWidth / 2.3;
 
 const Plates: FC<IPlates> = (props: IPlates): JSX.Element => {
-	const { image, title }: IPlates = props;
+	const { image, year }: IPlates = props;
 
 	return (
 		<View>
 			<Image source={{ uri: image[0]?.asset?.url }} style={styles.plateImage} />
-			<Text style={styles.plateText}>{title}</Text>
+			<Text style={styles.plateText}>{year}</Text>
 		</View>
 	);
 };

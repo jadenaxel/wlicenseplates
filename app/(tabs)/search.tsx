@@ -48,7 +48,7 @@ const Search: FC = (): JSX.Element => {
 			if (countryResults) setCountryState((prev: any) => [...prev, ...countryResults]);
 
 			stateItem?.countries?.forEach((country: any) => {
-				const plateResults = country?.plates?.filter((plate: any) => plate.title.toLowerCase().includes(text.toLowerCase()));
+				const plateResults = country?.plates?.filter((plate: any) => plate.year.toLowerCase().includes(text.toLowerCase()));
 				if (plateResults) setPlatesState((prev: any) => [...prev, ...plateResults]);
 			});
 		});
@@ -120,8 +120,8 @@ const Search: FC = (): JSX.Element => {
 						const countryTitle: any = country.filter((items: any) => items._id === item.country._ref)[0];
 						return (
 							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
-								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: countryTitle.title ?? '' } })}>
-									<FavoriteCard image={item.image} country={countryTitle.title ?? ''} title={item.title} key={i} />
+								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: countryTitle.year ?? '' } })}>
+									<FavoriteCard image={item.image} country={countryTitle.title ?? ''} year={item.year} key={i} />
 								</Pressable>
 							</Link>
 						);

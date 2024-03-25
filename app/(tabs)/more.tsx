@@ -8,8 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Color, WindowWidth, paddingHorizontal } from '@/config';
 import { Title } from '@/components';
 
-const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-3735161146039232/8868030605';
-
+const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-5125983390574582/1582337451';
 
 const More: FC = (): JSX.Element => {
 	return (

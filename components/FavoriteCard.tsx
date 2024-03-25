@@ -21,7 +21,7 @@ const DETAIL_TITLE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 35 : 12;
 const CROSS_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 30 : 16;
 
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
-	const { image, title, country, RemoveHeart }: TProps = props;
+	const { image, year, country, RemoveHeart }: TProps = props;
 
 	const imageType: any = image.hasOwnProperty('asset') ? image.asset?.url : image[0]?.asset?.url;
 
@@ -30,7 +30,7 @@ const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Elemen
 			<View style={styles.detail}>
 				<Image source={{ uri: imageType }} style={styles.image} />
 				<View>
-					{!image.hasOwnProperty('asset') ? <Text style={styles.detailTextTitle}>{title}</Text> : null}
+					{!image.hasOwnProperty('asset') ? <Text style={styles.detailTextTitle}>{year}</Text> : null}
 					<View style={styles.detailTextCountry}>
 						<Dot height={DOT_SCREEN_SIZE} width={DOT_SCREEN_SIZE} />
 						<Text style={styles.detailTextCountryText}>Country</Text>

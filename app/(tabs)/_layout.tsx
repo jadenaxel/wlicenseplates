@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 // Imports for Expo and Reac Native libraries
 
-import { Platform, Text } from 'react-native';
+import { Text } from 'react-native';
 import { Tabs } from 'expo-router/tabs';
 
 // Others imports

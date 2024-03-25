@@ -30,7 +30,7 @@ const Favorite: FC = (): JSX.Element => {
 	};
 
 	const LoadData = async (): Promise<void> => {
-		setData(await GetCountry());
+		setData((await GetCountry()) ?? []);
 		setLoading(false);
 	};
 
