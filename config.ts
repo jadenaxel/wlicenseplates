@@ -30,12 +30,12 @@ export const Color: IColor = {
 	white: '#FFFFFF',
 };
 
-export const GetPlates = async (year?: string) => {
+export const GetPlates = async (year?: string): Promise<ParsePlates | any> => {
 	try {
 		const data: any = await AsyncStorage.getItem('plates');
 		const parsing: ParsePlates = JSON.parse(data);
 		if (parsing === null) return [];
-		const getTitle: any = parsing.filter((item: any) => item.year === year);
+		const getTitle: ParsePlates = parsing.filter((item: any) => item.year === year);
 		if (year) return getTitle;
 		else return parsing;
 	} catch (e: any) {
@@ -47,7 +47,7 @@ export const RemoveHeartPlates = async (item: IPlates): Promise<void> => {
 	try {
 		const data: any = await AsyncStorage.getItem('plates');
 		const parsing: ParsePlates = JSON.parse(data);
-		if (parsing === null) return [];
+		if (parsing === null) return;
 		const deleteItem: IPlates[] = parsing.filter((items: IPlates) => items.title !== item.title);
 		await AsyncStorage.setItem('plates', JSON.stringify(deleteItem));
 	} catch (e: any) {
@@ -55,7 +55,7 @@ export const RemoveHeartPlates = async (item: IPlates): Promise<void> => {
 	}
 };
 
-export const SavePlates = async (state: any) => {
+export const SavePlates = async (state: any): Promise<void> => {
 	try {
 		const data: any = await AsyncStorage.getItem('plates');
 		const parsing: ParsePlates = JSON.parse(data);
