@@ -1,9 +1,9 @@
 import type { FC } from 'react';
+import type { IPlates } from '../types';
 
 import { View, StyleSheet, Image, Text } from 'react-native';
 
-import { IPlates } from '../types';
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '../config';
+import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/config';
 
 const PLATES_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 3.3 : WindowWidth / 2.3;
 

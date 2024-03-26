@@ -32,3 +32,28 @@ export type IPlates = {
 	plateType: string;
 	categories: any;
 };
+
+export type SVGProps = {
+	name: string;
+	ele: any;
+	height: number;
+	width: number;
+};
+
+export type Filter = {
+	title: string;
+	isSelected: string;
+};
+
+export type Props = {
+	type?: string;
+	uri: string;
+	dispatch?: any;
+	dispatchType?: any;
+};
+
+export type Return = {
+	data: any[];
+	error: any[];
+	isLoading: boolean;
+};

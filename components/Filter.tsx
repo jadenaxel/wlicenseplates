@@ -1,15 +1,28 @@
 import type { FC } from 'react';
+import type { Filter } from '@/types';
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 
 import { Color, WindowWidth, paddingHorizontal, SCREEN_SIZE_COMPARATION } from '@/config';
 
-interface Filter {
-	title: string;
-	isSelected: string;
-}
-
 const TEXT_SIZE = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : WindowWidth / 30;
+
+const FilterH: FC<any> = ({ data, setFilterSelected, filterSelected, condiction, styles }: any): JSX.Element => {
+	const renderedData = data.map((item: any, i: number) => {
+		return (
+			<Pressable key={i} onPress={() => setFilterSelected(item.title)}>
+				<Filter title={item.title} isSelected={filterSelected} />
+			</Pressable>
+		);
+	});
+
+	return (
+		<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles}>
+			{condiction ? renderedData : null}
+			{condiction === undefined ? renderedData : null}
+		</ScrollView>
+	);
+};
 
 const Filter: FC<any> = (props: Filter): JSX.Element => {
 	const { title, isSelected }: Filter = props;
@@ -36,4 +49,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Filter;
+export default FilterH;

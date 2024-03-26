@@ -1,18 +1,11 @@
 import type { FC } from 'react';
-import type { ICard } from '../types';
+import type { ICard, SVGProps } from '../types';
 
 import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 
 import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, elements } from '@/config';
 
 import { ArrowChvronRight } from '@/assets/images/icons';
-
-interface SVGProps {
-	name: string;
-	ele: any;
-	height: number;
-	width: number;
-}
 
 export const SVGIcon = ({ name, ele, width, height }: SVGProps): JSX.Element | null => {
 	const Component: any = ele[name];
@@ -26,7 +19,7 @@ const Card: FC<ICard> = ({ title, image, countries }: ICard): JSX.Element => {
 	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => acc.plates.length + country.plates.length);
 	const PLATES_LESS: number = countries?.map((acc: any) => acc.plates.length)[0];
 
-	const PLATES_VALIDATION = TOTAL_PLATES !== undefined && typeof TOTAL_PLATES === 'number' ? TOTAL_PLATES : PLATES_LESS;
+	const PLATES_VALIDATION: number = TOTAL_PLATES !== undefined && typeof TOTAL_PLATES === 'number' ? TOTAL_PLATES : PLATES_LESS;
 
 	return (
 		<ImageBackground source={{ uri: image?.asset?.url }} style={styles.card} borderRadius={14} blurRadius={17}>

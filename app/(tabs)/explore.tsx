@@ -23,28 +23,25 @@ const Home: FC = (): JSX.Element => {
 				<View style={styles.container}>
 					<Title text='Explore' />
 					<View style={styles.group}>
-						{state.Data.map((item: ICard | any, i: number) => {
-							return (
-								<Link key={i} href={{ pathname: '/continent' }} asChild>
-									<Pressable
-										onPress={() =>
-											dispatch({
-												type: Actions.Continent,
-												payload: {
-													image: item.image,
-													title: item.title,
-													platesNumber: item.platesNumber,
-													description: item.description,
-													countries: item.countries,
-												},
-											})
-										}
-									>
-										<Card {...item} />
-									</Pressable>
-								</Link>
-							);
-						})}
+						{state.Data.map((item: ICard | any, i: number) => (
+							<Link key={i} href={{ pathname: '/continent' }} asChild>
+								<Pressable
+									onPress={() =>
+										dispatch({
+											type: Actions.Continent,
+											payload: {
+												image: item.image,
+												title: item.title,
+												description: item.description,
+												countries: item.countries,
+											},
+										})
+									}
+								>
+									<Card {...item} />
+								</Pressable>
+							</Link>
+						))}
 					</View>
 				</View>
 			</ScrollView>

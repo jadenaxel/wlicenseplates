@@ -7,7 +7,7 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image }
 import { Link, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal } from '@/config';
+import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, filterPlates } from '@/config';
 import { Filter, Plates, useFecth, LoadingActivity } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 import Query from '@/query';
@@ -19,24 +19,17 @@ const ALL: string = 'All';
 const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
 
 const Country: FC = (): JSX.Element => {
+	const { data, isLoading } = useFecth({ type: 'countries', uri: Query.query.Category.query });
 	const [filterSelected, setFilterSelected] = useState<string>(ALL);
 	const { state, dispatch }: any = useContext(Context);
-	const { data, isLoading } = useFecth({ type: 'countries', uri: Query.query.Category.query });
 	const { description, flag, image, title, plates }: ICountries = state.CountryData.item;
 
-	const filterPlates = (plates: any, filter: any) => {
-		if (filter === ALL) return plates;
+	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
-		return plates.filter((plate: any) => {
-			return plate.categories.some((cat: any) => cat.title === filter);
-		});
-	};
-
-	const newItem: any = filterPlates(plates, filterSelected);
+	const newItem: any = filterPlates(plates, filterSelected, ALL);
+	const FilterData = DataFilterSorted(data, ALL);
 
 	if (isLoading) return <LoadingActivity />;
-
-	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
@@ -56,20 +49,9 @@ const Country: FC = (): JSX.Element => {
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
 			</View>
-			<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filter}>
-				{data.length > 0 &&
-					newItem?.length > 0 &&
-					data.map((item: any, i: number) => {
-						return (
-							<Pressable key={i} onPress={() => setFilterSelected(item.title)}>
-								<Filter title={item.title} isSelected={filterSelected} />
-							</Pressable>
-						);
-					})}
-			</ScrollView>
-
+			<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} styles={styles.filter} />
 			<View style={styles.plates}>
-				{newItem ? (
+				{newItem.length > 0 ? (
 					newItem.map((item: IPlates, i: number) => {
 						return (
 							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
@@ -153,12 +135,13 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 15,
-        paddingBottom: 20
+		paddingBottom: 20,
 	},
 	nocontent: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+		height: 200,
 	},
 	nocontentText: {
 		color: Color.white,

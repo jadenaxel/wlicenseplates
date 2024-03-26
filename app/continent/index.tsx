@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, Link } from 'expo-router';
 
 import { ICard } from '@/types';
-import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight, SCREEN_SIZE_COMPARATION, tableWidth } from '@/config';
-import { ContinentList, POPUP } from '@/components';
+import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight, SCREEN_SIZE_COMPARATION } from '@/config';
+import { ContinentList } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 
 import { SVGIcon } from '@/components/Card';
@@ -17,17 +17,11 @@ import { ArrowLeft } from '@/assets/images/icons';
 const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
 
 const Continent: FC = (): JSX.Element => {
-	const [isFilter, setIsFilter] = useState<string>('Random');
 	const { state, dispatch }: any = useContext(Context);
 
 	const { title, description, countries, image }: ICard = state.ContinentData;
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
-
-	const sortType = (a: any, b: any) => {
-		if (isFilter === 'Random') return Math.random() - 0.5;
-		else return a.title.localeCompare(b.title);
-	};
 
 	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => acc.plates.length + country.plates.length);
 	const PLATES_LESS: number = countries?.map((acc: any) => acc.plates.length)[0];
@@ -56,10 +50,9 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
 				</View>
-				{WindowWidth < tableWidth ? <POPUP setIsFilter={setIsFilter} /> : null}
 			</View>
 			{countries ? (
-				countries.sort(sortType).map((item: any, i: number) => {
+				countries.map((item: any, i: number) => {
 					return (
 						<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
 							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>

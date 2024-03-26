@@ -1,21 +1,23 @@
 import type { FC } from 'react';
 
-import { StyleSheet, ScrollView } from 'react-native';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import { StyleSheet, ScrollView, View } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Color, WindowWidth, paddingHorizontal } from '@/config';
 import { Title } from '@/components';
 
-const adUnitId = 'ca-app-pub-5125983390574582/1582337451';
+const adUnitId: string = 'ca-app-pub-5125983390574582/1582337451';
 
 const More: FC = (): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
+			<View style={styles.bannerAd}>
+				<BannerAd unitId={adUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
+			</View>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Title text='More' />
-				<BannerAd unitId={adUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
 				{/* <View style={styles.appC}>
 					{new Array(0).fill(2).map((item: number, i: number) => {
 						return (
@@ -37,25 +39,10 @@ const styles = StyleSheet.create({
 		paddingHorizontal,
 		backgroundColor: Color.black,
 	},
-	buyacoffee: {
-		backgroundColor: '#FFFF64',
-		borderRadius: 14,
-		paddingHorizontal: 14,
-		paddingVertical: 28,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		marginVertical: 15,
-	},
-	coffee: {
-		flexDirection: 'row',
-		alignItems: 'center',
-	},
-	coffeeText: {
-		fontSize: WindowWidth / 20,
-		fontWeight: 'bold',
-		width: WindowWidth / 3,
-		marginLeft: 13,
+	bannerAd: {
+		position: 'absolute',
+		bottom: 0,
+		width: WindowWidth,
 	},
 	goButton: {
 		paddingHorizontal: 35,

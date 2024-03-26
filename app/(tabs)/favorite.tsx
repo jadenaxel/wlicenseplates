@@ -7,7 +7,7 @@ import { View, StyleSheet, ScrollView, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import { Color, WindowHeight, GetPlates, RemoveHeartPlates, SCREEN_SIZE_COMPARATION, WindowWidth } from '@/config';
+import { Color, WindowHeight, GetPlates, RemoveHeartPlates, SCREEN_SIZE_COMPARATION, WindowWidth, paddingHorizontal } from '@/config';
 import { FavoriteCard, LoadingActivity, Title } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 
@@ -30,7 +30,7 @@ const Favorite: FC = (): JSX.Element => {
 	};
 
 	const LoadData = async (): Promise<void> => {
-		setData((await GetPlates()) ?? []);
+		setData(await GetPlates());
 		setLoading(false);
 	};
 
@@ -66,7 +66,7 @@ const Favorite: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal: 16,
+		paddingHorizontal,
 		backgroundColor: Color.black,
 	},
 	plate: {

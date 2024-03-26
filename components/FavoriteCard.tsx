@@ -1,27 +1,22 @@
 import type { FC } from 'react';
+import type { ICountries } from '@/types';
 
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-import { ICountries } from '@/types';
-
-import { Color, WindowHeight, WindowWidth, SCREEN_SIZE_COMPARATION } from '@/config';
+import { Color, WindowHeight, WindowWidth, SCREEN_SIZE_COMPARATION, paddingHorizontal } from '@/config';
 
 import { Cross as X, Dot } from '@/assets/images/icons';
 
 type TProps = ICountries | any;
 
 const IMAGE_SCREEN_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 6 : WindowWidth / 4;
-
 const DOT_SCREEN_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 12;
-
 const DETAIL_COUNTRY_LABEL: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 12;
-
 const DETAIL_TITLE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 35 : 12;
-
 const CROSS_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 30 : 16;
 
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
-	const { image, year, country, RemoveHeart }: TProps = props;
+	const { image, year, country, RemoveHeartPlates }: TProps = props;
 
 	const imageType: any = image.hasOwnProperty('asset') ? image.asset?.url : image[0]?.asset?.url;
 
@@ -38,8 +33,8 @@ const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Elemen
 					</View>
 				</View>
 			</View>
-			{RemoveHeart ? (
-				<Pressable onPress={(): any => RemoveHeart(props.item)}>
+			{RemoveHeartPlates ? (
+				<Pressable onPress={(): any => RemoveHeartPlates(props.item)}>
 					<X width={CROSS_SIZE} height={CROSS_SIZE} />
 				</Pressable>
 			) : null}
@@ -53,7 +48,7 @@ const styles = StyleSheet.create({
 		borderRadius: 14,
 		backgroundColor: '#171717',
 		marginVertical: 10,
-		paddingHorizontal: 16,
+		paddingHorizontal,
 		paddingVertical: 12,
 		justifyContent: 'space-between',
 		alignItems: 'center',

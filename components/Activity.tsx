@@ -1,7 +1,8 @@
-import { Color } from "@/config";
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+
+import { Color } from '@/config';
 
 const LoadingActivity: FC = (): JSX.Element => {
 	return (
@@ -11,7 +12,7 @@ const LoadingActivity: FC = (): JSX.Element => {
 	);
 };
 const styles = StyleSheet.create({
-	main: { flex: 1, backgroundColor: Color.black, justifyContent: "center", alignItems: "center" },
+	main: { flex: 1, backgroundColor: Color.black, justifyContent: 'center', alignItems: 'center' },
 });
 
 export default LoadingActivity;

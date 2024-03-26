@@ -1,8 +1,8 @@
 import type { FC } from 'react';
+import type { ICountries } from '../types';
 
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-import { ICountries } from '../types';
 import { Color, WindowHeight, WindowWidth, paddingHorizontal } from '../config';
 
 const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {

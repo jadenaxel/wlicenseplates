@@ -6,7 +6,7 @@ import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/config';
+import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, filterPlates, paddingHorizontal } from '@/config';
 import { Actions, Context } from '@/Wrapper';
 import { FavoriteCard, Filter, LoadingActivity, useFecth } from '@/components';
 import Query from '@/query';
@@ -24,12 +24,12 @@ const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>('');
 	const [countryState, setCountryState] = useState<any>([]);
 	const [platesState, setPlatesState] = useState<any>([]);
-
-	const [filterSelected, setFilterSelected] = useState<string>('All');
-	const { state, dispatch }: any = useContext(Context);
-	const StateData: any = state.Data;
+	const [filterSelected, setFilterSelected] = useState<string>(ALL);
 
 	const { data, isLoading } = useFecth({ uri: Query.query.Category.query, type: 'search' });
+
+	const { state, dispatch }: any = useContext(Context);
+	const StateData: any = state.Data;
 
 	const handleSearch = (text: string): void => {
 		if (text.length === 0) {
@@ -60,15 +60,14 @@ const Search: FC = (): JSX.Element => {
 		setPlatesState([]);
 	};
 
-	const filterPlates = (plates: any, filter: any): any => {
-		if (filter === ALL) return plates;
+	const newItem: any = filterPlates(platesState, filterSelected, ALL);
+	const FilterData: any = DataFilterSorted(data, ALL);
 
-		return plates.filter((plate: any) => {
-			return plate.categories.some((cat: any) => cat.title === filter);
-		});
-	};
+	const SEARCH_BAR_SIZE_VIEW: any = search.length > 0 ? { width: SCREEN_SIZE_COMPARATION ? WindowWidth - 130 : WindowWidth - 100 } : { width: '100%' };
+	const TEXT_INPUT_SIZE_ELE: any = search.length > 0 ? { width: WindowWidth - 200 } : { width: '100%' };
 
-	const newItem: any = filterPlates(platesState, filterSelected);
+	const FILTER_RENDER_CONDITION: boolean = search.length > 0 && data.length > 0 && countryState.length === 0 && platesState.length > 0;
+	const COUNTRY_RENDER_CONDITION: boolean = countryState.length > 0 && filterSelected === ALL;
 
 	if (isLoading) return <LoadingActivity />;
 
@@ -76,20 +75,9 @@ const Search: FC = (): JSX.Element => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.bar}>
-					<View
-						style={[
-							styles.searchBar,
-							search.length > 0 ? { width: SCREEN_SIZE_COMPARATION ? WindowWidth - 130 : WindowWidth - 100 } : { width: '100%' },
-						]}
-					>
+					<View style={[styles.searchBar, SEARCH_BAR_SIZE_VIEW]}>
 						<ISearch color={'white'} width={SEARCH_ICON_SIZE} height={SEARCH_ICON_SIZE} />
-						<TextInput
-							style={[styles.searchInput, search.length > 0 ? { width: WindowWidth - 200 } : { width: '100%' }]}
-							autoFocus
-							autoCorrect
-							onChangeText={handleSearch}
-							defaultValue={search}
-						/>
+						<TextInput style={[styles.searchInput, TEXT_INPUT_SIZE_ELE]} autoFocus autoCorrect onChangeText={handleSearch} defaultValue={search} />
 					</View>
 					{search.length > 0 && (
 						<Pressable onPress={onCancel}>
@@ -102,19 +90,7 @@ const Search: FC = (): JSX.Element => {
 						<Text style={styles.nocontentText}>¡Search something!</Text>
 					</View>
 				)}
-				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					{search.length > 0 &&
-						data.length > 0 &&
-						countryState.length === 0 &&
-						platesState.length > 0 &&
-						data.map((item: any, i: number) => {
-							return (
-								<Pressable key={i} onPress={() => setFilterSelected(item.title)}>
-									<Filter title={item.title} isSelected={filterSelected} />
-								</Pressable>
-							);
-						})}
-				</ScrollView>
+				<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} condiction={FILTER_RENDER_CONDITION} />
 				{newItem.length > 0 &&
 					newItem.map((item: any, i: number) => {
 						const countryTitle: any = country.filter((items: any) => items._id === item.country._ref)[0];
@@ -126,8 +102,7 @@ const Search: FC = (): JSX.Element => {
 							</Link>
 						);
 					})}
-				{countryState.length > 0 &&
-					filterSelected === ALL &&
+				{COUNTRY_RENDER_CONDITION &&
 					countryState.map((item: any, i: number) => {
 						return (
 							<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
@@ -138,7 +113,7 @@ const Search: FC = (): JSX.Element => {
 						);
 					})}
 
-				{search.length > 0 && countryState.length <= 0 && platesState.length <= 0 && (
+				{search.length > 0 && countryState.length === 0 && newItem.length === 0 && (
 					<View style={styles.nocontent}>
 						<Text style={styles.nocontentText}>No results</Text>
 					</View>
@@ -151,14 +126,8 @@ const Search: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal: 16,
+		paddingHorizontal,
 		backgroundColor: Color.black,
-	},
-	title: {
-		color: Color.white,
-		fontSize: 28,
-		marginTop: 70,
-		marginBottom: 29,
 	},
 	bar: {
 		flexDirection: 'row',

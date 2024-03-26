@@ -1,7 +1,9 @@
 // Imports for react types
-import { useContext, type FC, useEffect } from 'react';
+import type { FC } from 'react';
 
-import 'expo-dev-client';
+import { useContext } from 'react';
+
+// import 'expo-dev-client';
 
 // Imports for Expo and Reac Native libraries
 import { Redirect } from 'expo-router';

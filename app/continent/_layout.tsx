@@ -1,17 +1,19 @@
-import { Stack } from "expo-router";
+import type { FC } from 'react';
 
-const StackLayout = () => {
+import { Stack } from 'expo-router';
+
+const StackLayout: FC = (): JSX.Element => {
 	return (
 		<Stack screenOptions={{ headerShown: false }}>
 			<Stack.Screen
-				name="index"
+				name='index'
 				options={{
 					headerTransparent: true,
 					headerShown: false,
 				}}
 			/>
-			<Stack.Screen name="countries" />
-			<Stack.Screen name="plate" />
+			<Stack.Screen name='countries' />
+			<Stack.Screen name='plate' />
 		</Stack>
 	);
 };

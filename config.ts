@@ -65,3 +65,18 @@ export const SavePlates = async (state: any): Promise<void> => {
 		console.log(e.message);
 	}
 };
+
+export const DataFilterSorted = (data: any, ALL: string) => {
+	const FilterAllTitle = data.filter((item: any) => item.title === ALL);
+	const FilterOtherTitle = data.filter((item: any) => item.title !== ALL).sort((a: any, b: any) => a.title.localeCompare(b.title));
+
+	return [...FilterAllTitle, ...FilterOtherTitle];
+};
+
+export const filterPlates = (plates: any, filter: any, ALL: string) => {
+	if (filter === ALL) return plates;
+
+	return plates.filter((plate: any) => {
+		return plate.categories.some((cat: any) => cat.title === filter);
+	});
+};
