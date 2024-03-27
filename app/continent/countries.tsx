@@ -26,7 +26,7 @@ const Country: FC = (): JSX.Element => {
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
-	const newItem: any = filterPlates(plates, filterSelected, ALL);
+	const newItem: any = filterPlates(plates ?? [], filterSelected, ALL);
 	const FilterData = DataFilterSorted(data, ALL);
 
 	if (isLoading) return <LoadingActivity />;
@@ -51,7 +51,7 @@ const Country: FC = (): JSX.Element => {
 			</View>
 			<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} styles={styles.filter} />
 			<View style={styles.plates}>
-				{newItem.length > 0 ? (
+				{newItem !== null && newItem.length > 0 ? (
 					newItem.map((item: IPlates, i: number) => {
 						return (
 							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>

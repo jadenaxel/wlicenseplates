@@ -68,7 +68,7 @@ export const SavePlates = async (state: any): Promise<void> => {
 
 export const DataFilterSorted = (data: any, ALL: string) => {
 	const FilterAllTitle = data.filter((item: any) => item.title === ALL);
-	const FilterOtherTitle = data.filter((item: any) => item.title !== ALL).sort((a: any, b: any) => a.title.localeCompare(b.title));
+	const FilterOtherTitle = data.filter((item: any) => item.title !== ALL);
 
 	return [...FilterAllTitle, ...FilterOtherTitle];
 };

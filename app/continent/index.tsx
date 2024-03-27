@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import { useContext } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, Link } from 'expo-router';
@@ -23,13 +23,13 @@ const Continent: FC = (): JSX.Element => {
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
-	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => acc.plates.length + country.plates.length);
-	const PLATES_LESS: number = countries?.map((acc: any) => acc.plates.length)[0];
-
-	const PLATES_VALIDATION = TOTAL_PLATES !== undefined && typeof TOTAL_PLATES === 'number' ? TOTAL_PLATES : PLATES_LESS;
+	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => {
+		const VALUE = country.plates?.length ?? 0;
+		return acc + VALUE;
+	}, 0);
 
 	return (
-		<View style={styles.main}>
+		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
 			<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
 				<View style={styles.headerContent}>
 					<Pressable onPress={(): void => router.back()} style={styles.back}>
@@ -45,7 +45,7 @@ const Continent: FC = (): JSX.Element => {
 			<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
 				<View style={styles.subheaderSideOne}>
 					<View style={styles.subheaderInfo}>
-						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{PLATES_VALIDATION ?? 0} - License Plates</Text>
+						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{TOTAL_PLATES ?? 0} - License Plates</Text>
 						<Text style={styles.subheaderInfoText}>{countries?.length ?? 0} Countries</Text>
 					</View>
 					<Text style={styles.subheaderInfoDescription}>{description}</Text>
@@ -66,7 +66,7 @@ const Continent: FC = (): JSX.Element => {
 					<Text style={styles.nocontentText}>There's no content</Text>
 				</View>
 			)}
-		</View>
+		</ScrollView>
 	);
 };
 

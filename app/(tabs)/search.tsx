@@ -60,7 +60,7 @@ const Search: FC = (): JSX.Element => {
 		setPlatesState([]);
 	};
 
-	const newItem: any = filterPlates(platesState, filterSelected, ALL);
+	const newItem: any = filterPlates(platesState ?? [], filterSelected, ALL);
 	const FilterData: any = DataFilterSorted(data, ALL);
 
 	const SEARCH_BAR_SIZE_VIEW: any = search.length > 0 ? { width: SCREEN_SIZE_COMPARATION ? WindowWidth - 130 : WindowWidth - 100 } : { width: '100%' };
