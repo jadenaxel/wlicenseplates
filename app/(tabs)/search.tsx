@@ -6,11 +6,12 @@ import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+
 import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, filterPlates, paddingHorizontal } from '@/config';
 import { Actions, Context } from '@/Wrapper';
 import { FavoriteCard, Filter, LoadingActivity, useFecth } from '@/components';
 import Query from '@/query';
-
 import { ISearch } from '@/assets/images/icons';
 
 const country: any = [];
@@ -19,6 +20,8 @@ const ALL: string = 'All';
 const SEARCH_BAR_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 20 : 40;
 const SEARCH_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
 const SEARCH_BAR_TEXT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 25 : 15;
+
+const SEARCH_AD_UNIT: string = 'ca-app-pub-5125983390574582/1770303045';
 
 const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>('');
@@ -97,7 +100,7 @@ const Search: FC = (): JSX.Element => {
 						return (
 							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
 								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: countryTitle.year ?? '' } })}>
-									<FavoriteCard image={item.image} country={countryTitle.title ?? ''} year={item.year} key={i} />
+									<FavoriteCard image={item.image} country={countryTitle?.title ?? ''} year={item.year} key={i} />
 								</Pressable>
 							</Link>
 						);
@@ -119,6 +122,9 @@ const Search: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
+			<View style={styles.bannerAd}>
+				<BannerAd unitId={SEARCH_AD_UNIT} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
+			</View>
 		</SafeAreaView>
 	);
 };
@@ -128,6 +134,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal,
 		backgroundColor: Color.black,
+		paddingBottom: 70,
+	},
+	bannerAd: {
+		position: 'absolute',
+		bottom: 0,
 	},
 	bar: {
 		flexDirection: 'row',

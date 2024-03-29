@@ -57,5 +57,13 @@ export default {
                 title
             }`,
 		},
+		Others: {
+			query: 'https://fxqapxmx.api.sanity.io/v2022-03-07/data/query/production?query=*%5B_type%3D%3D%22others%22%5D%5B0%5D%7Bcontribute_email%2Ccontribute_subject%2Ccontribute_description%7D',
+			qroq: `*[_type=="others"][0]{
+                        contribute_email,
+                        contribute_subject,
+                        contribute_description
+                    }`,
+		},
 	},
 };
