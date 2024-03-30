@@ -1,12 +1,12 @@
-import { useState, type FC, useEffect } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
-import { StyleSheet, ScrollView, View, Text, Linking, Pressable } from 'react-native';
-import { BannerAd, BannerAdSize, RewardedAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
+import { StyleSheet, ScrollView, View, Text, Linking, Pressable, Alert } from 'react-native';
+import { RewardedAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Color, WindowWidth, paddingHorizontal } from '@/config';
-import { Title, useFecth, LoadingActivity } from '@/components';
+import { Title, useFecth, LoadingActivity, AdBanner } from '@/components';
 import Query from '@/query';
 
 const AD_UNIT_MORE: string = 'ca-app-pub-5125983390574582/1582337451';
@@ -17,13 +17,14 @@ const rewarded = RewardedAd.createForAdRequest(AD_UNIT_MORE_VIDEO, {
 });
 
 const More: FC = (): JSX.Element => {
+	const [loaded, setLoaded] = useState<boolean>(true);
 	const { data, isLoading } = useFecth({ uri: Query.query.Others.query });
 	const { contribute_email, contribute_subject, contribute_description }: any = data;
 
 	const MAIL_TO: string = `mailto:${contribute_email}?subject=${contribute_subject ?? ''}&body=${contribute_description ?? ''}`;
 
 	useEffect(() => {
-		const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {});
+		const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => setLoaded(false));
 		rewarded.load();
 
 		return () => {
@@ -31,14 +32,11 @@ const More: FC = (): JSX.Element => {
 		};
 	}, []);
 
-	if (isLoading) return <LoadingActivity />;
+	if (isLoading || loaded) return <LoadingActivity />;
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<View style={styles.bannerAd}>
-				<BannerAd unitId={AD_UNIT_MORE} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
-			</View>
-
+			<AdBanner ID={AD_UNIT_MORE} />
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Title text='More' />
 				{contribute_email.length > 0 && (
@@ -48,7 +46,15 @@ const More: FC = (): JSX.Element => {
 						</View>
 					</Pressable>
 				)}
-				<Pressable onPress={() => rewarded.show()}>
+				<Pressable
+					onPress={() => {
+						try {
+							rewarded.show();
+						} catch (e) {
+							Alert.alert('Wait a minute...');
+						}
+					}}
+				>
 					<View style={styles.videoAd}>
 						<Text style={styles.videoAdText}>Watch Ads!!!</Text>
 					</View>
@@ -73,11 +79,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal,
 		backgroundColor: Color.black,
-	},
-	bannerAd: {
-		position: 'absolute',
-		bottom: 0,
-		width: WindowWidth,
 	},
 	videoAd: {
 		backgroundColor: Color.gray,

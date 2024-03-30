@@ -8,12 +8,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
 import { Color, WindowHeight, GetPlates, RemoveHeartPlates, SCREEN_SIZE_COMPARATION, WindowWidth, paddingHorizontal } from '@/config';
-import { FavoriteCard, LoadingActivity, Title } from '@/components';
+import { FavoriteCard, LoadingActivity, Title, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 
 import { NoPlate } from '@/assets/images/icons';
 
 const NoPlateSize: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 2 : 212;
+
+const FAVORITE_AD_BANNER: string = 'ca-app-pub-5125983390574582/2755866057';
 
 const Favorite: FC = (): JSX.Element => {
 	const [data, setData] = useState<any>([]);
@@ -59,6 +61,7 @@ const Favorite: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
+			<AdBanner ID={FAVORITE_AD_BANNER} />
 		</SafeAreaView>
 	);
 };
@@ -68,6 +71,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal,
 		backgroundColor: Color.black,
+        paddingBottom: 70
 	},
 	plate: {
 		alignItems: 'center',

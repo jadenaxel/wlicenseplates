@@ -57,9 +57,10 @@ const AppLayout: FC = (): JSX.Element => {
 				}}
 			/>
 			<Tabs.Screen
-				name='search'
+				name={'search'}
 				options={{
 					headerShown: false,
+
 					title: 'Search',
 					tabBarIcon: ({ color }) => <ISearch color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray, fontSize: FONT_SIZE_MOBILE_WIDTH }}>Search</Text>,

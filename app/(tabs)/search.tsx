@@ -10,7 +10,7 @@ import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, filterPlates, paddingHorizontal } from '@/config';
 import { Actions, Context } from '@/Wrapper';
-import { FavoriteCard, Filter, LoadingActivity, useFecth } from '@/components';
+import { FavoriteCard, Filter, LoadingActivity, useFecth, AdBanner } from '@/components';
 import Query from '@/query';
 import { ISearch } from '@/assets/images/icons';
 
@@ -122,9 +122,7 @@ const Search: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
-			<View style={styles.bannerAd}>
-				<BannerAd unitId={SEARCH_AD_UNIT} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
-			</View>
+			<AdBanner ID={SEARCH_AD_UNIT} />
 		</SafeAreaView>
 	);
 };
@@ -135,10 +133,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal,
 		backgroundColor: Color.black,
 		paddingBottom: 70,
-	},
-	bannerAd: {
-		position: 'absolute',
-		bottom: 0,
 	},
 	bar: {
 		flexDirection: 'row',

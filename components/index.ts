@@ -7,5 +7,6 @@ import FavoriteCard from './FavoriteCard';
 import Title from './Title';
 import useFecth from './useFetch';
 import LoadingActivity from './Activity';
+import AdBanner from './AdBanner';
 
-export { Card, ContinentList, Filter, Plates, FavoriteCard, Title, useFecth, LoadingActivity };
+export { Card, ContinentList, Filter, Plates, FavoriteCard, Title, useFecth, LoadingActivity, AdBanner };
