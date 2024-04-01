@@ -1,7 +1,6 @@
-import { type FC, useEffect, useState } from 'react';
+import type { FC } from 'react';
 
 import { StyleSheet, ScrollView, View, Text, Linking, Pressable, Alert } from 'react-native';
-import { RewardedAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -10,29 +9,14 @@ import { Title, useFecth, LoadingActivity, AdBanner } from '@/components';
 import Query from '@/query';
 
 const AD_UNIT_MORE: string = 'ca-app-pub-5125983390574582/1582337451';
-const AD_UNIT_MORE_VIDEO: string = 'ca-app-pub-5125983390574582/3553840774';
-
-const rewarded = RewardedAd.createForAdRequest(AD_UNIT_MORE_VIDEO, {
-	keywords: ['game', 'apps'],
-});
 
 const More: FC = (): JSX.Element => {
-	const [loaded, setLoaded] = useState<boolean>(true);
 	const { data, isLoading } = useFecth({ uri: Query.query.Others.query });
 	const { contribute_email, contribute_subject, contribute_description }: any = data;
 
 	const MAIL_TO: string = `mailto:${contribute_email}?subject=${contribute_subject ?? ''}&body=${contribute_description ?? ''}`;
 
-	useEffect(() => {
-		const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => setLoaded(false));
-		rewarded.load();
-
-		return () => {
-			unsubscribeLoaded();
-		};
-	}, []);
-
-	if (isLoading || loaded) return <LoadingActivity />;
+	if (isLoading) return <LoadingActivity />;
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -46,19 +30,6 @@ const More: FC = (): JSX.Element => {
 						</View>
 					</Pressable>
 				)}
-				<Pressable
-					onPress={() => {
-						try {
-							rewarded.show();
-						} catch (e) {
-							Alert.alert('Wait a minute...');
-						}
-					}}
-				>
-					<View style={styles.videoAd}>
-						<Text style={styles.videoAdText}>Watch Ads!!!</Text>
-					</View>
-				</Pressable>
 				{/* <View style={styles.appC}>
 					{new Array(10).fill(2).map((item: number, i: number) => {
 						return (

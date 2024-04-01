@@ -1,14 +1,16 @@
 import type { FC } from 'react';
 import type { ICountries, IPlates } from '@/types';
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from 'react-native';
 
 import { Link, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { useInterstitialAd } from 'react-native-google-mobile-ads';
+
 import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, filterPlates } from '@/config';
-import { Filter, Plates, useFecth, LoadingActivity } from '@/components';
+import { Filter, Plates, useFecth, LoadingActivity, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 import Query from '@/query';
 
@@ -16,9 +18,14 @@ import { ArrowLeft } from '@/assets/images/icons';
 
 const ALL: string = 'All';
 
+const COUNTRIES_AD_BANNER_V1: string = 'ca-app-pub-5125983390574582/6247855677';
+const SINGLE_PLATE_TRANSITION_V1: string = 'ca-app-pub-5125983390574582/9803957300';
+
 const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
 
 const Country: FC = (): JSX.Element => {
+	const { isLoaded, load, show } = useInterstitialAd(SINGLE_PLATE_TRANSITION_V1);
+
 	const { data, isLoading } = useFecth({ type: 'countries', uri: Query.query.Category.query });
 	const [filterSelected, setFilterSelected] = useState<string>(ALL);
 	const { state, dispatch }: any = useContext(Context);
@@ -29,51 +36,62 @@ const Country: FC = (): JSX.Element => {
 	const newItem: any = filterPlates(plates ?? [], filterSelected, ALL);
 	const FilterData = DataFilterSorted(data, ALL);
 
+	useEffect(() => {
+		load();
+	}, [load]);
+
 	if (isLoading) return <LoadingActivity />;
 
 	return (
-		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
-			<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
-				<Pressable onPress={(): void => router.back()} style={styles.back}>
-					<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
-				</Pressable>
-				<View style={styles.continent}>
-					<Image style={styles.contientIcon} source={{ uri: flag?.asset?.url }} />
-					<Text style={styles.continentText}>{title}</Text>
-				</View>
-				<LinearGradient colors={['rgba(0,0,0,0.1)', `${DYNAMIC_BACKGROUND_COLOR}`]} style={styles.linearGradient} />
-			</ImageBackground>
-			<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
-				<View style={styles.subheaderSideOne}>
-					<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{plates?.length ?? 0} - License Plates</Text>
-					<Text style={styles.subheaderInfoDescription}>{description}</Text>
-				</View>
-			</View>
-			<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} styles={styles.filter} />
-			<View style={styles.plates}>
-				{newItem !== null && newItem.length > 0 ? (
-					newItem.map((item: IPlates, i: number) => {
-						return (
-							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
-								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: title } })}>
-									<Plates {...item} />
-								</Pressable>
-							</Link>
-						);
-					})
-				) : (
-					<View style={styles.nocontent}>
-						<Text style={styles.nocontentText}>There's no content</Text>
+		<View style={{ flex: 1 }}>
+			<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
+				<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
+					<Pressable onPress={(): void => router.back()} style={styles.back}>
+						<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
+					</Pressable>
+					<View style={styles.continent}>
+						<Image style={styles.contientIcon} source={{ uri: flag?.asset?.url }} />
+						<Text style={styles.continentText}>{title}</Text>
 					</View>
-				)}
-			</View>
-		</ScrollView>
+					<LinearGradient colors={['rgba(0,0,0,0.1)', `${DYNAMIC_BACKGROUND_COLOR}`]} style={styles.linearGradient} />
+				</ImageBackground>
+				<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
+					<View style={styles.subheaderSideOne}>
+						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{plates?.length ?? 0} - License Plates</Text>
+						<Text style={styles.subheaderInfoDescription}>{description}</Text>
+					</View>
+				</View>
+				<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} styles={styles.filter} />
+				<View style={styles.plates}>
+					{newItem !== null && newItem.length > 0 ? (
+						newItem.map((item: IPlates, i: number) => {
+							return (
+								<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
+									<Pressable
+										onPress={() => {
+											dispatch({ type: Actions.Plates, payload: { item, country: title } });
+											if (isLoaded) show();
+										}}
+									>
+										<Plates {...item} />
+									</Pressable>
+								</Link>
+							);
+						})
+					) : (
+						<View style={styles.nocontent}>
+							<Text style={styles.nocontentText}>There's no content</Text>
+						</View>
+					)}
+				</View>
+			</ScrollView>
+			<AdBanner ID={COUNTRIES_AD_BANNER_V1} />
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	main: {
-		flex: 1,
 		backgroundColor: Color.black,
 	},
 	back: {
@@ -135,7 +153,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 15,
-		paddingBottom: 20,
+		paddingBottom: 80,
 	},
 	nocontent: {
 		flex: 1,

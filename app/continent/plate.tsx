@@ -10,11 +10,14 @@ import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHoriz
 import { Context } from '@/Wrapper';
 
 import { Cross, Heart } from '@/assets/images/icons';
+import { AdBanner } from '@/components';
 
 type TPlates = IPlates | any;
 
 const X_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
 const HEART_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 24 : 22;
+
+const SINGLE_PLATE_AD: string = 'ca-app-pub-5125983390574582/9472784817';
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
@@ -40,89 +43,92 @@ const Plate: FC = (): JSX.Element => {
 	}, []);
 
 	return (
-		<ScrollView style={styles.main}>
-			<ImageBackground source={{ uri: bg?.asset?.url }} style={styles.header} resizeMode='cover' blurRadius={3}>
-				<View style={styles.action_button}>
-					<Pressable onPress={handleHeart}>
-						<Heart width={HEART_ICON_SIZE} height={HEART_ICON_SIZE} color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
-					</Pressable>
-					<Pressable onPress={() => router.back()}>
-						<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
-					</Pressable>
-				</View>
-				<View>
-					<Text style={styles.continentTextYear}>{year}</Text>
-					<Text style={styles.continentTextTitle}>Year</Text>
-				</View>
-			</ImageBackground>
-			<View style={styles.content}>
-				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					{image.map((item: any, i: number) => {
-						return (
-							<Pressable
-								key={i}
-								onPress={() => {
-									setModalVisible(true);
-									setModalImage(item?.asset?.url);
-								}}
-							>
-								<View style={styles.platesContainer}>
-									<Image source={{ uri: item?.asset?.url }} style={styles.platesImages} />
-								</View>
-							</Pressable>
-						);
-					})}
-				</ScrollView>
-				<Modal
-					animationType='slide'
-					transparent={true}
-					visible={modalVisible}
-					onRequestClose={() => {
-						setModalVisible(!modalVisible);
-					}}
-				>
-					<View style={styles.modalContainer}>
-						<View style={styles.modalContent}>
-							<Image source={{ uri: modalImage }} style={styles.modalImage} />
-						</View>
-						<Pressable onPress={() => setModalVisible(false)}>
+		<View style={{ flex: 1 }}>
+			<ScrollView style={styles.main}>
+				<ImageBackground source={{ uri: bg?.asset?.url }} style={styles.header} resizeMode='cover' blurRadius={3}>
+					<View style={styles.action_button}>
+						<Pressable onPress={handleHeart}>
+							<Heart width={HEART_ICON_SIZE} height={HEART_ICON_SIZE} color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
+						</Pressable>
+						<Pressable onPress={() => router.back()}>
 							<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
 						</Pressable>
 					</View>
-				</Modal>
-				{description ? (
-					<View style={styles.description}>
-						<Text style={styles.descriptionText}>{description}</Text>
+					<View>
+						<Text style={styles.continentTextYear}>{year}</Text>
+						<Text style={styles.continentTextTitle}>Year</Text>
 					</View>
-				) : null}
-				<View style={styles.detail}>
-					{eligibility ? (
-						<View style={styles.detailE}>
-							<Text style={styles.detailETitle}>Eligibility</Text>
-							<Text style={styles.detailEText}>{eligibility}</Text>
+				</ImageBackground>
+				<View style={styles.content}>
+					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+						{image.map((item: any, i: number) => {
+							return (
+								<Pressable
+									key={i}
+									onPress={() => {
+										setModalVisible(true);
+										setModalImage(item?.asset?.url);
+									}}
+								>
+									<View style={styles.platesContainer}>
+										<Image source={{ uri: item?.asset?.url }} style={styles.platesImages} />
+									</View>
+								</Pressable>
+							);
+						})}
+					</ScrollView>
+					<Modal
+						animationType='slide'
+						transparent={true}
+						visible={modalVisible}
+						onRequestClose={() => {
+							setModalVisible(!modalVisible);
+						}}
+					>
+						<View style={styles.modalContainer}>
+							<View style={styles.modalContent}>
+								<Image source={{ uri: modalImage }} style={styles.modalImage} />
+							</View>
+							<Pressable onPress={() => setModalVisible(false)}>
+								<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
+							</Pressable>
+						</View>
+					</Modal>
+					{description ? (
+						<View style={styles.description}>
+							<Text style={styles.descriptionText}>{description}</Text>
 						</View>
 					) : null}
-					{plateType ? (
-						<View style={styles.detailE}>
-							<Text style={styles.detailTTitle}>Plate Type</Text>
-							<Text style={styles.detailTText}>{plateType}</Text>
+					<View style={styles.detail}>
+						{eligibility ? (
+							<View style={styles.detailE}>
+								<Text style={styles.detailETitle}>Eligibility</Text>
+								<Text style={styles.detailEText}>{eligibility}</Text>
+							</View>
+						) : null}
+						{plateType ? (
+							<View style={styles.detailE}>
+								<Text style={styles.detailTTitle}>Plate Type</Text>
+								<Text style={styles.detailTText}>{plateType}</Text>
+							</View>
+						) : null}
+					</View>
+					{note ? (
+						<View style={{ padding: 10 }}>
+							<Text style={styles.noteTitle}>Note:</Text>
+							<Text style={styles.noteText}>{note}</Text>
 						</View>
 					) : null}
 				</View>
-				{note ? (
-					<View style={{ padding: 10 }}>
-						<Text style={styles.noteTitle}>Note:</Text>
-						<Text style={styles.noteText}>{note}</Text>
-					</View>
-				) : null}
-			</View>
-		</ScrollView>
+			</ScrollView>
+			<AdBanner ID={SINGLE_PLATE_AD} />
+		</View>
 	);
 };
 const styles = StyleSheet.create({
 	main: {
-		flex: 1,
 		backgroundColor: Color.black,
+		paddingBottom: 70,
 	},
 	header: {
 		height: WindowHeight / 2.9,

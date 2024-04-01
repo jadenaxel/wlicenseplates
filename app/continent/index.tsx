@@ -1,14 +1,16 @@
 import type { FC } from 'react';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, Link } from 'expo-router';
 
+import { useInterstitialAd } from 'react-native-google-mobile-ads';
+
 import { ICard } from '@/types';
 import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight, SCREEN_SIZE_COMPARATION } from '@/config';
-import { ContinentList } from '@/components';
+import { ContinentList, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 
 import { SVGIcon } from '@/components/Card';
@@ -16,7 +18,11 @@ import { ArrowLeft } from '@/assets/images/icons';
 
 const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
 
+const AD_CONTINENT_ID_V1: string = 'ca-app-pub-5125983390574582/1598164226';
+const SINGLE_COUNTRY_TRANSITION_V1: string = 'ca-app-pub-5125983390574582/1305670122';
+
 const Continent: FC = (): JSX.Element => {
+	const { isLoaded, load, show } = useInterstitialAd(SINGLE_COUNTRY_TRANSITION_V1);
 	const { state, dispatch }: any = useContext(Context);
 
 	const { title, description, countries, image }: ICard = state.ContinentData;
@@ -28,52 +34,64 @@ const Continent: FC = (): JSX.Element => {
 		return acc + VALUE;
 	}, 0);
 
+	useEffect(() => {
+		load();
+	}, [load]);
+
 	return (
-		<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
-			<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
-				<View style={styles.headerContent}>
-					<Pressable onPress={(): void => router.back()} style={styles.back}>
-						<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
-					</Pressable>
-					<View style={styles.continent}>
-						<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight / 2.4} />
-						<Text style={styles.continentText}>{title}</Text>
+		<View style={{ flex: 1 }}>
+			<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
+				<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
+					<View style={styles.headerContent}>
+						<Pressable onPress={(): void => router.back()} style={styles.back}>
+							<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
+						</Pressable>
+						<View style={styles.continent}>
+							<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight / 2.4} />
+							<Text style={styles.continentText}>{title}</Text>
+						</View>
+					</View>
+					<LinearGradient colors={['rgba(0,0,0,0.1)', `${DYNAMIC_BACKGROUND_COLOR}`]} style={styles.linearGradient} />
+				</ImageBackground>
+				<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
+					<View style={styles.subheaderSideOne}>
+						<View style={styles.subheaderInfo}>
+							<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{TOTAL_PLATES ?? 0} - License Plates</Text>
+							<Text style={styles.subheaderInfoText}>{countries?.length ?? 0} Countries</Text>
+						</View>
+						<Text style={styles.subheaderInfoDescription}>{description}</Text>
 					</View>
 				</View>
-				<LinearGradient colors={['rgba(0,0,0,0.1)', `${DYNAMIC_BACKGROUND_COLOR}`]} style={styles.linearGradient} />
-			</ImageBackground>
-			<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
-				<View style={styles.subheaderSideOne}>
-					<View style={styles.subheaderInfo}>
-						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{TOTAL_PLATES ?? 0} - License Plates</Text>
-						<Text style={styles.subheaderInfoText}>{countries?.length ?? 0} Countries</Text>
+				{countries ? (
+					countries.map((item: any, i: number) => {
+						return (
+							<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
+								<Pressable
+									onPress={() => {
+										dispatch({ type: Actions.Country, payload: { item } });
+										if (isLoaded) show();
+									}}
+								>
+									<ContinentList {...item} />
+								</Pressable>
+							</Link>
+						);
+					})
+				) : (
+					<View style={styles.nocontent}>
+						<Text style={styles.nocontentText}>There's no content</Text>
 					</View>
-					<Text style={styles.subheaderInfoDescription}>{description}</Text>
-				</View>
-			</View>
-			{countries ? (
-				countries.map((item: any, i: number) => {
-					return (
-						<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
-							<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>
-								<ContinentList {...item} />
-							</Pressable>
-						</Link>
-					);
-				})
-			) : (
-				<View style={styles.nocontent}>
-					<Text style={styles.nocontentText}>There's no content</Text>
-				</View>
-			)}
-		</ScrollView>
+				)}
+			</ScrollView>
+			<AdBanner ID={AD_CONTINENT_ID_V1} />
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	main: {
-		flex: 1,
 		backgroundColor: Color.black,
+		paddingBottom: 70,
 	},
 	header: {
 		height: WindowHeight / 2.9,
