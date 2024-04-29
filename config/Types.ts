@@ -1,8 +1,7 @@
-export type IColor = {
+type IColor = {
 	[key: string]: string;
 };
-
-export type ICard = {
+type ICard = {
 	image: any;
 	title: string;
 	platesNumber: number;
@@ -10,8 +9,7 @@ export type ICard = {
 	description: string;
 	countries: [ICountries] | any;
 };
-
-export type ICountries = {
+type ICountries = {
 	image: any;
 	title: string;
 	flag: any;
@@ -20,8 +18,7 @@ export type ICountries = {
 	continent: [ICard];
 	plates: [IPlates];
 };
-
-export type IPlates = {
+type IPlates = {
 	title: string;
 	bg: any;
 	year: number;
@@ -32,28 +29,27 @@ export type IPlates = {
 	plateType: string;
 	categories: any;
 };
-
-export type SVGProps = {
+type SVGProps = {
 	name: string;
 	ele: any;
 	height: number;
 	width: number;
 };
-
-export type Filter = {
+type Filter = {
 	title: string;
 	isSelected: string;
 };
-
-export type Props = {
+type Props = {
 	type?: string;
 	uri: string;
 	dispatch?: any;
 	dispatchType?: any;
 };
-
-export type Return = {
+type Return = {
 	data: any[];
 	error: any[];
 	isLoading: boolean;
 };
+type ParsePlates = IPlates[] | null;
+
+export type { IColor, ICard, ICountries, IPlates, SVGProps, Filter, Props, Return, ParsePlates };

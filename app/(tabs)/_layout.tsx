@@ -8,71 +8,57 @@ import type { FC } from 'react';
 import { Text } from 'react-native';
 import { Tabs } from 'expo-router/tabs';
 
-// Others imports
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/config';
-
 // Imports of icons for tab bottom navigation
 import { IExplorer, IFavorite, ISearch, IMore } from '@/assets/images/icons';
+import { Sizes, Colors } from '@/config';
 
-// Constant value for icons size
-const ICON_SIZE: number = 25;
-
-const ICON_SIZE_MOBILE_WIDTH: number = SCREEN_SIZE_COMPARATION ? WindowWidth / ICON_SIZE : WindowWidth / 5;
-const ICON_SIZE_MOBILE_HEIGHT: number = SCREEN_SIZE_COMPARATION ? WindowHeight / ICON_SIZE : 20;
-
-const FONT_SIZE_MOBILE_WIDTH: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 39 : WindowWidth / 26;
-
-const MARING_RIGHT_SIZE: number = SCREEN_SIZE_COMPARATION ? ICON_SIZE : 0;
+const ICON_SIZE_MOBILE_WIDTH: number = Sizes.windowWidth / 5;
+const ICON_SIZE_MOBILE_HEIGHT: number = 20;
+const fontSize = { fontSize: Sizes.ajustFontSize(14) };
 
 const AppLayout: FC = (): JSX.Element => {
 	return (
 		<Tabs
 			screenOptions={{
-				tabBarStyle: { backgroundColor: Color.black, borderTopWidth: 0, flexDirection: 'column' },
-				tabBarHideOnKeyboard: true,
-				tabBarActiveTintColor: Color.white,
-				tabBarIconStyle: {
-					marginRight: MARING_RIGHT_SIZE,
+				tabBarStyle: {
+					backgroundColor: Colors.background,
+					borderTopWidth: 0,
 				},
+				headerShown: false,
+				tabBarActiveTintColor: Colors.text,
 			}}
 		>
 			<Tabs.Screen
 				name='explore'
 				options={{
-					headerShown: false,
 					title: 'Explore',
 					tabBarIcon: ({ color }) => <IExplorer color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
-					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray, fontSize: FONT_SIZE_MOBILE_WIDTH }}>Explore</Text>,
+					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Colors.red : Colors.gray, ...fontSize }}>Explore</Text>,
 				}}
 			/>
 
 			<Tabs.Screen
 				name='favorite'
 				options={{
-					headerShown: false,
 					title: 'Favorite',
 					tabBarIcon: ({ color }) => <IFavorite color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
-					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray, fontSize: FONT_SIZE_MOBILE_WIDTH }}>Favorite</Text>,
-					unmountOnBlur: true,
+					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Colors.red : Colors.gray, ...fontSize }}>Favorite</Text>,
 				}}
 			/>
 			<Tabs.Screen
-				name={'search'}
+				name='search'
 				options={{
-					headerShown: false,
-
 					title: 'Search',
 					tabBarIcon: ({ color }) => <ISearch color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
-					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray, fontSize: FONT_SIZE_MOBILE_WIDTH }}>Search</Text>,
+					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Colors.red : Colors.gray, ...fontSize }}>Search</Text>,
 				}}
 			/>
 			<Tabs.Screen
 				name='more'
 				options={{
-					headerShown: false,
 					title: 'More',
 					tabBarIcon: ({ color }) => <IMore color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
-					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Color.red : Color.gray, fontSize: FONT_SIZE_MOBILE_WIDTH }}>More</Text>,
+					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Colors.red : Colors.gray, ...fontSize }}>More</Text>,
 				}}
 			/>
 		</Tabs>

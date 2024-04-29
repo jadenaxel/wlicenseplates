@@ -39,5 +39,5 @@
         "web": "expo start --web",
         "build-a": "eas build -p android --profile production --local"
     },
-    "version": "1.1.10"
+    "version": "1.1.11"
 }

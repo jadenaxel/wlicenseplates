@@ -10,7 +10,7 @@ import { Redirect } from 'expo-router';
 
 import { LoadingActivity, useFecth } from '@/components';
 import { Actions, Context } from '@/Wrapper';
-import Query from '@/query';
+import Query from '@/config/Query';
 
 const Home: FC = (): JSX.Element => {
 	const { dispatch }: any = useContext(Context);

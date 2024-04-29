@@ -1,9 +1,9 @@
 import type { FC } from 'react';
-import type { ICountries } from '@/types';
+import type { ICountries } from '@/config/Types';
 
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-import { Color, WindowHeight, WindowWidth, SCREEN_SIZE_COMPARATION, paddingHorizontal } from '@/config';
+import { Color, WindowHeight, WindowWidth, SCREEN_SIZE_COMPARATION, paddingHorizontal } from '@/configs';
 
 import { Cross as X, Dot } from '@/assets/images/icons';
 

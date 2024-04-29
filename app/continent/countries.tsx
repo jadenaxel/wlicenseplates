@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { ICountries, IPlates } from '@/types';
+import type { ICountries, IPlates } from '@/config/Types';
 
 import { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image } from 'react-native';
@@ -9,27 +9,24 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { useInterstitialAd } from 'react-native-google-mobile-ads';
 
-import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, filterPlates } from '@/config';
+import { DataFilterSorted, filterPlates, COUNTRY_SECTION_BANNER_V1, PLATE_TRANSITION_INTERSTITIAl_V1 } from '@/configs';
 import { Filter, Plates, useFecth, LoadingActivity, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
-import Query from '@/query';
+import Query from '@/config/Query';
+import { Colors, Sizes } from '@/config';
 
 import { ArrowLeft } from '@/assets/images/icons';
 
 const ALL: string = 'All';
 
-const COUNTRIES_AD_BANNER_V1: string = 'ca-app-pub-5125983390574582/6247855677';
-const SINGLE_PLATE_TRANSITION_V1: string = 'ca-app-pub-5125983390574582/9803957300';
-
-const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
-
 const Country: FC = (): JSX.Element => {
-	const { isLoaded, load, show } = useInterstitialAd(SINGLE_PLATE_TRANSITION_V1);
+	const { isLoaded, isClosed, load, show } = useInterstitialAd(PLATE_TRANSITION_INTERSTITIAl_V1);
 
 	const { data, isLoading } = useFecth({ type: 'countries', uri: Query.query.Category.query });
 	const [filterSelected, setFilterSelected] = useState<string>(ALL);
 	const { state, dispatch }: any = useContext(Context);
-	const { description, flag, image, title, plates }: ICountries = state.CountryData.item;
+	const { CountryData } = state;
+	const { description, flag, image, title, plates }: ICountries = CountryData.item;
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
@@ -38,7 +35,7 @@ const Country: FC = (): JSX.Element => {
 
 	useEffect(() => {
 		load();
-	}, [load]);
+	}, [load, isClosed]);
 
 	if (isLoading) return <LoadingActivity />;
 
@@ -47,7 +44,7 @@ const Country: FC = (): JSX.Element => {
 			<ScrollView showsVerticalScrollIndicator={false} style={styles.main}>
 				<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
 					<Pressable onPress={(): void => router.back()} style={styles.back}>
-						<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
+						<ArrowLeft width={22} height={22} />
 					</Pressable>
 					<View style={styles.continent}>
 						<Image style={styles.contientIcon} source={{ uri: flag?.asset?.url }} />
@@ -58,7 +55,9 @@ const Country: FC = (): JSX.Element => {
 				<View style={[styles.subheader, { backgroundColor: DYNAMIC_BACKGROUND_COLOR }]}>
 					<View style={styles.subheaderSideOne}>
 						<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{plates?.length ?? 0} - License Plates</Text>
-						<Text style={styles.subheaderInfoDescription}>{description}</Text>
+						<Text style={styles.subheaderInfoDescription} numberOfLines={5}>
+							{description}
+						</Text>
 					</View>
 				</View>
 				<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} styles={styles.filter} />
@@ -85,22 +84,18 @@ const Country: FC = (): JSX.Element => {
 					)}
 				</View>
 			</ScrollView>
-			<AdBanner ID={COUNTRIES_AD_BANNER_V1} />
+			<AdBanner ID={COUNTRY_SECTION_BANNER_V1} />
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	main: {
-		backgroundColor: Color.black,
-	},
-	back: {
-		marginTop: 30,
-	},
+	main: { backgroundColor: Colors.background },
+	back: { marginTop: 30 },
 	header: {
-		height: WindowHeight / 2.9,
-		width: WindowWidth,
-		paddingHorizontal: 17,
+		height: Sizes.windowHeight / 2.9,
+		width: Sizes.windowWidth,
+		paddingHorizontal: Sizes.paddingHorizontal,
 		paddingTop: 25,
 		paddingBottom: 16,
 		justifyContent: 'space-between',
@@ -111,17 +106,17 @@ const styles = StyleSheet.create({
 		zIndex: 1,
 	},
 	contientIcon: {
-		width: WindowWidth / 10,
-		height: WindowHeight / 25,
+		width: Sizes.windowWidth / 10,
+		height: Sizes.windowHeight / 25,
 		marginRight: 17,
 		borderRadius: 4,
 	},
 	continentText: {
-		fontSize: WindowWidth / 15,
+		fontSize: Sizes.ajustFontSize(25),
 		fontWeight: 'bold',
-		color: Color.white,
+		color: Colors.text,
 	},
-	linearGradient: { aspectRatio: 1, bottom: 0, left: 0, position: 'absolute', right: 0, opacity: 0.7, height: WindowHeight / 8 },
+	linearGradient: { aspectRatio: 1, bottom: 0, left: 0, position: 'absolute', right: 0, opacity: 0.7, height: Sizes.windowHeight / 8 },
 	subheader: {
 		paddingHorizontal: 16,
 		paddingVertical: 10,
@@ -134,22 +129,20 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	subheaderInfoDescription: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(16),
 	},
 	subheaderInfoPlates: {
 		marginRight: 22,
 		marginBottom: 20,
 	},
 	subheaderInfoText: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(16),
 	},
-	filter: {
-		paddingHorizontal,
-	},
+	filter: { paddingHorizontal: Sizes.paddingHorizontal },
 	plates: {
-		paddingHorizontal,
+		paddingHorizontal: Sizes.paddingHorizontal,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 15,
@@ -162,9 +155,9 @@ const styles = StyleSheet.create({
 		height: 200,
 	},
 	nocontentText: {
-		color: Color.white,
+		color: Colors.text,
 		fontWeight: 'bold',
-		fontSize: WindowWidth / 20,
+		fontSize: Sizes.ajustFontSize(20),
 	},
 });
 

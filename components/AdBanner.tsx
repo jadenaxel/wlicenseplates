@@ -1,8 +1,9 @@
-import { WindowWidth } from '@/config';
 import type { FC } from 'react';
 
 import { View, StyleSheet } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+
+import { Sizes } from '@/config';
 
 const AdBanner: FC<any> = ({ ID }: { ID: string }): JSX.Element => {
 	return (
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 	bannerAd: {
 		position: 'absolute',
 		bottom: 0,
-		width: WindowWidth,
+		width: Sizes.windowWidth,
 	},
 });
 

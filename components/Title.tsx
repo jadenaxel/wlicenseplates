@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import { Text, StyleSheet } from 'react-native';
 
-import { Color, WindowWidth } from '@/config';
+import { Color, WindowWidth } from '@/configs';
 
 const Title: FC<{ text: string }> = ({ text }: { text: string }): JSX.Element => {
 	return <Text style={styles.text}>{text}</Text>;

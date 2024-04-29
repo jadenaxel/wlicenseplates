@@ -6,13 +6,21 @@ import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-
-import { Color, DataFilterSorted, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, filterPlates, paddingHorizontal } from '@/config';
+import {
+	Color,
+	DataFilterSorted,
+	SCREEN_SIZE_COMPARATION,
+	WindowHeight,
+	WindowWidth,
+	filterPlates,
+	paddingHorizontal,
+	SEARCH_SECTION_BANNER_V1,
+} from '@/configs';
 import { Actions, Context } from '@/Wrapper';
 import { FavoriteCard, Filter, LoadingActivity, useFecth, AdBanner } from '@/components';
-import Query from '@/query';
+import Query from '@/config/Query';
 import { ISearch } from '@/assets/images/icons';
+import { Sizes } from '@/config';
 
 const country: any = [];
 const ALL: string = 'All';
@@ -20,8 +28,6 @@ const ALL: string = 'All';
 const SEARCH_BAR_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 20 : 40;
 const SEARCH_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
 const SEARCH_BAR_TEXT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 25 : 15;
-
-const SEARCH_AD_UNIT: string = 'ca-app-pub-5125983390574582/1770303045';
 
 const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>('');
@@ -122,7 +128,7 @@ const Search: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
-			<AdBanner ID={SEARCH_AD_UNIT} />
+			<AdBanner ID={SEARCH_SECTION_BANNER_V1} />
 		</SafeAreaView>
 	);
 };
@@ -168,7 +174,7 @@ const styles = StyleSheet.create({
 	nocontentText: {
 		color: Color.white,
 		fontWeight: 'bold',
-		fontSize: WindowWidth / 20,
+		fontSize: Sizes.ajustFontSize(20),
 	},
 });
 

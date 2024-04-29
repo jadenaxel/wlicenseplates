@@ -1,14 +1,12 @@
 import type { FC } from 'react';
 
-import { StyleSheet, ScrollView, View, Text, Linking, Pressable, Alert } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Linking, Pressable } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Color, WindowWidth, paddingHorizontal } from '@/config';
+import { Color, WindowWidth, paddingHorizontal, MORE_SECTION_BANNER_V1 } from '@/configs';
 import { Title, useFecth, LoadingActivity, AdBanner } from '@/components';
-import Query from '@/query';
-
-const AD_UNIT_MORE: string = 'ca-app-pub-5125983390574582/1582337451';
+import Query from '@/config/Query';
 
 const More: FC = (): JSX.Element => {
 	const { data, isLoading } = useFecth({ uri: Query.query.Others.query });
@@ -20,7 +18,7 @@ const More: FC = (): JSX.Element => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<AdBanner ID={AD_UNIT_MORE} />
+			<AdBanner ID={MORE_SECTION_BANNER_V1} />
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Title text='More' />
 				{contribute_email.length > 0 && (

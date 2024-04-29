@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 
-import { Color } from '@/config';
+import { Color } from '@/configs';
 
 const LoadingActivity: FC = (): JSX.Element => {
 	return (

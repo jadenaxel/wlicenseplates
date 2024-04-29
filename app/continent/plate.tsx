@@ -1,12 +1,22 @@
 import type { FC } from 'react';
-import type { IPlates } from '@/types';
+import type { IPlates } from '@/config/Types';
 
 import { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, Modal } from 'react-native';
 
 import { router } from 'expo-router';
 
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, paddingHorizontal, GetPlates, RemoveHeartPlates, SavePlates } from '@/config';
+import {
+	Color,
+	SCREEN_SIZE_COMPARATION,
+	WindowHeight,
+	WindowWidth,
+	paddingHorizontal,
+	GetPlates,
+	RemoveHeartPlates,
+	SavePlates,
+	PLATE_SECTION_BANNER_V1,
+} from '@/configs';
 import { Context } from '@/Wrapper';
 
 import { Cross, Heart } from '@/assets/images/icons';
@@ -16,8 +26,6 @@ type TPlates = IPlates | any;
 
 const X_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
 const HEART_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 24 : 22;
-
-const SINGLE_PLATE_AD: string = 'ca-app-pub-5125983390574582/9472784817';
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
@@ -121,7 +129,7 @@ const Plate: FC = (): JSX.Element => {
 					) : null}
 				</View>
 			</ScrollView>
-			<AdBanner ID={SINGLE_PLATE_AD} />
+			<AdBanner ID={PLATE_SECTION_BANNER_V1} />
 		</View>
 	);
 };

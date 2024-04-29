@@ -1,19 +1,15 @@
 import type { FC } from 'react';
-import type { ICard, SVGProps } from '../types';
+import type { ICard, SVGProps } from '../config/Types';
 
 import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth, elements } from '@/config';
-
 import { ArrowChvronRight } from '@/assets/images/icons';
+import { Sizes, Constants, Colors } from '@/config';
 
 export const SVGIcon = ({ name, ele, width, height }: SVGProps): JSX.Element | null => {
 	const Component: any = ele[name];
 	return Component ? <Component width={width} height={height} /> : null;
 };
-
-const ARROW_WIDTH_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 10;
-const ARROW_HEIGHT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 40 : 10;
 
 const Card: FC<ICard> = ({ title, image, countries }: ICard): JSX.Element => {
 	const TOTAL_PLATES: number = countries?.reduce((acc: any, country: any) => {
@@ -22,11 +18,11 @@ const Card: FC<ICard> = ({ title, image, countries }: ICard): JSX.Element => {
 	}, 0);
 
 	return (
-		<ImageBackground source={{ uri: image?.asset?.url }} style={styles.card} borderRadius={14} blurRadius={17}>
+		<ImageBackground source={{ uri: image?.asset?.url }} borderRadius={14} blurRadius={17}>
 			<View style={styles.overlay}>
 				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 					<ImageBackground borderRadius={14} source={{ uri: image?.asset?.url }} style={styles.portrait}>
-						<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight} />
+						<SVGIcon name={title} ele={Constants.elements} width={Sizes.windowWidth / 10} height={Sizes.windowHeight} />
 					</ImageBackground>
 					<View style={styles.data}>
 						<Text style={styles.dataTitle}>{title}</Text>
@@ -37,7 +33,7 @@ const Card: FC<ICard> = ({ title, image, countries }: ICard): JSX.Element => {
 					</View>
 				</View>
 				<View style={styles.arrowAccess}>
-					<ArrowChvronRight width={ARROW_WIDTH_SIZE} height={ARROW_HEIGHT_SIZE} />
+					<ArrowChvronRight width={10} height={10} />
 				</View>
 			</View>
 		</ImageBackground>
@@ -45,9 +41,6 @@ const Card: FC<ICard> = ({ title, image, countries }: ICard): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-	card: {
-		marginBottom: 15,
-	},
 	overlay: {
 		borderRadius: 14,
 		backgroundColor: 'rgba(70,63,65,0.35)',
@@ -57,24 +50,24 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	portrait: {
-		width: WindowWidth / 5,
-		height: WindowHeight / 11,
-		maxHeight: WindowHeight / 11,
+		width: Sizes.windowWidth / 5,
+		height: Sizes.windowHeight / 11,
+		maxHeight: Sizes.windowHeight / 11,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	data: {
 		alignSelf: 'flex-end',
 		marginLeft: 20,
-		width: WindowWidth / 2,
+		width: Sizes.windowWidth / 2,
 	},
 	dataTitle: {
-		color: Color.white,
-		fontSize: WindowWidth / 21,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(20),
 		fontWeight: '800',
 	},
 	dataDetails: {
-		width: WindowWidth / 2,
+		width: Sizes.windowWidth / 2,
 		justifyContent: 'space-between',
 		flexDirection: 'row',
 		borderTopColor: 'rgba(255,255,255,.10)',
@@ -87,7 +80,7 @@ const styles = StyleSheet.create({
 	dataDetailsItem: {
 		color: 'white',
 		fontWeight: '300',
-		fontSize: WindowWidth / 33,
+		fontSize: Sizes.ajustFontSize(13),
 		marginBottom: 5,
 	},
 	arrowAccess: {

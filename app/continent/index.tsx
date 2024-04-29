@@ -8,24 +8,21 @@ import { router, Link } from 'expo-router';
 
 import { useInterstitialAd } from 'react-native-google-mobile-ads';
 
-import { ICard } from '@/types';
-import { Color, WindowWidth, paddingHorizontal, elements, WindowHeight, SCREEN_SIZE_COMPARATION } from '@/config';
+import { ICard } from '@/config/Types';
+import { Color, WindowWidth, paddingHorizontal, CONTINENT_SECTION_BANNER_V1, COUNTRY_TRANSITION_INTERSTITIAl_V1 } from '@/configs';
 import { ContinentList, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
 
 import { SVGIcon } from '@/components/Card';
 import { ArrowLeft } from '@/assets/images/icons';
-
-const ARROW_BACK_ICON: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 15 : 22;
-
-const AD_CONTINENT_ID_V1: string = 'ca-app-pub-5125983390574582/1598164226';
-const SINGLE_COUNTRY_TRANSITION_V1: string = 'ca-app-pub-5125983390574582/1305670122';
+import { Sizes, Constants } from '@/config';
 
 const Continent: FC = (): JSX.Element => {
-	const { isLoaded, load, show } = useInterstitialAd(SINGLE_COUNTRY_TRANSITION_V1);
+	const { isLoaded, isClosed, load, show } = useInterstitialAd(COUNTRY_TRANSITION_INTERSTITIAl_V1);
 	const { state, dispatch }: any = useContext(Context);
 
-	const { title, description, countries, image }: ICard = state.ContinentData;
+	const { ContinentData } = state;
+	const { title, description, countries, image }: ICard = ContinentData;
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
@@ -36,7 +33,7 @@ const Continent: FC = (): JSX.Element => {
 
 	useEffect(() => {
 		load();
-	}, [load]);
+	}, [load, isClosed]);
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -44,10 +41,10 @@ const Continent: FC = (): JSX.Element => {
 				<ImageBackground source={{ uri: image?.asset?.url }} style={styles.header} resizeMode='cover'>
 					<View style={styles.headerContent}>
 						<Pressable onPress={(): void => router.back()} style={styles.back}>
-							<ArrowLeft width={ARROW_BACK_ICON} height={ARROW_BACK_ICON} />
+							<ArrowLeft width={22} height={22} />
 						</Pressable>
 						<View style={styles.continent}>
-							<SVGIcon name={title} ele={elements} width={WindowWidth / 10} height={WindowHeight / 2.4} />
+							<SVGIcon name={title} ele={Constants.elements} width={WindowWidth / 10} height={Sizes.windowHeight / 2.4} />
 							<Text style={styles.continentText}>{title}</Text>
 						</View>
 					</View>
@@ -59,7 +56,9 @@ const Continent: FC = (): JSX.Element => {
 							<Text style={[styles.subheaderInfoText, styles.subheaderInfoPlates]}>{TOTAL_PLATES ?? 0} - License Plates</Text>
 							<Text style={styles.subheaderInfoText}>{countries?.length ?? 0} Countries</Text>
 						</View>
-						<Text style={styles.subheaderInfoDescription}>{description}</Text>
+						<Text style={styles.subheaderInfoDescription} numberOfLines={5}>
+							{description}
+						</Text>
 					</View>
 				</View>
 				{countries ? (
@@ -83,7 +82,7 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
-			<AdBanner ID={AD_CONTINENT_ID_V1} />
+			<AdBanner ID={CONTINENT_SECTION_BANNER_V1} />
 		</View>
 	);
 };
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 70,
 	},
 	header: {
-		height: WindowHeight / 2.9,
+		height: Sizes.windowHeight / 2.9,
 		paddingHorizontal,
 		paddingTop: 25,
 	},
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
 	subheaderSideOne: {
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		width: WindowWidth / 1.2,
+		width: Sizes.windowWidth / 1.2,
 	},
 	subheaderInfo: {
 		flexDirection: 'row',
@@ -121,26 +120,34 @@ const styles = StyleSheet.create({
 	},
 	subheaderInfoDescription: {
 		color: Color.white,
-		fontSize: WindowWidth / 25,
+		fontSize: Sizes.ajustFontSize(16),
 	},
 	subheaderInfoPlates: {
 		marginRight: 22,
 	},
 	subheaderInfoText: {
 		color: Color.white,
-		fontSize: WindowWidth / 25,
+		fontSize: Sizes.ajustFontSize(16),
 	},
 	continent: {
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
 	continentText: {
-		fontSize: WindowWidth / 11,
+		fontSize: Sizes.ajustFontSize(30),
 		fontWeight: 'bold',
 		color: Color.white,
 		marginLeft: 17,
 	},
-	linearGradient: { aspectRatio: 1, bottom: 0, left: 0, position: 'absolute', right: 0, opacity: 0.7, height: WindowHeight / 8 },
+	linearGradient: {
+		aspectRatio: 1,
+		bottom: 0,
+		left: 0,
+		position: 'absolute',
+		right: 0,
+		opacity: 0.7,
+		height: Sizes.windowHeight / 8,
+	},
 	subheaderIcon: {
 		alignSelf: 'flex-end',
 		marginBottom: 16,
@@ -153,7 +160,7 @@ const styles = StyleSheet.create({
 	nocontentText: {
 		color: Color.white,
 		fontWeight: 'bold',
-		fontSize: WindowWidth / 20,
+		fontSize: Sizes.ajustFontSize(20),
 	},
 });
 

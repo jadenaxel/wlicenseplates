@@ -1,15 +1,15 @@
 import type { FC } from 'react';
-import type { ICountries } from '../types';
+import type { ICountries } from '../config/Types';
 
+import { Fragment } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-
-import { Color, WindowHeight, WindowWidth, paddingHorizontal } from '../config';
+import { Colors, Sizes } from '@/config';
 
 const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => {
 	const { plates, title, flag }: ICountries = props;
 
 	return (
-		<View>
+		<Fragment>
 			<View style={styles.container}>
 				<View style={styles.flagsContinaer}>
 					<Image style={styles.flagsContinaerImage} source={{ uri: flag?.asset?.url }} />
@@ -18,13 +18,13 @@ const ContinentList: FC<ICountries> = (props: ICountries | any): JSX.Element => 
 				<Text style={styles.platesNumber}>{plates?.length ?? 0}</Text>
 			</View>
 			<View style={styles.line} />
-		</View>
+		</Fragment>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
-		paddingHorizontal,
+		paddingHorizontal: Sizes.paddingHorizontal,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
@@ -35,21 +35,21 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	flagsContinaerImage: {
-		width: WindowWidth / 10,
-		height: WindowHeight / 25,
+		width: Sizes.windowWidth / 10,
+		height: Sizes.windowHeight / 25,
 		marginRight: 8.47,
 		borderRadius: 4,
 	},
 	flagsContinaerText: {
-		color: Color.white,
-		fontSize: WindowWidth / 30,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(16),
 	},
 	platesNumber: {
-		fontSize: WindowWidth / 25,
-		color: Color.white,
+		fontSize: Sizes.ajustFontSize(16),
+		color: Colors.text,
 	},
 	line: {
-		backgroundColor: Color.white,
+		backgroundColor: Colors.text,
 		height: 1,
 		opacity: 0.15,
 		marginHorizontal: 16,

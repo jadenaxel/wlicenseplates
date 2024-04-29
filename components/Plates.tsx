@@ -1,11 +1,9 @@
 import type { FC } from 'react';
-import type { IPlates } from '../types';
+import type { IPlates } from '../config/Types';
 
 import { View, StyleSheet, Image, Text } from 'react-native';
 
-import { Color, SCREEN_SIZE_COMPARATION, WindowHeight, WindowWidth } from '@/config';
-
-const PLATES_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 3.3 : WindowWidth / 2.3;
+import { Sizes, Colors } from '@/config';
 
 const Plates: FC<IPlates> = (props: IPlates): JSX.Element => {
 	const { image, year }: IPlates = props;
@@ -19,17 +17,17 @@ const Plates: FC<IPlates> = (props: IPlates): JSX.Element => {
 };
 const styles = StyleSheet.create({
 	plateImage: {
-		width: PLATES_SIZE,
-		height: WindowHeight / 10,
+		width: Sizes.windowWidth / 2.3,
+		height: Sizes.windowHeight / 10,
 		resizeMode: 'cover',
 		borderRadius: 4,
 		marginBottom: 11,
 	},
 	plateText: {
-		color: Color.white,
-		width: PLATES_SIZE,
+		color: Colors.text,
+		width: Sizes.windowWidth / 2.3,
 		textAlign: 'center',
-		fontSize: WindowWidth / 25,
+		fontSize: Sizes.ajustFontSize(15),
 	},
 });
 

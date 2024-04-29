@@ -1,4 +1,4 @@
-import type { Props, Return } from '@/types';
+import type { Props, Return } from '@/config/Types';
 
 import { useEffect, useState } from 'react';
 
