@@ -9,9 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
 // Others imports
-import { Colors, Sizes } from '@/config';
+import { Colors, Sizes, ICard } from '@/config';
 import { Card, Title } from '@/components';
-import { ICard } from '@/config/Types';
 import { Actions, Context } from '@/Wrapper';
 
 const Home: FC = (): JSX.Element => {

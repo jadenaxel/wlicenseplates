@@ -19,6 +19,7 @@ type ICountries = {
 	plates: [IPlates];
 };
 type IPlates = {
+    _id: string;
 	title: string;
 	bg: any;
 	year: number;

@@ -4,12 +4,11 @@ import { StyleSheet, ScrollView, View, Text, Linking, Pressable } from 'react-na
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Color, WindowWidth, paddingHorizontal, MORE_SECTION_BANNER_V1 } from '@/configs';
 import { Title, useFecth, LoadingActivity, AdBanner } from '@/components';
-import Query from '@/config/Query';
+import { Query, Ads, Colors, Sizes } from '@/config';
 
 const More: FC = (): JSX.Element => {
-	const { data, isLoading } = useFecth({ uri: Query.query.Others.query });
+	const { data, isLoading } = useFecth({ uri: Query.Others.Query });
 	const { contribute_email, contribute_subject, contribute_description }: any = data;
 
 	const MAIL_TO: string = `mailto:${contribute_email}?subject=${contribute_subject ?? ''}&body=${contribute_description ?? ''}`;
@@ -18,7 +17,7 @@ const More: FC = (): JSX.Element => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<AdBanner ID={MORE_SECTION_BANNER_V1} />
+			<AdBanner ID={Ads.MORE_SECTION_BANNER_V1} />
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Title text='More' />
 				{contribute_email.length > 0 && (
@@ -46,11 +45,11 @@ const More: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal,
-		backgroundColor: Color.black,
+		paddingHorizontal: Sizes.paddingHorizontal,
+		backgroundColor: Colors.background,
 	},
 	videoAd: {
-		backgroundColor: Color.gray,
+		backgroundColor: Colors.gray,
 		borderRadius: 4,
 		padding: 10,
 		marginBottom: 20,
@@ -59,14 +58,14 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	contribute: {
-		backgroundColor: Color.gray,
+		backgroundColor: Colors.gray,
 		borderRadius: 4,
 		padding: 10,
 		marginBottom: 20,
 	},
 	contributeText: {
 		textAlign: 'center',
-		fontSize: WindowWidth / 25,
+		fontSize: Sizes.ajustFontSize(15),
 	},
 	goButton: {
 		paddingHorizontal: 35,

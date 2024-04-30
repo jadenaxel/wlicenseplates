@@ -13,4 +13,5 @@ export default {
 		if (filter === ALL) return plates;
 		return plates.filter((plate: any) => plate.categories.some((cat: any) => cat.title === filter));
 	},
+	ALL: 'All',
 };

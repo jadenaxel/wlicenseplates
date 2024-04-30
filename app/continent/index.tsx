@@ -8,17 +8,14 @@ import { router, Link } from 'expo-router';
 
 import { useInterstitialAd } from 'react-native-google-mobile-ads';
 
-import { ICard } from '@/config/Types';
-import { Color, WindowWidth, paddingHorizontal, CONTINENT_SECTION_BANNER_V1, COUNTRY_TRANSITION_INTERSTITIAl_V1 } from '@/configs';
 import { ContinentList, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
-
 import { SVGIcon } from '@/components/Card';
 import { ArrowLeft } from '@/assets/images/icons';
-import { Sizes, Constants } from '@/config';
+import { Sizes, Constants, ICard, Ads, Colors } from '@/config';
 
 const Continent: FC = (): JSX.Element => {
-	const { isLoaded, isClosed, load, show } = useInterstitialAd(COUNTRY_TRANSITION_INTERSTITIAl_V1);
+	const { isLoaded, isClosed, load, show } = useInterstitialAd(Ads.COUNTRY_TRANSITION_INTERSTITIAl_V1);
 	const { state, dispatch }: any = useContext(Context);
 
 	const { ContinentData } = state;
@@ -44,7 +41,7 @@ const Continent: FC = (): JSX.Element => {
 							<ArrowLeft width={22} height={22} />
 						</Pressable>
 						<View style={styles.continent}>
-							<SVGIcon name={title} ele={Constants.elements} width={WindowWidth / 10} height={Sizes.windowHeight / 2.4} />
+							<SVGIcon name={title} ele={Constants.elements} width={Sizes.windowWidth / 10} height={Sizes.windowHeight / 2.4} />
 							<Text style={styles.continentText}>{title}</Text>
 						</View>
 					</View>
@@ -82,19 +79,19 @@ const Continent: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
-			<AdBanner ID={CONTINENT_SECTION_BANNER_V1} />
+			<AdBanner ID={Ads.CONTINENT_SECTION_BANNER_V1} />
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	main: {
-		backgroundColor: Color.black,
+		backgroundColor: Colors.background,
 		paddingBottom: 70,
 	},
 	header: {
 		height: Sizes.windowHeight / 2.9,
-		paddingHorizontal,
+		paddingHorizontal: Sizes.paddingHorizontal,
 		paddingTop: 25,
 	},
 	headerContent: {
@@ -104,7 +101,7 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 	},
 	subheader: {
-		padding: paddingHorizontal,
+		padding: Sizes.paddingHorizontal,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		marginBottom: 7,
@@ -119,14 +116,14 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	subheaderInfoDescription: {
-		color: Color.white,
+		color: Colors.text,
 		fontSize: Sizes.ajustFontSize(16),
 	},
 	subheaderInfoPlates: {
 		marginRight: 22,
 	},
 	subheaderInfoText: {
-		color: Color.white,
+		color: Colors.text,
 		fontSize: Sizes.ajustFontSize(16),
 	},
 	continent: {
@@ -136,7 +133,7 @@ const styles = StyleSheet.create({
 	continentText: {
 		fontSize: Sizes.ajustFontSize(30),
 		fontWeight: 'bold',
-		color: Color.white,
+		color: Colors.text,
 		marginLeft: 17,
 	},
 	linearGradient: {
@@ -158,7 +155,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	nocontentText: {
-		color: Color.white,
+		color: Colors.text,
 		fontWeight: 'bold',
 		fontSize: Sizes.ajustFontSize(20),
 	},

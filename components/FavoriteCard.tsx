@@ -3,17 +3,15 @@ import type { ICountries } from '@/config/Types';
 
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-import { Color, WindowHeight, WindowWidth, SCREEN_SIZE_COMPARATION, paddingHorizontal } from '@/configs';
-
 import { Cross as X, Dot } from '@/assets/images/icons';
+
+import { Sizes, Colors } from '@/config';
 
 type TProps = ICountries | any;
 
-const IMAGE_SCREEN_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 6 : WindowWidth / 4;
-const DOT_SCREEN_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 12;
-const DETAIL_COUNTRY_LABEL: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 40 : 12;
-const DETAIL_TITLE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 35 : 12;
-const CROSS_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 30 : 16;
+const IMAGE_SCREEN_SIZE: number = Sizes.windowWidth / 4;
+const DOT_SCREEN_SIZE: number = 12;
+const CROSS_SIZE: number = 16;
 
 const FavoriteCard: FC<ICountries | any> = (props: ICountries | any): JSX.Element => {
 	const { image, year, country, RemoveHeartPlates }: TProps = props;
@@ -47,8 +45,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		borderRadius: 14,
 		backgroundColor: '#171717',
-		marginVertical: 10,
-		paddingHorizontal,
+		paddingHorizontal: Sizes.paddingHorizontal,
 		paddingVertical: 12,
 		justifyContent: 'space-between',
 		alignItems: 'center',
@@ -60,13 +57,13 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		width: IMAGE_SCREEN_SIZE,
-		height: WindowHeight / 15,
+		height: Sizes.windowHeight / 15,
 		borderRadius: 4,
 		marginRight: 16,
 	},
 	detailTextTitle: {
-		fontSize: DETAIL_TITLE,
-		color: Color.white,
+		fontSize: Sizes.ajustFontSize(15),
+		color: Colors.text,
 		marginBottom: 4,
 	},
 	detailTextCountry: {
@@ -76,11 +73,12 @@ const styles = StyleSheet.create({
 	detailTextCountryText: {
 		color: '#FF1464',
 		marginHorizontal: 4,
-		fontSize: DETAIL_COUNTRY_LABEL,
+		fontSize: Sizes.ajustFontSize(),
 	},
 	detailTextCountryTextTwo: {
 		color: 'white',
-		fontSize: DETAIL_COUNTRY_LABEL,
+		fontSize: Sizes.ajustFontSize(),
+        width: "60%"
 	},
 });
 

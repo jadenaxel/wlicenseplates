@@ -19,7 +19,7 @@ const RemoveHeartPlates = async (item: IPlates): Promise<void> => {
 		const data: any = await AsyncStorage.getItem('plates');
 		const parsing: ParsePlates = JSON.parse(data);
 		if (parsing === null) return;
-		const deleteItem: IPlates[] = parsing.filter((items: IPlates) => items.title !== item.title);
+		const deleteItem: IPlates[] = parsing.filter((items: IPlates) => items._id !== item._id);
 		await AsyncStorage.setItem('plates', JSON.stringify(deleteItem));
 	} catch (e: any) {
 		console.log(e.message);

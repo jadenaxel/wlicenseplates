@@ -26,8 +26,8 @@ const Filter: FC<any> = (props: Filter): JSX.Element => {
 	const { title, isSelected }: Filter = props;
 
 	return (
-		<View style={[styles.container, isSelected === title ? { backgroundColor: Colors.red } : {}]}>
-			<Text style={[styles.text, isSelected === title ? { color: Colors.text } : {}]}>{title}</Text>
+		<View style={[styles.container, isSelected === title && { backgroundColor: Colors.red }]}>
+			<Text style={[styles.text, isSelected === title && { color: Colors.text }]}>{title}</Text>
 		</View>
 	);
 };
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 	},
 	text: {
-		fontSize: Sizes.ajustFontSize(15),
+		fontSize: Sizes.ajustFontSize(),
 	},
 });
 

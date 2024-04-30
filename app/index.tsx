@@ -3,18 +3,18 @@ import type { FC } from 'react';
 
 import { useContext } from 'react';
 
-// import 'expo-dev-client';
+import 'expo-dev-client';
 
 // Imports for Expo and Reac Native libraries
 import { Redirect } from 'expo-router';
 
 import { LoadingActivity, useFecth } from '@/components';
 import { Actions, Context } from '@/Wrapper';
-import Query from '@/config/Query';
+import { Query } from '@/config';
 
 const Home: FC = (): JSX.Element => {
 	const { dispatch }: any = useContext(Context);
-	const { isLoading } = useFecth({ uri: Query.query.Home.Continent.query, dispatch, dispatchType: Actions.All });
+	const { isLoading } = useFecth({ uri: Query.Continent.Query, dispatch, dispatchType: Actions.All });
 
 	if (isLoading) return <LoadingActivity />;
 

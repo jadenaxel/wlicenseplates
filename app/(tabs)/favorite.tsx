@@ -7,22 +7,10 @@ import { View, StyleSheet, ScrollView, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import {
-	Color,
-	WindowHeight,
-	GetPlates,
-	RemoveHeartPlates,
-	SCREEN_SIZE_COMPARATION,
-	WindowWidth,
-	paddingHorizontal,
-	FAVORITE_SECTION_BANNER_V1,
-} from '@/configs';
 import { FavoriteCard, LoadingActivity, Title, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
-
 import { NoPlate } from '@/assets/images/icons';
-
-const NoPlateSize: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 2 : 212;
+import { Sizes, Colors, LocalStorage, Ads } from '@/config';
 
 const Favorite: FC = (): JSX.Element => {
 	const [data, setData] = useState<any>([]);
@@ -32,14 +20,13 @@ const Favorite: FC = (): JSX.Element => {
 
 	const RemoveHeartPlatesUpper = async (item: any): Promise<void> => {
 		setLoading(true);
-		await RemoveHeartPlates(item);
+		await LocalStorage.RemoveHeartPlates(item);
 		setData([]);
 		await LoadData();
-		setLoading(false);
 	};
 
 	const LoadData = async (): Promise<void> => {
-		setData(await GetPlates());
+		setData(await LocalStorage.GetPlates());
 		setLoading(false);
 	};
 
@@ -53,22 +40,25 @@ const Favorite: FC = (): JSX.Element => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Title text='Favorite' />
-				{data.length > 0 ? (
-					data.map((item: ICountries, i: number) => (
-						<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
-							<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item } })}>
-								<FavoriteCard {...item} RemoveHeartPlates={RemoveHeartPlatesUpper} item={item} />
-							</Pressable>
-						</Link>
-					))
-				) : (
+				{data.length > 0 && (
+					<View style={{ gap: 15 }}>
+						{data.map((item: ICountries, i: number) => (
+							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
+								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item } })}>
+									<FavoriteCard {...item} RemoveHeartPlates={RemoveHeartPlatesUpper} item={item} />
+								</Pressable>
+							</Link>
+						))}
+					</View>
+				)}
+				{data.length <= 0 && (
 					<View style={styles.plate}>
-						<NoPlate width={NoPlateSize} height={NoPlateSize} />
+						<NoPlate width={212} height={212} />
 						<Text style={styles.plateText}>You don’t have a favorite plate yet.</Text>
 					</View>
 				)}
 			</ScrollView>
-			<AdBanner ID={FAVORITE_SECTION_BANNER_V1} />
+			<AdBanner ID={Ads.FAVORITE_SECTION_BANNER_V1} />
 		</SafeAreaView>
 	);
 };
@@ -76,20 +66,20 @@ const Favorite: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal,
-		backgroundColor: Color.black,
+		paddingHorizontal: Sizes.paddingHorizontal,
+		backgroundColor: Colors.background,
 		paddingBottom: 70,
 	},
 	plate: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		height: WindowHeight / 1.55,
+		height: Sizes.windowHeight / 1.55,
 	},
 	plateText: {
-		color: Color.white,
+		color: Colors.text,
 		marginTop: 15,
 		fontWeight: '500',
-		fontSize: WindowWidth / 25,
+		fontSize: Sizes.ajustFontSize(20),
 	},
 });
 

@@ -6,43 +6,31 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image, 
 
 import { router } from 'expo-router';
 
-import {
-	Color,
-	SCREEN_SIZE_COMPARATION,
-	WindowHeight,
-	WindowWidth,
-	paddingHorizontal,
-	GetPlates,
-	RemoveHeartPlates,
-	SavePlates,
-	PLATE_SECTION_BANNER_V1,
-} from '@/configs';
 import { Context } from '@/Wrapper';
-
 import { Cross, Heart } from '@/assets/images/icons';
 import { AdBanner } from '@/components';
+import { Ads, Colors, LocalStorage as LS, Sizes } from '@/config';
 
 type TPlates = IPlates | any;
-
-const X_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
-const HEART_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 24 : 22;
 
 const Plate: FC = (): JSX.Element => {
 	const [heart, setHeart] = useState<boolean>(false);
 	const [modalImage, setModalImage] = useState<string>('');
 	const [modalVisible, setModalVisible] = useState<boolean>(false);
+
 	const { state }: any = useContext(Context);
 
-	const { bg, year, image, description, eligibility, plateType, note }: TPlates = state.PlatesData;
+	const { PlatesData } = state;
+
+	const { bg, year, image, description, eligibility, plateType, note }: TPlates = PlatesData;
 
 	const LocalStorage = async (): Promise<any> => {
-		const getTitle: any = await GetPlates(year);
+		const getTitle: any = await LS.GetPlates(year);
 		setHeart(getTitle?.length > 0 ? true : false);
 	};
 
 	const handleHeart = (): void => {
-		if (heart === true) RemoveHeartPlates(state.PlatesData);
-		if (heart === false) SavePlates(state.PlatesData);
+		heart ? LS.RemoveHeartPlates(PlatesData) : LS.SavePlates(PlatesData);
 		setHeart((prev: boolean): boolean => !prev);
 	};
 
@@ -56,10 +44,10 @@ const Plate: FC = (): JSX.Element => {
 				<ImageBackground source={{ uri: bg?.asset?.url }} style={styles.header} resizeMode='cover' blurRadius={3}>
 					<View style={styles.action_button}>
 						<Pressable onPress={handleHeart}>
-							<Heart width={HEART_ICON_SIZE} height={HEART_ICON_SIZE} color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
+							<Heart width={22} height={22} color={heart ? 'red' : 'white'} fill={heart ? 'red' : 'none'} />
 						</Pressable>
 						<Pressable onPress={() => router.back()}>
-							<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
+							<Cross width={22} height={22} />
 						</Pressable>
 					</View>
 					<View>
@@ -98,7 +86,7 @@ const Plate: FC = (): JSX.Element => {
 								<Image source={{ uri: modalImage }} style={styles.modalImage} />
 							</View>
 							<Pressable onPress={() => setModalVisible(false)}>
-								<Cross width={X_ICON_SIZE} height={X_ICON_SIZE} />
+								<Cross width={22} height={22} />
 							</Pressable>
 						</View>
 					</Modal>
@@ -129,19 +117,19 @@ const Plate: FC = (): JSX.Element => {
 					) : null}
 				</View>
 			</ScrollView>
-			<AdBanner ID={PLATE_SECTION_BANNER_V1} />
+			<AdBanner ID={Ads.PLATE_SECTION_BANNER_V1} />
 		</View>
 	);
 };
 const styles = StyleSheet.create({
 	main: {
-		backgroundColor: Color.black,
+		backgroundColor: Colors.background,
 		paddingBottom: 70,
 	},
 	header: {
-		height: WindowHeight / 2.9,
-		width: WindowWidth,
-		paddingHorizontal,
+		height: Sizes.windowHeight / 2.9,
+		width: Sizes.windowWidth,
+		paddingHorizontal: Sizes.paddingHorizontal,
 		paddingTop: 25,
 		paddingBottom: 16,
 		justifyContent: 'space-between',
@@ -154,20 +142,20 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-end',
 		marginTop: 30,
 	},
-	content: { paddingHorizontal },
+	content: { paddingHorizontal: Sizes.paddingHorizontal },
 	continentTextYear: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(20),
 		fontWeight: 'bold',
 	},
 	continentTextTitle: {
-		color: Color.white,
-		fontSize: WindowWidth / 20,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(25),
 		textTransform: 'uppercase',
 	},
 	platesContainer: {
 		borderRadius: 4,
-		backgroundColor: Color.white,
+		backgroundColor: Colors.text,
 		paddingHorizontal: 8.37,
 		paddingVertical: 5.14,
 		justifyContent: 'center',
@@ -176,29 +164,29 @@ const styles = StyleSheet.create({
 		marginBottom: 16,
 	},
 	platesImages: {
-		width: WindowWidth / 4,
-		height: WindowHeight / 15,
+		width: Sizes.windowWidth / 4,
+		height: Sizes.windowHeight / 15,
 		resizeMode: 'contain',
 	},
 	modalContainer: {
-		width: WindowWidth,
-		height: WindowHeight,
+		width: Sizes.windowWidth,
+		height: Sizes.windowHeight,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	modalContent: {
-		backgroundColor: Color.white,
+		backgroundColor: Colors.text,
 		borderRadius: 6,
-		borderColor: Color.black,
+		borderColor: Colors.background,
 		borderWidth: 1,
-		width: WindowWidth / 1.6,
-		height: WindowHeight / 5,
+		width: Sizes.windowWidth / 1.6,
+		height: Sizes.windowHeight / 5,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	modalImage: {
-		width: WindowWidth / 2,
-		height: WindowHeight / 7,
+		width: Sizes.windowWidth / 2,
+		height: Sizes.windowHeight / 7,
 		resizeMode: 'contain',
 	},
 	description: {
@@ -209,8 +197,8 @@ const styles = StyleSheet.create({
 		paddingVertical: 23.06,
 	},
 	descriptionText: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(15),
 	},
 	detail: {
 		flexDirection: 'row',
@@ -224,39 +212,39 @@ const styles = StyleSheet.create({
 		paddingVertical: 12,
 		paddingLeft: 12,
 		paddingRight: 16,
-		width: WindowWidth / 2.2,
-		minHeight: WindowHeight / 6,
+		width: Sizes.windowWidth / 2.2,
+		minHeight: Sizes.windowHeight / 6,
 		height: '100%',
 	},
 	detailETitle: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(20),
 		marginBottom: 10,
 		fontWeight: 'bold',
 	},
 	detailEText: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(15),
 	},
 	detailTTitle: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(20),
 		marginBottom: 10,
 		fontWeight: 'bold',
 	},
 	detailTText: {
-		color: Color.white,
-		fontSize: WindowWidth / 27,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(15),
 	},
 	noteTitle: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(20),
 		marginBottom: 10,
 		fontWeight: 'bold',
 	},
 	noteText: {
-		color: Color.white,
-		fontSize: WindowWidth / 25,
+		color: Colors.text,
+		fontSize: Sizes.ajustFontSize(15),
 	},
 });
 

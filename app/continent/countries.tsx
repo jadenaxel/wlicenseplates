@@ -6,32 +6,26 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Pressable, Image }
 
 import { Link, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-
 import { useInterstitialAd } from 'react-native-google-mobile-ads';
 
-import { DataFilterSorted, filterPlates, COUNTRY_SECTION_BANNER_V1, PLATE_TRANSITION_INTERSTITIAl_V1 } from '@/configs';
 import { Filter, Plates, useFecth, LoadingActivity, AdBanner } from '@/components';
 import { Actions, Context } from '@/Wrapper';
-import Query from '@/config/Query';
-import { Colors, Sizes } from '@/config';
-
+import { Colors, Sizes, Query, Ads, Constants } from '@/config';
 import { ArrowLeft } from '@/assets/images/icons';
 
-const ALL: string = 'All';
-
 const Country: FC = (): JSX.Element => {
-	const { isLoaded, isClosed, load, show } = useInterstitialAd(PLATE_TRANSITION_INTERSTITIAl_V1);
+	const { isLoaded, isClosed, load, show } = useInterstitialAd(Ads.PLATE_TRANSITION_INTERSTITIAl_V1);
 
-	const { data, isLoading } = useFecth({ type: 'countries', uri: Query.query.Category.query });
-	const [filterSelected, setFilterSelected] = useState<string>(ALL);
+	const { data, isLoading } = useFecth({ type: 'countries', uri: Query.Category.Query });
+	const [filterSelected, setFilterSelected] = useState<string>(Constants.ALL);
 	const { state, dispatch }: any = useContext(Context);
 	const { CountryData } = state;
 	const { description, flag, image, title, plates }: ICountries = CountryData.item;
 
 	const DYNAMIC_BACKGROUND_COLOR: string = image.asset.metadata.palette.darkVibrant.background;
 
-	const newItem: any = filterPlates(plates ?? [], filterSelected, ALL);
-	const FilterData = DataFilterSorted(data, ALL);
+	const newItem: any = Constants.filterPlates(plates ?? [], filterSelected, Constants.ALL);
+	const FilterData = Constants.DataFilterSorted(data, Constants.ALL);
 
 	useEffect(() => {
 		load();
@@ -84,7 +78,7 @@ const Country: FC = (): JSX.Element => {
 					)}
 				</View>
 			</ScrollView>
-			<AdBanner ID={COUNTRY_SECTION_BANNER_V1} />
+			<AdBanner ID={Ads.COUNTRY_SECTION_BANNER_V1} />
 		</View>
 	);
 };

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	dataDetailsItem: {
 		color: 'white',
 		fontWeight: '300',
-		fontSize: Sizes.ajustFontSize(13),
+		fontSize: Sizes.ajustFontSize(),
 		marginBottom: 5,
 	},
 	arrowAccess: {

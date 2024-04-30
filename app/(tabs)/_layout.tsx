@@ -43,6 +43,7 @@ const AppLayout: FC = (): JSX.Element => {
 					title: 'Favorite',
 					tabBarIcon: ({ color }) => <IFavorite color={color} width={ICON_SIZE_MOBILE_WIDTH} height={ICON_SIZE_MOBILE_HEIGHT} />,
 					tabBarLabel: ({ focused }) => <Text style={{ color: focused ? Colors.red : Colors.gray, ...fontSize }}>Favorite</Text>,
+					unmountOnBlur: true,
 				}}
 			/>
 			<Tabs.Screen

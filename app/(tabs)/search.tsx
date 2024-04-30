@@ -6,36 +6,21 @@ import { View, StyleSheet, ScrollView, Text, Pressable, TextInput } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-import {
-	Color,
-	DataFilterSorted,
-	SCREEN_SIZE_COMPARATION,
-	WindowHeight,
-	WindowWidth,
-	filterPlates,
-	paddingHorizontal,
-	SEARCH_SECTION_BANNER_V1,
-} from '@/configs';
 import { Actions, Context } from '@/Wrapper';
 import { FavoriteCard, Filter, LoadingActivity, useFecth, AdBanner } from '@/components';
 import Query from '@/config/Query';
 import { ISearch } from '@/assets/images/icons';
-import { Sizes } from '@/config';
+import { Sizes, Constants, Colors, Ads } from '@/config';
 
 const country: any = [];
-const ALL: string = 'All';
-
-const SEARCH_BAR_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowHeight / 20 : 40;
-const SEARCH_ICON_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 20 : 22;
-const SEARCH_BAR_TEXT_SIZE: number = SCREEN_SIZE_COMPARATION ? WindowWidth / 25 : 15;
 
 const Search: FC = (): JSX.Element => {
 	const [search, setSearch] = useState<string>('');
 	const [countryState, setCountryState] = useState<any>([]);
 	const [platesState, setPlatesState] = useState<any>([]);
-	const [filterSelected, setFilterSelected] = useState<string>(ALL);
+	const [filterSelected, setFilterSelected] = useState<string>(Constants.ALL);
 
-	const { data, isLoading } = useFecth({ uri: Query.query.Category.query, type: 'search' });
+	const { data, isLoading } = useFecth({ uri: Query.Category.Query, type: 'search' });
 
 	const { state, dispatch }: any = useContext(Context);
 	const StateData: any = state.Data;
@@ -69,14 +54,14 @@ const Search: FC = (): JSX.Element => {
 		setPlatesState([]);
 	};
 
-	const newItem: any = filterPlates(platesState ?? [], filterSelected, ALL);
-	const FilterData: any = DataFilterSorted(data, ALL);
+	const newItem: any = Constants.filterPlates(platesState ?? [], filterSelected, Constants.ALL);
+	const FilterData: any = Constants.DataFilterSorted(data, Constants.ALL);
 
-	const SEARCH_BAR_SIZE_VIEW: any = search.length > 0 ? { width: SCREEN_SIZE_COMPARATION ? WindowWidth - 130 : WindowWidth - 100 } : { width: '100%' };
-	const TEXT_INPUT_SIZE_ELE: any = search.length > 0 ? { width: WindowWidth - 200 } : { width: '100%' };
+	const SEARCH_BAR_SIZE_VIEW: any = search.length > 0 ? { width: Sizes.windowWidth - 100 } : { width: '100%' };
+	const TEXT_INPUT_SIZE_ELE: any = search.length > 0 ? { width: Sizes.windowWidth - 200 } : { width: '100%' };
 
 	const FILTER_RENDER_CONDITION: boolean = search.length > 0 && data.length > 0 && countryState.length === 0 && platesState.length > 0;
-	const COUNTRY_RENDER_CONDITION: boolean = countryState.length > 0 && filterSelected === ALL;
+	const COUNTRY_RENDER_CONDITION: boolean = countryState.length > 0 && filterSelected === Constants.ALL;
 
 	if (isLoading) return <LoadingActivity />;
 
@@ -85,7 +70,7 @@ const Search: FC = (): JSX.Element => {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.bar}>
 					<View style={[styles.searchBar, SEARCH_BAR_SIZE_VIEW]}>
-						<ISearch color={'white'} width={SEARCH_ICON_SIZE} height={SEARCH_ICON_SIZE} />
+						<ISearch color={'white'} width={22} height={22} />
 						<TextInput style={[styles.searchInput, TEXT_INPUT_SIZE_ELE]} autoFocus autoCorrect onChangeText={handleSearch} defaultValue={search} />
 					</View>
 					{search.length > 0 && (
@@ -100,27 +85,31 @@ const Search: FC = (): JSX.Element => {
 					</View>
 				)}
 				<Filter data={FilterData} setFilterSelected={setFilterSelected} filterSelected={filterSelected} condiction={FILTER_RENDER_CONDITION} />
-				{newItem.length > 0 &&
-					newItem.map((item: any, i: number) => {
-						const countryTitle: any = country.filter((items: any) => items._id === item.country._ref)[0];
-						return (
-							<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
-								<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: countryTitle.year ?? '' } })}>
-									<FavoriteCard image={item.image} country={countryTitle?.title ?? ''} year={item.year} key={i} />
-								</Pressable>
-							</Link>
-						);
-					})}
-				{COUNTRY_RENDER_CONDITION &&
-					countryState.map((item: any, i: number) => {
-						return (
-							<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
-								<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>
-									<FavoriteCard image={item.flag} country={item.title} />
-								</Pressable>
-							</Link>
-						);
-					})}
+				<View style={{ gap: 15 }}>
+					{newItem.length > 0 &&
+						newItem.map((item: any, i: number) => {
+							const countryTitle: any = country.filter((items: any) => items._id === item.country._ref)[0];
+							return (
+								<Link key={i} href={{ pathname: '/continent/plate' }} asChild>
+									<Pressable onPress={() => dispatch({ type: Actions.Plates, payload: { item, country: countryTitle.year ?? '' } })}>
+										<FavoriteCard image={item.image} country={countryTitle?.title ?? ''} year={item.year} key={i} />
+									</Pressable>
+								</Link>
+							);
+						})}
+				</View>
+				<View style={{ gap: 15 }}>
+					{COUNTRY_RENDER_CONDITION &&
+						countryState.map((item: any, i: number) => {
+							return (
+								<Link key={i} href={{ pathname: '/continent/countries' }} asChild>
+									<Pressable onPress={() => dispatch({ type: Actions.Country, payload: { item } })}>
+										<FavoriteCard image={item.flag} country={item.title} />
+									</Pressable>
+								</Link>
+							);
+						})}
+				</View>
 
 				{search.length > 0 && countryState.length === 0 && newItem.length === 0 && (
 					<View style={styles.nocontent}>
@@ -128,7 +117,7 @@ const Search: FC = (): JSX.Element => {
 					</View>
 				)}
 			</ScrollView>
-			<AdBanner ID={SEARCH_SECTION_BANNER_V1} />
+			<AdBanner ID={Ads.SEARCH_SECTION_BANNER_V1} />
 		</SafeAreaView>
 	);
 };
@@ -136,8 +125,8 @@ const Search: FC = (): JSX.Element => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal,
-		backgroundColor: Color.black,
+		paddingHorizontal: Sizes.paddingHorizontal,
+		backgroundColor: Colors.background,
 		paddingBottom: 70,
 	},
 	bar: {
@@ -147,7 +136,7 @@ const styles = StyleSheet.create({
 		marginVertical: 15,
 	},
 	searchBar: {
-		height: SEARCH_BAR_SIZE,
+		height: 40,
 		borderRadius: 12,
 		backgroundColor: '#292929',
 		flexDirection: 'row',
@@ -158,21 +147,21 @@ const styles = StyleSheet.create({
 		marginLeft: 12,
 		marginRight: 12,
 		color: 'white',
-		fontSize: SEARCH_BAR_TEXT_SIZE,
+		fontSize: 15,
 	},
 	cancelButton: {
 		color: 'white',
-		fontSize: SCREEN_SIZE_COMPARATION ? WindowWidth / 30 : 15,
+		fontSize: Sizes.ajustFontSize(15),
 		fontWeight: '400',
 	},
 	nocontent: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: WindowHeight / 1.2,
+		height: Sizes.windowHeight / 1.2,
 	},
 	nocontentText: {
-		color: Color.white,
+		color: Colors.text,
 		fontWeight: 'bold',
 		fontSize: Sizes.ajustFontSize(20),
 	},
